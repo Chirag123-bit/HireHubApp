@@ -40,14 +40,75 @@ class GettingStarted extends StatelessWidget {
                 ),
               ),
               Positioned(
+                left: 0,
+                right: 0,
+                bottom: size.width * 0.4 + 75,
+                child: Container(
+                  width: 175,
+                  height: 175,
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [purpleDark, purpleLight],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      shape: BoxShape.circle),
+                ),
+              ),
+              Positioned(
                 bottom: -10,
                 left: 0,
                 right: 0,
                 child: GlassMorphismContainer(
-                  size: size,
                   height: size.height * 0.4,
                   width: size.width,
-                  child: const Center(child: Text("Getting Started")),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Text(
+                          "Find the perfect \n job for you",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 24),
+                              height: 50,
+                              width: 200,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(30),
+                                ),
+                              ),
+                              child: const Text("Get started",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               )
             ],
