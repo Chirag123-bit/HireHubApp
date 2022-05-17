@@ -51,7 +51,7 @@ class SignUpScreen extends StatelessWidget {
                             children: [
                               Spacer(),
                               const Text(
-                                "Sign In",
+                                "Register ",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -65,8 +65,22 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 10),
                               CustomTextField(
+                                prefixIcon: Icons.person,
+                                hintText: "Username",
+                              ),
+                              const SizedBox(height: 10),
+                              CustomTextField(
                                 prefixIcon: Icons.lock,
                                 hintText: "Password",
+                                isObscure: true,
+                                suffixIcon: Icons.remove_red_eye,
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              CustomTextField(
+                                prefixIcon: Icons.lock,
+                                hintText: "Confirm Password",
                                 isObscure: true,
                                 suffixIcon: Icons.remove_red_eye,
                               ),
@@ -76,7 +90,7 @@ class SignUpScreen extends StatelessWidget {
                               Container(
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/signup');
+                                    Navigator.pushNamed(context, '/login');
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -95,7 +109,7 @@ class SignUpScreen extends StatelessWidget {
                                           Radius.circular(30),
                                         ),
                                       ),
-                                      child: const Text("Sign In",
+                                      child: const Text("Sign Up",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 20,
@@ -111,17 +125,22 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      GlassMorphismContainer(
-                        height: 50,
-                        borderRadius: 10,
-                        width: size.width * 0.8,
-                        child: const Center(
-                          child: Text("Dont't have an account? Sign Up",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                              )),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: GlassMorphismContainer(
+                          height: 50,
+                          borderRadius: 10,
+                          width: size.width * 0.8,
+                          child: const Center(
+                            child: Text("Already have an account? Sign In",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                )),
+                          ),
                         ),
                       ),
                       const Spacer(),
