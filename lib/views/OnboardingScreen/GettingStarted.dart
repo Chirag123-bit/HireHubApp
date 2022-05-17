@@ -78,7 +78,7 @@ class GettingStarted extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, '/signup');
+                            Navigator.pushNamed(context, '/login');
                           },
                           child: Container(
                             alignment: Alignment.centerRight,
