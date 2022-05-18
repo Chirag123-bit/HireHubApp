@@ -39,8 +39,27 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextField(
+                    style: const TextStyle(color: Colors.red),
+                    decoration: registerInputDecoration(
+                      hintText: "Username",
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: TextField(
+                    style: const TextStyle(color: Colors.red),
+                    decoration: registerInputDecoration(
+                      hintText: "Password",
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   child: TextFormField(
-                    decoration: registerInputDecoration(hintText: "Password"),
+                    decoration:
+                        registerInputDecoration(hintText: "Confirm Password"),
                   ),
                 ),
                 SignUpBar(
