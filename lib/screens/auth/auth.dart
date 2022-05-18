@@ -38,13 +38,13 @@ class _AuthScreenState extends State<AuthScreen>
           ),
           Center(
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: 800),
+              constraints: const BoxConstraints(maxHeight: 800),
               child: ValueListenableBuilder<bool>(
                 valueListenable: showSignInPage,
                 builder: (context, value, child) {
                   return PageTransitionSwitcher(
                     reverse: !value,
-                    duration: Duration(milliseconds: 800),
+                    duration: const Duration(milliseconds: 800),
                     transitionBuilder: (child, animation, secondaryAnimation) {
                       return SharedAxisTransition(
                         animation: animation,

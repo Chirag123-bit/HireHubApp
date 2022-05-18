@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/screens/auth/auth.dart';
+import 'package:hirehub/screens/home/HomeScreen.dart';
 
 import 'config/Palette.dart';
 
@@ -13,20 +15,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
       theme: ThemeData(
+        primaryColor: Color(0xFF43B1B7),
+        accentColor: Color(0xFFFED408),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.muliTextTheme(),
-        accentColor: Palette.darkOrange,
         appBarTheme: const AppBarTheme(
-          brightness: Brightness.dark,
           color: Palette.darkBlue,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
+        colorScheme:
+            ColorScheme.fromSwatch().copyWith(secondary: Palette.darkOrange),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const AuthScreen(),
+        "/": (context) => const HomePage(),
+        "/auth": (context) => const AuthScreen(),
       },
     );
   }
