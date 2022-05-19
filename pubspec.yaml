@@ -40,6 +40,7 @@ dependencies:
   google_fonts: ^2.3.2
   page_transition: ^2.0.5
   animations: ^2.0.2
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:

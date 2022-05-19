@@ -22,10 +22,11 @@ class SearchCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Fast Search",
+            "Quick Search",
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.blueAccent,
               fontSize: 26,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(
@@ -35,7 +36,7 @@ class SearchCard extends StatelessWidget {
             "You can search quickly for your dream job",
             style: TextStyle(
               height: 1.8,
-              color: Colors.white,
+              color: Colors.blue,
               fontWeight: FontWeight.w400,
             ),
           ),
