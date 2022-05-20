@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const HomePage(),
-        "/auth": (context) => const AuthScreen(),
+        "/": (context) => const AuthScreen(),
+        "/home": (context) => const HomePage(),
       },
     );
   }

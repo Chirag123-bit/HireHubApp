@@ -26,7 +26,7 @@ class _TagListState extends State<TagList> {
                         vertical: 10, horizontal: 20),
                     decoration: BoxDecoration(
                         color: selected == index
-                            ? Theme.of(context).primaryColor.withOpacity(0.2)
+                            ? Theme.of(context).primaryColor.withOpacity(0.8)
                             : Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
@@ -36,6 +36,11 @@ class _TagListState extends State<TagList> {
                         )),
                     child: Text(
                       tagLists[index],
+                      style: TextStyle(
+                        color: selected == index
+                            ? Colors.white
+                            : Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                 ),

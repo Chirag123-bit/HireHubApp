@@ -66,7 +66,7 @@ class SignInBar extends StatelessWidget {
             label,
             style: const TextStyle(
               fontWeight: FontWeight.w800,
-              color: Palette.darkBlue,
+              color: Palette.lightBlue,
               fontSize: 24,
             ),
           ),
@@ -99,7 +99,7 @@ class _LoadingIndicator extends StatelessWidget {
       child: Visibility(
         visible: isLoading,
         child: const LinearProgressIndicator(
-          backgroundColor: Palette.darkBlue,
+          backgroundColor: Palette.lightBlue,
         ),
       ),
     );
@@ -119,7 +119,7 @@ class _RoundContinueButton extends StatelessWidget {
     return RawMaterialButton(
       onPressed: onPressed,
       elevation: 0.0,
-      fillColor: Palette.darkBlue,
+      fillColor: Palette.lightBlue,
       splashColor: Palette.darkOrange,
       padding: const EdgeInsets.all(22.0),
       shape: const CircleBorder(),

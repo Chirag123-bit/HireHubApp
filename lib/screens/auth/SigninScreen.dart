@@ -40,7 +40,12 @@ class SigninScreen extends StatelessWidget {
                     decoration: signInInputDecoration(hintText: "Password"),
                   ),
                 ),
-                SignInBar(label: "Login", isLoading: false, onPressed: () {}),
+                SignInBar(
+                    label: "Login",
+                    isLoading: false,
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/home");
+                    }),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: InkWell(
