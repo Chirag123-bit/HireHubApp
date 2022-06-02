@@ -18,14 +18,14 @@ class RegisterScreen extends StatelessWidget {
       child: Column(
         children: [
           const Expanded(
-            flex: 3,
+            flex: 1,
             child: Align(
               alignment: Alignment.centerLeft,
               child: LoginTitle(title: "Register to HireHub"),
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 6,
             child: ListView(
               children: [
                 Padding(

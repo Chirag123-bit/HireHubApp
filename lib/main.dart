@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/screens/auth/auth.dart';
 import 'package:hirehub/screens/home/HomeScreen.dart';
+import 'package:hirehub/screens/splash/splashScreen.dart';
 
 import 'config/Palette.dart';
 
@@ -19,21 +20,22 @@ class MyApp extends StatelessWidget {
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Color.fromARGB(255, 41, 63, 233),
-        accentColor: Color(0xFFFED408),
+        primaryColor: const Color.fromARGB(255, 41, 63, 233),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.muliTextTheme(),
         appBarTheme: const AppBarTheme(
           color: Palette.darkBlue,
           systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
-        colorScheme:
-            ColorScheme.fromSwatch().copyWith(secondary: Palette.darkOrange),
+        colorScheme: ColorScheme.fromSwatch()
+            .copyWith(secondary: Palette.darkOrange)
+            .copyWith(secondary: Color(0xFFFED408)),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const AuthScreen(),
+        "/": (context) => const SplashScreen(),
+        "/auth": (context) => const AuthScreen(),
         "/home": (context) => const HomePage(),
       },
     );

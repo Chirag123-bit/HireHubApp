@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:hirehub/config/Palette.dart';
 import 'dart:math';
 import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:hirehub/config/Palette.dart';
 
 class BackgroundPainter extends CustomPainter {
   BackgroundPainter({
