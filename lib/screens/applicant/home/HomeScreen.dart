@@ -13,18 +13,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Container(),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(color: kBackgroundColor),
-            ),
-          ],
-        ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -35,6 +23,24 @@ class HomeScreen extends StatelessWidget {
             ),
             TagList(),
             JobList(),
+            Container(
+              margin: const EdgeInsets.only(
+                  left: 15, right: 15, top: 20, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "Latest Jobs",
+                    style: kBoldStyle.copyWith(fontSize: 17),
+                  ),
+                  const Spacer(),
+                  Text(
+                    "See all",
+                    style: kMedStyle.copyWith(fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
             LatestJobs()
           ],
         )

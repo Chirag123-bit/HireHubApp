@@ -6,6 +6,7 @@ class JobItem extends StatelessWidget {
   final Job job;
   final bool showTime;
   final bool isSelected;
+  // ignore: use_key_in_widget_constructors
   const JobItem(this.job, this.isSelected, {this.showTime = false});
   @override
   Widget build(BuildContext context) {
