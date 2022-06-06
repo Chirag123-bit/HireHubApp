@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
 import 'package:hirehub/screens/auth/auth.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
       theme: ThemeData(
+        backgroundColor: kSilver,
         primaryColor: const Color.fromARGB(255, 41, 63, 233),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.muliTextTheme(),
