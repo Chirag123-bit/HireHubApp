@@ -15,12 +15,6 @@ class SplashContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SvgPicture.asset(
-          image,
-          height: getProportionateScreenHeight(500),
-          width: getProportionateScreenWidth(450),
-          // color: Colors.transparent,
-        ),
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Text(
@@ -29,7 +23,17 @@ class SplashContent extends StatelessWidget {
             style: TextStyle(
               color: Palette.primaryColor,
               fontSize: getProportionateScreenWidth(25),
+              fontWeight: FontWeight.bold,
             ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SvgPicture.asset(
+            image,
+            height: getProportionateScreenHeight(400),
+            width: getProportionateScreenWidth(400),
+            // color: Colors.transparent,
           ),
         ),
       ],
