@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BasicComponents extends StatelessWidget {
+class AccountComponents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -8,7 +8,7 @@ class BasicComponents extends StatelessWidget {
         const SizedBox(height: 15),
         TextFormField(
           decoration: const InputDecoration(
-              labelText: 'First Name',
+              labelText: 'Type',
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 borderSide: BorderSide(color: Colors.black, width: 0.5),
@@ -18,7 +18,7 @@ class BasicComponents extends StatelessWidget {
         const SizedBox(height: 15),
         TextFormField(
           decoration: const InputDecoration(
-              labelText: 'Last Name',
+              labelText: 'Email Address',
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 borderSide: BorderSide(color: Colors.black, width: 0.5),
@@ -28,7 +28,7 @@ class BasicComponents extends StatelessWidget {
         const SizedBox(height: 15),
         TextFormField(
           decoration: const InputDecoration(
-              labelText: 'Gender',
+              labelText: 'Username',
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 borderSide: BorderSide(color: Colors.black, width: 0.5),
@@ -38,7 +38,7 @@ class BasicComponents extends StatelessWidget {
         const SizedBox(height: 15),
         TextFormField(
           decoration: const InputDecoration(
-              labelText: 'Phone',
+              labelText: 'Password',
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 borderSide: BorderSide(color: Colors.black, width: 0.5),
