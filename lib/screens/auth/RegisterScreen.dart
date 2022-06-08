@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/screens/auth/registerComponents/AccountComponents.dart';
 import 'package:hirehub/screens/auth/registerComponents/BasicComponents.dart';
+import 'package:hirehub/screens/auth/registerComponents/candidateComponents/AdditionalInfo.dart';
 
 import '../../config/Palette.dart';
 import 'SigninUpBar.dart';
@@ -20,6 +22,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // ignore: prefer_final_fields
   int _currentStep = 0;
   final _globalkey = GlobalKey<FormState>();
+  User user = User();
 
   @override
   Widget build(BuildContext context) {
@@ -99,22 +102,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
   List<Step> getSteps() => [
         Step(
           title: const Text('Personal Info'),
-          content: BasicComponents(),
+          content: BasicComponents(
+            user: user,
+          ),
           isActive: _currentStep >= 0,
         ),
         Step(
           title: const Text('Account Info'),
-          content: AccountComponents(),
+          content: AccountComponents(
+            user: user,
+          ),
           isActive: _currentStep >= 1,
         ),
         Step(
           title: const Text('Additional Info'),
-          content: const Text('Confirm your information'),
+          content: AdditionalInfo(
+            user: user,
+          ),
           isActive: _currentStep >= 2,
         ),
         Step(
           title: const Text('Professional Info'),
-          content: BasicComponents(),
+          content: BasicComponents(
+            user: user,
+          ),
           isActive: _currentStep >= 3,
         ),
       ];
