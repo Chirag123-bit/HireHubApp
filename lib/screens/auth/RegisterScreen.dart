@@ -3,6 +3,7 @@ import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/screens/auth/registerComponents/AccountComponents.dart';
 import 'package:hirehub/screens/auth/registerComponents/BasicComponents.dart';
 import 'package:hirehub/screens/auth/registerComponents/candidateComponents/AdditionalInfo.dart';
+import 'package:hirehub/screens/auth/registerComponents/candidateComponents/ProfessionalInfo.dart';
 
 import '../../config/Palette.dart';
 import 'SigninUpBar.dart';
@@ -123,7 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
         Step(
           title: const Text('Professional Info'),
-          content: BasicComponents(
+          content: ProfessionalInfo(
             user: user,
           ),
           isActive: _currentStep >= 3,
