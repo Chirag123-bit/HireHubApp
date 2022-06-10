@@ -44,6 +44,8 @@ dependencies:
   readmore: ^2.1.0
   getflutter: ^1.0.11
   expandable: ^5.0.1
+  json_annotation: ^4.5.0
+  build_runner: ^2.1.11
 
 dev_dependencies:
   flutter_test:

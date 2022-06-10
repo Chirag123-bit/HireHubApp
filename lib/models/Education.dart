@@ -1,14 +1,24 @@
-// ignore: file_names
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Education.g.dart';
+
+@JsonSerializable()
 class Education {
-  String etitle;
-  String eschool;
-  String estart;
-  String eend;
+  @JsonKey(name: '_id')
+  String? id;
+  String? etitle;
+  String? eschool;
+  String? estart;
+  String? eend;
 
   Education({
-    required this.etitle,
-    required this.eschool,
-    required this.estart,
-    required this.eend,
+    this.etitle,
+    this.eschool,
+    this.estart,
+    this.eend,
   });
+
+  factory Education.fromJson(Map<String, dynamic> json) =>
+      _$EducationFromJson(json);
+  Map<String, dynamic> toJson() => _$EducationToJson(this);
 }

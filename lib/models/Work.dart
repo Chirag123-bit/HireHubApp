@@ -1,18 +1,25 @@
-// ignore: file_names
+import 'package:json_annotation/json_annotation.dart';
+
+part 'Work.g.dart';
+
+@JsonSerializable()
 class Work {
-  String wtitle;
-  String wcompany;
-  String wlocation;
-  String wtype;
-  String wstart;
-  String wend;
+  @JsonKey(name: '_id')
+  String? id;
+  String? wtitle;
+  String? wcompany;
+  String? wlocation;
+  String? wtype;
+  String? wstart;
+  String? wend;
 
   Work({
-    required this.wtitle,
-    required this.wcompany,
-    required this.wlocation,
-    required this.wtype,
-    required this.wstart,
-    required this.wend,
+    this.id,
+    this.wtitle,
+    this.wcompany,
+    this.wlocation,
+    this.wtype,
+    this.wstart,
+    this.wend,
   });
 }
