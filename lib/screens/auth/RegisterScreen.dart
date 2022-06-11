@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/auth/registerComponents/AccountComponents.dart';
 import 'package:hirehub/screens/auth/registerComponents/BasicComponents.dart';
 import 'package:hirehub/screens/auth/registerComponents/candidateComponents/AdditionalInfo.dart';
 import 'package:hirehub/screens/auth/registerComponents/candidateComponents/ProfessionalInfo.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 import '../../config/Palette.dart';
 import 'SigninUpBar.dart';
@@ -24,6 +26,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   int _currentStep = 0;
   final _globalkey = GlobalKey<FormState>();
   User user = User();
+
+  _registerUser() async {
+    bool isLogin = await UserRepository().registerUser(user);
+    if (isLogin) {
+      MotionToast.success(
+        description: const Text("Register Success"),
+      ).show(context);
+    } else {
+      MotionToast.error(
+        description: const Text("Register Failed"),
+      ).show(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       final isLastStep = _currentStep == getSteps().length - 1;
                       if (isLastStep) {
                         // ignore: avoid_print
-                        print("Last Step");
+                        _registerUser();
                       } else {
                         setState(() {
                           _currentStep = _currentStep + 1;

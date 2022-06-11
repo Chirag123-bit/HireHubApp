@@ -11,8 +11,6 @@ class AccountComponents extends StatefulWidget {
 }
 
 class _AccountComponentsState extends State<AccountComponents> {
-  String? applicantType = "Applicant";
-
   List<DropdownMenuItem<String>> typeOptions = const [
     DropdownMenuItem(
       child: Text('Applicant'),
@@ -29,7 +27,17 @@ class _AccountComponentsState extends State<AccountComponents> {
     return Column(
       children: [
         const SizedBox(height: 15),
-        DropdownComponent(items: typeOptions, valueHolder: applicantType),
+        DropdownComponent(
+          items: typeOptions,
+          valueHolder: widget.user.type,
+          onChanged: (value) {
+            setState(
+              () {
+                widget.user.type = value;
+              },
+            );
+          },
+        ),
         const SizedBox(height: 15),
         TextFormField(
           initialValue: widget.user.email ?? "",

@@ -8,8 +8,6 @@ class ProfessionalInfo extends StatefulWidget {
   User user;
   ProfessionalInfo({Key? key, required this.user}) : super(key: key);
 
-  String? workType = "Full Time";
-
   List<DropdownMenuItem<String>> workOptions = const [
     DropdownMenuItem(
       child: Text('Full Time'),
@@ -29,17 +27,18 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
   @override
   void initState() {
     super.initState();
-    widget.user.educations = List<Education>.empty(growable: true);
-    widget.user.educations!
+    widget.user.educationSet = List<Education>.empty(growable: true);
+    widget.user.educationSet!
         .add(Education(etitle: "", eschool: "", estart: "", eend: ""));
-    widget.user.works = List<Work>.empty(growable: true);
-    widget.user.works!.add(Work(
-        wtitle: "",
-        wcompany: "",
-        wlocation: "",
-        wtype: "",
-        wstart: "",
-        wend: ""));
+    widget.user.workSet = List<Work>.empty(growable: true);
+    widget.user.workSet!.add(Work(
+      wtitle: "",
+      wcompany: "",
+      wlocation: "",
+      wtype: "Full Time",
+      wstart: "",
+      wend: "",
+    ));
   }
 
   @override
@@ -47,14 +46,14 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
     return Column(
       children: [
         const SizedBox(height: 15),
-        _educationsContainer(),
+        _educationSetContainer(),
         const SizedBox(height: 15),
-        _worksContainer(),
+        _workSetContainer(),
       ],
     );
   }
 
-  Widget _educationsContainer() {
+  Widget _educationSetContainer() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -66,7 +65,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
         ListView.separated(
           shrinkWrap: true,
           physics: const ScrollPhysics(),
-          itemCount: widget.user.educations!.length,
+          itemCount: widget.user.educationSet!.length,
           itemBuilder: (context, index) {
             return Column(children: [
               educationUi(index),
@@ -78,7 +77,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
     );
   }
 
-  Widget _worksContainer() {
+  Widget _workSetContainer() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +89,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
         ListView.separated(
           shrinkWrap: true,
           physics: const ScrollPhysics(),
-          itemCount: widget.user.works!.length,
+          itemCount: widget.user.workSet!.length,
           itemBuilder: (context, index) {
             return Column(children: [
               WorkUi(index),
@@ -121,11 +120,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                   children: [
                     getTextField(
                       "Degree Title",
-                      widget.user.educations![index].etitle,
+                      widget.user.educationSet![index].etitle!,
                       (value) {
                         setState(
                           () {
-                            widget.user.educations![index].etitle = value;
+                            widget.user.educationSet![index].etitle = value;
                           },
                         );
                       },
@@ -135,35 +134,35 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     getTextField(
                       "College/University",
-                      widget.user.educations![index].eschool,
+                      widget.user.educationSet![index].eschool!,
                       (value) {
                         setState(
                           () {
-                            widget.user.educations![index].eschool = value;
+                            widget.user.educationSet![index].eschool = value;
                           },
                         );
                       },
                     ),
                     getDateField(
                       "Start Date",
-                      widget.user.educations![index].estart,
+                      widget.user.educationSet![index].estart!,
                       (value) {
                         setState(
                           () {
-                            widget.user.educations![index].estart = value;
+                            widget.user.educationSet![index].estart = value;
                           },
                         );
                       },
                     ),
                     getDateField(
-                        "End Date", widget.user.educations![index].eend,
+                        "End Date", widget.user.educationSet![index].eend!,
                         (value) {
                       setState(
                         () {
-                          widget.user.educations![index].eend = value;
+                          widget.user.educationSet![index].eend = value;
                         },
                       );
-                    }, finalDate: widget.user.educations![index].estart),
+                    }, finalDate: widget.user.educationSet![index].estart!),
                   ],
                 ),
               )),
@@ -221,11 +220,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                   children: [
                     getTextField(
                       "Job Title",
-                      widget.user.works![index].wtitle,
+                      widget.user.workSet![index].wtitle!,
                       (value) {
                         setState(
                           () {
-                            widget.user.works![index].wtitle = value;
+                            widget.user.workSet![index].wtitle = value;
                           },
                         );
                       },
@@ -235,11 +234,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     getTextField(
                       "Company Name",
-                      widget.user.works![index].wcompany,
+                      widget.user.workSet![index].wcompany!,
                       (value) {
                         setState(
                           () {
-                            widget.user.works![index].wcompany = value;
+                            widget.user.workSet![index].wcompany = value;
                           },
                         );
                       },
@@ -249,11 +248,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     getTextField(
                       "Work Location",
-                      widget.user.works![index].wlocation,
+                      widget.user.workSet![index].wlocation!,
                       (value) {
                         setState(
                           () {
-                            widget.user.works![index].wlocation = value;
+                            widget.user.workSet![index].wlocation = value;
                           },
                         );
                       },
@@ -263,27 +262,34 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     DropdownComponent(
                       items: widget.workOptions,
-                      valueHolder: widget.workType,
-                    ),
-                    getDateField(
-                      "Work Start Date",
-                      widget.user.works![index].wstart,
-                      (value) {
+                      valueHolder: widget.user.workSet![index].wtype,
+                      onChanged: (value) {
                         setState(
                           () {
-                            widget.user.works![index].wstart = value;
+                            widget.user.workSet![index].wtype = value;
                           },
                         );
                       },
                     ),
-                    getDateField("End Date", widget.user.works![index].wend,
+                    getDateField(
+                      "Work Start Date",
+                      widget.user.workSet![index].wstart!,
+                      (value) {
+                        setState(
+                          () {
+                            widget.user.workSet![index].wstart = value;
+                          },
+                        );
+                      },
+                    ),
+                    getDateField("End Date", widget.user.workSet![index].wend!,
                         (value) {
                       setState(
                         () {
-                          widget.user.works![index].wend = value;
+                          widget.user.workSet![index].wend = value;
                         },
                       );
-                    }, finalDate: widget.user.works![index].wstart),
+                    }, finalDate: widget.user.workSet![index].wstart!),
                   ],
                 ),
               )),
@@ -386,22 +392,22 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
 
   void addEduControl() {
     setState(() {
-      widget.user.educations!
+      widget.user.educationSet!
           .add(Education(etitle: "", eschool: "", estart: "", eend: ""));
     });
   }
 
   void removeEduControl(int index) {
     setState(() {
-      if (widget.user.educations!.length > 1) {
-        widget.user.educations!.removeAt(index);
+      if (widget.user.educationSet!.length > 1) {
+        widget.user.educationSet!.removeAt(index);
       }
     });
   }
 
   void addWorkControl() {
     setState(() {
-      widget.user.works!.add(Work(
+      widget.user.workSet!.add(Work(
           wtitle: "",
           wcompany: "",
           wlocation: "",
@@ -413,8 +419,8 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
 
   void removeWorkControl(int index) {
     setState(() {
-      if (widget.user.works!.length > 1) {
-        widget.user.works!.removeAt(index);
+      if (widget.user.workSet!.length > 1) {
+        widget.user.workSet!.removeAt(index);
       }
     });
   }

@@ -1,11 +1,18 @@
+// import 'package:json_annotation/json_annotation.dart';
+
+// part 'Job.g.dart';
+
+// @JsonSerializable()
 class Job {
-  String company;
-  String logoUrl;
-  bool isMark;
-  String title;
-  String location;
-  String time;
-  List<String> req;
+  // @JsonKey(name: '_id')
+  String? id;
+  String? company;
+  String? logoUrl;
+  bool? isMark;
+  String? title;
+  String? location;
+  String? time;
+  List<String>? req;
 
   Job(this.company, this.logoUrl, this.isMark, this.title, this.location,
       this.time, this.req);

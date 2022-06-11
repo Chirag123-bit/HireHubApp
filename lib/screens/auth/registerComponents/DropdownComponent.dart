@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 class DropdownComponent extends StatefulWidget {
   final List<DropdownMenuItem<String>> items;
   String? valueHolder;
-  DropdownComponent({Key? key, required this.items, required this.valueHolder})
+  Function onChanged;
+  DropdownComponent(
+      {Key? key,
+      required this.items,
+      required this.valueHolder,
+      required this.onChanged})
       : super(key: key);
 
   @override
@@ -17,11 +22,9 @@ class _DropdownComponentState extends State<DropdownComponent> {
       hint: const Text('Select your Type'),
       items: widget.items,
       isExpanded: true,
-      value: widget.valueHolder!,
+      value: widget.valueHolder ?? widget.items[0].value,
       onChanged: (value) {
-        setState(() {
-          widget.valueHolder = value.toString();
-        });
+        widget.onChanged(value.toString());
       },
     );
   }

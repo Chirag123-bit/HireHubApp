@@ -12,6 +12,7 @@ class Education {
   String? eend;
 
   Education({
+    this.id,
     this.etitle,
     this.eschool,
     this.estart,

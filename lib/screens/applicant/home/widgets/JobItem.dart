@@ -37,13 +37,13 @@ class JobItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Image.asset(job.logoUrl),
+                        child: Image.asset(job.logoUrl!),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       Text(
-                        job.company,
+                        job.company!,
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 16,
@@ -52,10 +52,10 @@ class JobItem extends StatelessWidget {
                     ],
                   ),
                   Icon(
-                    job.isMark
+                    job.isMark!
                         ? Icons.bookmark
                         : Icons.bookmark_outline_outlined,
-                    color: job.isMark
+                    color: job.isMark!
                         ? Theme.of(context).primaryColor
                         : isSelected
                             ? Colors.white
@@ -67,7 +67,7 @@ class JobItem extends StatelessWidget {
                 height: 15,
               ),
               Text(
-                job.title,
+                job.title!,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: isSelected ? Colors.white : Colors.black,
@@ -79,9 +79,9 @@ class JobItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconText(Icons.location_on_outlined, job.location, 1),
+                  IconText(Icons.location_on_outlined, job.location!, 1),
                   if (showTime)
-                    IconText(Icons.access_time_outlined, job.time, 1)
+                    IconText(Icons.access_time_outlined, job.time!, 1)
                 ],
               )
             ],

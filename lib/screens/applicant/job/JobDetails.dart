@@ -26,7 +26,7 @@ class JobDetails extends StatelessWidget {
           onPressed: () {},
         ),
         title: Text(
-          job.company,
+          job.company!,
           style: kTitleStyle.copyWith(
               fontFamily: "Poppins", fontWeight: FontWeight.w600, fontSize: 20),
         ),
@@ -43,18 +43,18 @@ class JobDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.asset(
-                    job.logoUrl,
+                    job.logoUrl!,
                     width: 50,
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    job.title,
+                    job.title!,
                     style: kTitleStyle.copyWith(
                         fontFamily: "Poppins", fontSize: 26),
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    job.company,
+                    job.company!,
                     style: kTitleStyle.copyWith(
                         fontFamily: "Poppins", fontSize: 14),
                   ),
@@ -62,7 +62,7 @@ class JobDetails extends StatelessWidget {
                     height: 7,
                   ),
                   Text(
-                    job.time,
+                    job.time!,
                     style: kSubtitleStyle.copyWith(
                         fontFamily: "Poppins", fontSize: 12, color: kBlack),
                   )

@@ -46,6 +46,9 @@ dependencies:
   expandable: ^5.0.1
   json_annotation: ^4.5.0
   build_runner: ^2.1.11
+  dio: ^4.0.6
+  json_serializable: ^6.2.0
+  motion_toast: ^2.1.9
 
 dev_dependencies:
   flutter_test:

@@ -24,19 +24,19 @@ class LatestJobContainer extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               image: DecorationImage(
-                image: AssetImage(job.logoUrl),
+                image: AssetImage(job.logoUrl!),
                 fit: BoxFit.fitWidth,
               ),
             )),
         title: Text(
-          job.title,
+          job.title!,
           style:
               kTitleStyle.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(job.company),
+            Text(job.company!),
             Container(
               margin: const EdgeInsets.only(top: 7),
               child: Row(

@@ -66,7 +66,17 @@ class _AdditionalInfoState extends State<AdditionalInfo> {
               border: OutlineInputBorder()),
         ),
         const SizedBox(height: 15),
-        DropdownComponent(items: jobOptions, valueHolder: jobType),
+        DropdownComponent(
+          items: jobOptions,
+          valueHolder: widget.user.sector,
+          onChanged: (value) {
+            setState(
+              () {
+                widget.user.sector = value;
+              },
+            );
+          },
+        ),
         const SizedBox(height: 15),
         SizedBox(
           height: 100,

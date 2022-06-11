@@ -22,4 +22,7 @@ class Work {
     this.wstart,
     this.wend,
   });
+
+  factory Work.fromJson(Map<String, dynamic> json) => _$WorkFromJson(json);
+  Map<String, dynamic> toJson() => _$WorkToJson(this);
 }

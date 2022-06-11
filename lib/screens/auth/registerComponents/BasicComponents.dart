@@ -64,7 +64,17 @@ class _BasicComponentsState extends State<BasicComponents> {
               border: OutlineInputBorder()),
         ),
         const SizedBox(height: 15),
-        DropdownComponent(items: genderOptions, valueHolder: genderType),
+        DropdownComponent(
+          items: genderOptions,
+          valueHolder: widget.user.gender,
+          onChanged: (value) {
+            setState(
+              () {
+                widget.user.gender = value;
+              },
+            );
+          },
+        ),
         const SizedBox(height: 15),
         TextFormField(
           initialValue: widget.user.phone ?? "",

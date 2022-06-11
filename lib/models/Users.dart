@@ -1,13 +1,19 @@
 import 'package:hirehub/models/Education.dart';
 import 'package:hirehub/models/Work.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'Users.g.dart';
+
+@JsonSerializable()
 class User {
+  @JsonKey(name: '_id')
   String? id;
   String? firstName;
   String? lastName;
   String? gender;
   String? phone;
   String? email;
+  String? type;
   String? password;
   String? username;
 
@@ -23,51 +29,33 @@ class User {
   String? summary;
   List<String>? skills;
 
-  List<Work>? works;
-  List<Education>? educations;
+  List<Work>? workSet;
+  List<Education>? educationSet;
 
-  User(
-      {this.firstName,
-      this.lastName,
-      this.phone,
-      this.email,
-      this.password,
-      this.username,
-      this.gender,
-      this.cname,
-      this.country,
-      this.cabout,
-      this.cdesc,
-      this.csector,
-      this.region,
-      this.sector,
-      this.skills,
-      this.summary,
-      this.title});
+  User({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.phone,
+    this.email,
+    this.password,
+    this.username,
+    this.gender,
+    this.type,
+    this.cname,
+    this.country,
+    this.cabout,
+    this.cdesc,
+    this.csector,
+    this.region,
+    this.sector,
+    this.skills,
+    this.summary,
+    this.title,
+    this.workSet,
+    this.educationSet,
+  });
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-
-    data['firstName'] = firstName;
-    data['lastName'] = lastName;
-    data['gender'] = gender;
-    data['phone'] = phone;
-    data['email'] = email;
-    data['password'] = password;
-    data['username'] = username;
-    data['cname'] = cname;
-    data['country'] = country;
-    data['region'] = region;
-    data['cabout'] = cabout;
-    data['cdesc'] = cdesc;
-    data['csector'] = csector;
-    data['title'] = title;
-    data['sector'] = sector;
-    data['skills'] = skills;
-    data['summary'] = summary;
-    data['work'] = works;
-    data['education'] = educations;
-
-    return data;
-  }
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }
