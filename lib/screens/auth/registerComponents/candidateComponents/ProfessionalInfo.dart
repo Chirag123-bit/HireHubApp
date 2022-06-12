@@ -6,7 +6,10 @@ import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 
 class ProfessionalInfo extends StatefulWidget {
   User user;
-  ProfessionalInfo({Key? key, required this.user}) : super(key: key);
+  List<GlobalKey<FormState>> formKeys;
+
+  ProfessionalInfo({Key? key, required this.user, required this.formKeys})
+      : super(key: key);
 
   List<DropdownMenuItem<String>> workOptions = const [
     DropdownMenuItem(
@@ -54,26 +57,29 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
   }
 
   Widget _educationSetContainer() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Text(
-          "Skill(s)",
-          textAlign: TextAlign.left,
-        ),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const ScrollPhysics(),
-          itemCount: widget.user.educationSet!.length,
-          itemBuilder: (context, index) {
-            return Column(children: [
-              educationUi(index),
-            ]);
-          },
-          separatorBuilder: (context, index) => const Divider(),
-        )
-      ],
+    return Form(
+      key: widget.formKeys[3],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            "Skill(s)",
+            textAlign: TextAlign.left,
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
+            itemCount: widget.user.educationSet!.length,
+            itemBuilder: (context, index) {
+              return Column(children: [
+                educationUi(index),
+              ]);
+            },
+            separatorBuilder: (context, index) => const Divider(),
+          )
+        ],
+      ),
     );
   }
 
@@ -85,6 +91,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
         const Text(
           "Work Experience(s)",
           textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 16),
         ),
         ListView.separated(
           shrinkWrap: true,
@@ -143,26 +150,32 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                         );
                       },
                     ),
-                    getDateField(
-                      "Start Date",
-                      widget.user.educationSet![index].estart!,
-                      (value) {
-                        setState(
-                          () {
-                            widget.user.educationSet![index].estart = value;
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          getDateField(
+                            "Start Date",
+                            widget.user.educationSet![index].estart!,
+                            (value) {
+                              setState(
+                                () {
+                                  widget.user.educationSet![index].estart =
+                                      value;
+                                },
+                              );
+                            },
+                          ),
+                          getDateField("End Date",
+                              widget.user.educationSet![index].eend!, (value) {
+                            setState(
+                              () {
+                                widget.user.educationSet![index].eend = value;
+                              },
+                            );
                           },
-                        );
-                      },
-                    ),
-                    getDateField(
-                        "End Date", widget.user.educationSet![index].eend!,
-                        (value) {
-                      setState(
-                        () {
-                          widget.user.educationSet![index].eend = value;
-                        },
-                      );
-                    }, finalDate: widget.user.educationSet![index].estart!),
+                              finalDate:
+                                  widget.user.educationSet![index].estart!),
+                        ])
                   ],
                 ),
               )),
@@ -218,31 +231,34 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    getTextField(
-                      "Job Title",
-                      widget.user.workSet![index].wtitle!,
-                      (value) {
-                        setState(
-                          () {
-                            widget.user.workSet![index].wtitle = value;
+                    Row(children: [
+                      Flexible(
+                        child: getTextField(
+                          "Job Title",
+                          widget.user.workSet![index].wtitle!,
+                          (value) {
+                            setState(
+                              () {
+                                widget.user.workSet![index].wtitle = value;
+                              },
+                            );
                           },
-                        );
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    getTextField(
-                      "Company Name",
-                      widget.user.workSet![index].wcompany!,
-                      (value) {
-                        setState(
-                          () {
-                            widget.user.workSet![index].wcompany = value;
+                        ),
+                      ),
+                      Flexible(
+                        child: getTextField(
+                          "Company Name",
+                          widget.user.workSet![index].wcompany!,
+                          (value) {
+                            setState(
+                              () {
+                                widget.user.workSet![index].wcompany = value;
+                              },
+                            );
                           },
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+                    ]),
                     const SizedBox(
                       height: 10,
                     ),
@@ -271,25 +287,31 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                         );
                       },
                     ),
-                    getDateField(
-                      "Work Start Date",
-                      widget.user.workSet![index].wstart!,
-                      (value) {
-                        setState(
-                          () {
-                            widget.user.workSet![index].wstart = value;
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        getDateField(
+                          "Start Date",
+                          widget.user.workSet![index].wstart!,
+                          (value) {
+                            setState(
+                              () {
+                                widget.user.workSet![index].wstart = value;
+                              },
+                            );
                           },
-                        );
-                      },
-                    ),
-                    getDateField("End Date", widget.user.workSet![index].wend!,
-                        (value) {
-                      setState(
-                        () {
-                          widget.user.workSet![index].wend = value;
-                        },
-                      );
-                    }, finalDate: widget.user.workSet![index].wstart!),
+                        ),
+                        getDateField(
+                            "End Date", widget.user.workSet![index].wend!,
+                            (value) {
+                          setState(
+                            () {
+                              widget.user.workSet![index].wend = value;
+                            },
+                          );
+                        }, finalDate: widget.user.workSet![index].wstart!),
+                      ],
+                    )
                   ],
                 ),
               )),
@@ -329,18 +351,22 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
   }
 
   Widget getTextField(String label, String initialValue, Function onChanged) {
-    return TextFormField(
-      initialValue: initialValue,
-      onChanged: (value) {
-        onChanged(value.toString());
-      },
-      decoration: InputDecoration(
-          labelText: label,
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            borderSide: BorderSide(color: Colors.black, width: 0.5),
-          ),
-          border: const OutlineInputBorder()),
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: TextFormField(
+        initialValue: initialValue,
+        onChanged: (value) {
+          onChanged(value.toString());
+        },
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "This field is required";
+          }
+          return null;
+        },
+        decoration: InputDecoration(
+            labelText: label, border: const OutlineInputBorder()),
+      ),
     );
   }
 

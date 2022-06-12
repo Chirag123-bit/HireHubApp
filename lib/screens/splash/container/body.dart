@@ -70,7 +70,7 @@ class _BodyState extends State<Body> {
                     height: getProportionateScreenHeight(56),
                     child: defaultButton(
                       press: () {
-                        Navigator.pushNamed(context, "/auth");
+                        Navigator.pushNamed(context, "/login");
                       },
                       text: "Continue",
                     ),

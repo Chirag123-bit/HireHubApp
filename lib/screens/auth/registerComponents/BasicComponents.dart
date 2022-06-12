@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/screens/auth/TextComponent.dart';
 import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 
+// ignore: must_be_immutable
 class BasicComponents extends StatefulWidget {
   User user;
+  TextEditingController firstnameController;
+  TextEditingController lastnameController;
+  TextEditingController phoneController;
+  List<GlobalKey<FormState>> formKeys;
   @override
   State<BasicComponents> createState() => _BasicComponentsState();
-  BasicComponents({Key? key, required this.user}) : super(key: key);
+  BasicComponents({
+    Key? key,
+    required this.user,
+    required this.firstnameController,
+    required this.lastnameController,
+    required this.phoneController,
+    required this.formKeys,
+  }) : super(key: key);
 }
 
 class _BasicComponentsState extends State<BasicComponents> {
@@ -29,69 +42,55 @@ class _BasicComponentsState extends State<BasicComponents> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 15),
-        TextFormField(
-          initialValue: widget.user.firstName ?? "",
-          onChanged: (value) {
-            setState(() {
-              widget.user.firstName = value;
-            });
-          },
-          decoration: const InputDecoration(
-              labelText: 'First Name',
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
+    return SingleChildScrollView(
+      child: Form(
+        key: widget.formKeys[0],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // const Spacer(),
+            const SizedBox(height: 15),
+            Row(children: [
+              Flexible(
+                child: TextFieldGenerator(
+                  label: "First Name",
+                  controller: widget.firstnameController,
+                  keyboardType: TextInputType.text,
+                  validatorText: "First Name is required",
+                ),
               ),
-              border: OutlineInputBorder()),
-        ),
-        const SizedBox(height: 15),
-        TextFormField(
-          initialValue: widget.user.lastName ?? "",
-          onChanged: (value) {
-            setState(() {
-              widget.user.lastName = value;
-            });
-          },
-          decoration: const InputDecoration(
-              labelText: 'Last Name',
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              border: OutlineInputBorder()),
-        ),
-        const SizedBox(height: 15),
-        DropdownComponent(
-          items: genderOptions,
-          valueHolder: widget.user.gender,
-          onChanged: (value) {
-            setState(
-              () {
-                widget.user.gender = value;
+              Flexible(
+                child: TextFieldGenerator(
+                  label: "Last Name",
+                  controller: widget.lastnameController,
+                  keyboardType: TextInputType.text,
+                  validatorText: "Last Name is required",
+                ),
+              )
+            ]),
+            const SizedBox(height: 15),
+            DropdownComponent(
+              items: genderOptions,
+              valueHolder: widget.user.gender,
+              onChanged: (value) {
+                setState(
+                  () {
+                    widget.user.gender = value;
+                  },
+                );
               },
-            );
-          },
+            ),
+            const SizedBox(height: 15),
+            TextFieldGenerator(
+              label: "Phone Number",
+              controller: widget.phoneController,
+              keyboardType: TextInputType.number,
+              validatorText: "Phone Number is required",
+            ),
+          ],
         ),
-        const SizedBox(height: 15),
-        TextFormField(
-          initialValue: widget.user.phone ?? "",
-          onChanged: (value) {
-            setState(() {
-              widget.user.phone = value;
-            });
-          },
-          decoration: const InputDecoration(
-              labelText: 'Phone',
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              border: OutlineInputBorder()),
-        ),
-      ],
+      ),
     );
   }
 }

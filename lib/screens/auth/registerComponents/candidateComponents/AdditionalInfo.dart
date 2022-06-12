@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/screens/auth/TextComponent.dart';
 import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 
 class AdditionalInfo extends StatefulWidget {
   User user;
-  AdditionalInfo({Key? key, required this.user}) : super(key: key);
+  TextEditingController jobTitleController;
+  List<GlobalKey<FormState>> formKeys;
+
+  AdditionalInfo(
+      {Key? key,
+      required this.user,
+      required this.jobTitleController,
+      required this.formKeys})
+      : super(key: key);
 
   @override
   State<AdditionalInfo> createState() => _AdditionalInfoState();
@@ -45,68 +54,60 @@ class _AdditionalInfoState extends State<AdditionalInfo> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const SizedBox(height: 15),
-        TextFormField(
-          initialValue: widget.user.title ?? "",
-          onChanged: (value) {
-            setState(() {
-              widget.user.title = value;
-            });
-          },
-          decoration: const InputDecoration(
-              labelText: 'Prefered Job Title',
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              border: OutlineInputBorder()),
-        ),
-        const SizedBox(height: 15),
-        DropdownComponent(
-          items: jobOptions,
-          valueHolder: widget.user.sector,
-          onChanged: (value) {
-            setState(
-              () {
-                widget.user.sector = value;
-              },
-            );
-          },
-        ),
-        const SizedBox(height: 15),
-        SizedBox(
-          height: 100,
-          child: TextFormField(
-            initialValue: widget.user.summary ?? "",
-            onChanged: (value) {
-              setState(() {
-                widget.user.summary = value;
-              });
-            },
-            expands: true,
-            maxLines: null,
-            decoration: const InputDecoration(
-                labelText: 'About Yourself',
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: Colors.black, width: 0.5),
-                ),
-                border: OutlineInputBorder()),
+    return Form(
+      key: widget.formKeys[2],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 15),
+          TextFieldGenerator(
+            label: "Preffered Job Title",
+            controller: widget.jobTitleController,
+            keyboardType: TextInputType.text,
+            validatorText: "Preferred Title is required",
           ),
-        ),
-        const SizedBox(height: 15),
-        _skillsContainer(),
-      ],
+          const SizedBox(height: 15),
+          DropdownComponent(
+            items: jobOptions,
+            valueHolder: widget.user.sector,
+            onChanged: (value) {
+              setState(
+                () {
+                  widget.user.sector = value;
+                },
+              );
+            },
+          ),
+          const SizedBox(height: 15),
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: SizedBox(
+              height: 100,
+              child: TextFormField(
+                initialValue: widget.user.summary ?? "",
+                onChanged: (value) {
+                  setState(() {
+                    widget.user.summary = value;
+                  });
+                },
+                expands: true,
+                maxLines: null,
+                decoration: const InputDecoration(
+                    labelText: "About Yourself", border: OutlineInputBorder()),
+              ),
+            ),
+          ),
+          const SizedBox(height: 15),
+          _skillsContainer(),
+        ],
+      ),
     );
   }
 
   Widget skillUi(int index) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(8),
       child: Row(children: [
         Flexible(
           child: TextFormField(
@@ -116,13 +117,14 @@ class _AdditionalInfoState extends State<AdditionalInfo> {
                 widget.user.skills![index] = value;
               });
             },
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Skill $index is required";
+              }
+              return null;
+            },
             decoration: InputDecoration(
-                labelText: 'Skill $index',
-                enabledBorder: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(color: Colors.black, width: 0.5),
-                ),
-                border: const OutlineInputBorder()),
+                labelText: 'Skill $index', border: const OutlineInputBorder()),
           ),
         ),
         Visibility(
@@ -160,26 +162,30 @@ class _AdditionalInfoState extends State<AdditionalInfo> {
   }
 
   Widget _skillsContainer() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        const Text(
-          "Skill(s)",
-          textAlign: TextAlign.left,
-        ),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const ScrollPhysics(),
-          itemCount: widget.user.skills!.length,
-          itemBuilder: (context, index) {
-            return Column(children: [
-              skillUi(index),
-            ]);
-          },
-          separatorBuilder: (context, index) => const Divider(),
-        )
-      ],
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            "Skill(s)",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 16),
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
+            itemCount: widget.user.skills!.length,
+            itemBuilder: (context, index) {
+              return Column(children: [
+                skillUi(index),
+              ]);
+            },
+            separatorBuilder: (context, index) => const Divider(),
+          )
+        ],
+      ),
     );
   }
 

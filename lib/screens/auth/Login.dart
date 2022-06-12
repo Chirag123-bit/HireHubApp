@@ -221,12 +221,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Don\'t have an account?   ',
                         style: TextStyle(color: Colors.grey[400], fontSize: 16),
                       ),
-                      const Text(
-                        'Register',
-                        style: TextStyle(
-                            color: Color.fromRGBO(143, 148, 251, 1),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
+                      GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, '/register'),
+                        child: const Text(
+                          'Register',
+                          style: TextStyle(
+                              color: Color.fromRGBO(143, 148, 251, 1),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
                       )
                     ],
                   )

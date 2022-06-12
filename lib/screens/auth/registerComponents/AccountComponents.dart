@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/screens/auth/TextComponent.dart';
 import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 
 class AccountComponents extends StatefulWidget {
   User user;
-  AccountComponents({Key? key, required this.user}) : super(key: key);
+  TextEditingController usernameController;
+  TextEditingController passwordController;
+  TextEditingController emailController;
+  List<GlobalKey<FormState>> formKeys;
+
+  AccountComponents({
+    Key? key,
+    required this.user,
+    required this.emailController,
+    required this.passwordController,
+    required this.usernameController,
+    required this.formKeys,
+  }) : super(key: key);
 
   @override
   State<AccountComponents> createState() => _AccountComponentsState();
@@ -24,71 +37,52 @@ class _AccountComponentsState extends State<AccountComponents> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 15),
-        DropdownComponent(
-          items: typeOptions,
-          valueHolder: widget.user.type,
-          onChanged: (value) {
-            setState(
-              () {
-                widget.user.type = value;
-              },
-            );
-          },
-        ),
-        const SizedBox(height: 15),
-        TextFormField(
-          initialValue: widget.user.email ?? "",
-          onChanged: (value) {
-            setState(() {
-              widget.user.email = value;
-            });
-          },
-          decoration: const InputDecoration(
-              labelText: 'Email Address',
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
+    return Form(
+      key: widget.formKeys[1],
+      child: Column(
+        children: [
+          const SizedBox(height: 15),
+          DropdownComponent(
+            items: typeOptions,
+            valueHolder: widget.user.type,
+            onChanged: (value) {
+              setState(
+                () {
+                  widget.user.type = value;
+                },
+              );
+            },
+          ),
+          const SizedBox(height: 15),
+          TextFieldGenerator(
+            label: "Email Address",
+            controller: widget.emailController,
+            keyboardType: TextInputType.text,
+            validatorText: "Email is required",
+          ),
+          const SizedBox(height: 15),
+          Row(
+            children: [
+              Flexible(
+                  child: TextFieldGenerator(
+                label: "User Name",
+                controller: widget.usernameController,
+                keyboardType: TextInputType.text,
+                validatorText: "User Name is required",
+              )),
+              Flexible(
+                child: TextFieldGenerator(
+                  label: "Password",
+                  controller: widget.passwordController,
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+                  validatorText: "Password is required",
+                ),
               ),
-              border: OutlineInputBorder()),
-        ),
-        const SizedBox(height: 15),
-        TextFormField(
-          initialValue: widget.user.username ?? "",
-          onChanged: (value) {
-            setState(() {
-              widget.user.username = value;
-            });
-          },
-          decoration: const InputDecoration(
-              labelText: 'Username',
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              border: OutlineInputBorder()),
-        ),
-        const SizedBox(height: 15),
-        TextFormField(
-          initialValue: widget.user.password ?? "",
-          onChanged: (value) {
-            setState(() {
-              widget.user.password = value;
-            });
-          },
-          obscureText: true,
-          obscuringCharacter: "*",
-          decoration: const InputDecoration(
-              labelText: 'Password',
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                borderSide: BorderSide(color: Colors.black, width: 0.5),
-              ),
-              border: OutlineInputBorder()),
-        ),
-      ],
+            ],
+          )
+        ],
+      ),
     );
   }
 }
