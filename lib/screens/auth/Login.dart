@@ -20,9 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   _loginUser(User user) async {
     bool isLogin = await UserRepository().loginUser(user);
     if (isLogin) {
-      MotionToast.success(
-        description: const Text("Login Success"),
-      ).show(context);
+      Navigator.pushNamed(context, "/home");
     } else {
       MotionToast.error(
         description: const Text("Incorrect Username or Password"),
