@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
+import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/auth.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
 
@@ -34,11 +35,12 @@ class MyApp extends StatelessWidget {
             .copyWith(secondary: const Color(0xFFFED408)),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: "/login",
       routes: {
         "/": (context) => const SplashScreen(),
         "/auth": (context) => const AuthScreen(),
         "/home": (context) => const ApplicantMainPage(),
+        "/login": (context) => const LoginScreen(),
       },
     );
   }
