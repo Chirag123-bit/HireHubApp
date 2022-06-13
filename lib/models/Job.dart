@@ -14,82 +14,93 @@ class Job {
   String? time;
   List<String>? req;
   String? desc;
+  String? company_desc;
 
   Job(this.company, this.logoUrl, this.isMark, this.title, this.location,
-      this.time, this.req, this.desc);
+      this.time, this.req, this.desc, this.company_desc);
 
   static List<Job> generatedJobs() {
     return [
       Job(
-          "Google LIC",
-          "assets/images/google_logo.png",
-          false,
-          "Backend Developer",
-          "Kathmandu, Nepal",
-          "Full Time",
-          [
-            "Support, development, and data operation workload.",
-            "Coordinate and communicate effectively with team members and various stakeholders",
-            "Identify and test for bugs and bottlenecks in the ETL solution.",
-            "Ensure the best possible performance and quality in the packages."
-          ],
-          "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns."),
+        "Google LIC",
+        "assets/images/google_logo.png",
+        false,
+        "Backend Developer",
+        "Kathmandu, Nepal",
+        "Full Time",
+        [
+          "Support, development, and data operation workload.",
+          "Coordinate and communicate effectively with team members and various stakeholders",
+          "Identify and test for bugs and bottlenecks in the ETL solution.",
+          "Ensure the best possible performance and quality in the packages."
+        ],
+        "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns.",
+        "At Verisk you can build an exciting career with meaningful work; create positive and lasting impact on business; and find the support, coaching, and training you need to advance your career. We have received the Great Place to Work® Certification for the fifth consecutive year. We’ve been recognized by Forbes as a World’s Best Employer and a Best Employer for Women, testaments to our culture of engagement and the value we place on an inclusive and diverse workforce. Verisk’s Statement on Racial Equity and Diversity supports our commitment to these values and affecting positive and lasting change in the communities where we live and work.",
+      ),
       Job(
-          "Google LIC",
-          "assets/images/google_logo.png",
-          false,
-          "Backend Developer",
-          "Kathmandu, Nepal",
-          "Full Time",
-          [
-            "Support, development, and data operation workload.",
-            "Coordinate and communicate effectively with team members and various stakeholders",
-            "Identify and test for bugs and bottlenecks in the ETL solution.",
-            "Ensure the best possible performance and quality in the packages."
-          ],
-          "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns."),
+        "Google LIC",
+        "assets/images/google_logo.png",
+        false,
+        "Backend Developer",
+        "Kathmandu, Nepal",
+        "Full Time",
+        [
+          "Support, development, and data operation workload.",
+          "Coordinate and communicate effectively with team members and various stakeholders",
+          "Identify and test for bugs and bottlenecks in the ETL solution.",
+          "Ensure the best possible performance and quality in the packages."
+        ],
+        "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns.",
+        "At Verisk you can build an exciting career with meaningful work; create positive and lasting impact on business; and find the support, coaching, and training you need to advance your career. We have received the Great Place to Work® Certification for the fifth consecutive year. We’ve been recognized by Forbes as a World’s Best Employer and a Best Employer for Women, testaments to our culture of engagement and the value we place on an inclusive and diverse workforce. Verisk’s Statement on Racial Equity and Diversity supports our commitment to these values and affecting positive and lasting change in the communities where we live and work.",
+      ),
       Job(
-          "Google LIC",
-          "assets/images/google_logo.png",
-          false,
-          "Backend Developer",
-          "Kathmandu, Nepal",
-          "Full Time",
-          [
-            "Support, development, and data operation workload.",
-            "Coordinate and communicate effectively with team members and various stakeholders",
-            "Identify and test for bugs and bottlenecks in the ETL solution.",
-            "Ensure the best possible performance and quality in the packages."
-          ],
-          "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns."),
+        "Google LIC",
+        "assets/images/google_logo.png",
+        false,
+        "Backend Developer",
+        "Kathmandu, Nepal",
+        "Full Time",
+        [
+          "Support, development, and data operation workload.",
+          "Coordinate and communicate effectively with team members and various stakeholders",
+          "Identify and test for bugs and bottlenecks in the ETL solution.",
+          "Ensure the best possible performance and quality in the packages."
+        ],
+        "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns.",
+        "At Verisk you can build an exciting career with meaningful work; create positive and lasting impact on business; and find the support, coaching, and training you need to advance your career. We have received the Great Place to Work® Certification for the fifth consecutive year. We’ve been recognized by Forbes as a World’s Best Employer and a Best Employer for Women, testaments to our culture of engagement and the value we place on an inclusive and diverse workforce. Verisk’s Statement on Racial Equity and Diversity supports our commitment to these values and affecting positive and lasting change in the communities where we live and work.",
+      ),
       Job(
-          "Google LIC",
-          "assets/images/google_logo.png",
-          false,
-          "Backend Developer",
-          "Kathmandu, Nepal",
-          "Full Time",
-          [
-            "Support, development, and data operation workload.",
-            "Coordinate and communicate effectively with team members and various stakeholders",
-            "Identify and test for bugs and bottlenecks in the ETL solution.",
-            "Ensure the best possible performance and quality in the packages."
-          ],
-          "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns."),
+        "Google LIC",
+        "assets/images/google_logo.png",
+        false,
+        "Backend Developer",
+        "Kathmandu, Nepal",
+        "Full Time",
+        [
+          "Support, development, and data operation workload.",
+          "Coordinate and communicate effectively with team members and various stakeholders",
+          "Identify and test for bugs and bottlenecks in the ETL solution.",
+          "Ensure the best possible performance and quality in the packages."
+        ],
+        "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns.",
+        "At Verisk you can build an exciting career with meaningful work; create positive and lasting impact on business; and find the support, coaching, and training you need to advance your career. We have received the Great Place to Work® Certification for the fifth consecutive year. We’ve been recognized by Forbes as a World’s Best Employer and a Best Employer for Women, testaments to our culture of engagement and the value we place on an inclusive and diverse workforce. Verisk’s Statement on Racial Equity and Diversity supports our commitment to these values and affecting positive and lasting change in the communities where we live and work.",
+      ),
       Job(
-          "Google LIC",
-          "assets/images/google_logo.png",
-          false,
-          "Backend Developer",
-          "Kathmandu, Nepal",
-          "Full Time",
-          [
-            "Support, development, and data operation workload.",
-            "Coordinate and communicate effectively with team members and various stakeholders",
-            "Identify and test for bugs and bottlenecks in the ETL solution.",
-            "Ensure the best possible performance and quality in the packages."
-          ],
-          "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns."),
+        "Google LIC",
+        "assets/images/google_logo.png",
+        false,
+        "Backend Developer",
+        "Kathmandu, Nepal",
+        "Full Time",
+        [
+          "Support, development, and data operation workload.",
+          "Coordinate and communicate effectively with team members and various stakeholders",
+          "Identify and test for bugs and bottlenecks in the ETL solution.",
+          "Ensure the best possible performance and quality in the packages."
+        ],
+        "We are looking for a dynamic, energetic laravel backend developer intern who is eager to learn about our company by assisting software backend. You will be working closely with our team to conduct research on innovation, work, capture data. To be successful as an Intern, you should be willing to help with any tasks assigned by a supervisor. You will be involved in various campaigns as well as assisting with current campaigns.",
+        "At Verisk you can build an exciting career with meaningful work; create positive and lasting impact on business; and find the support, coaching, and training you need to advance your career. We have received the Great Place to Work® Certification for the fifth consecutive year. We’ve been recognized by Forbes as a World’s Best Employer and a Best Employer for Women, testaments to our culture of engagement and the value we place on an inclusive and diverse workforce. Verisk’s Statement on Racial Equity and Diversity supports our commitment to these values and affecting positive and lasting change in the communities where we live and work.",
+      ),
     ];
   }
 }

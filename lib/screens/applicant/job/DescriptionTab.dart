@@ -12,9 +12,9 @@ class DescriptionTab extends StatelessWidget {
         child: ListView(
       children: [
         const SizedBox(height: 20),
-        const Text(
+        Text(
           "About the opportunity",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: kTitleStyle.copyWith(fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 15),
         Text(
@@ -26,9 +26,9 @@ class DescriptionTab extends StatelessWidget {
           textAlign: TextAlign.justify,
         ),
         const SizedBox(height: 20),
-        const Text(
+        Text(
           "Job Responsibilities",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: kTitleStyle.copyWith(fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 15),
         Column(
