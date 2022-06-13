@@ -13,12 +13,12 @@ var kPageTitleStyle = GoogleFonts.roboto(
   color: kBlack,
   wordSpacing: 2.5,
 );
-var kTitleStyle = GoogleFonts.questrial(
-  fontSize: 16,
+var kTitleStyle = GoogleFonts.roboto(
+  fontSize: 18,
   fontWeight: FontWeight.w600,
   color: kBlack,
 );
-var kSubtitleStyle = GoogleFonts.questrial(
+var kSubtitleStyle = GoogleFonts.roboto(
   fontSize: 14,
   color: kBlack,
 );

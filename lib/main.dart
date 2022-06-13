@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
             .copyWith(secondary: const Color(0xFFFED408)),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: "/home",
       routes: {
         "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),

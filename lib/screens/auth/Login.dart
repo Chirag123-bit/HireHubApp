@@ -189,13 +189,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 fontSize: 18),
                           ),
                           onTap: () {
-                            if (_formKey.currentState!.validate()) {
-                              User user = User(
-                                username: _usernameController.text,
-                                password: _passwordController.text,
-                              );
-                              _loginUser(user);
-                            }
+                            Navigator.pushNamed(context, "/home");
+
+                            // if (_formKey.currentState!.validate()) {
+                            //   User user = User(
+                            //     username: _usernameController.text,
+                            //     password: _passwordController.text,
+                            //   );
+                            //   _loginUser(user);
+                            // }
                           }),
                     ),
                   ),

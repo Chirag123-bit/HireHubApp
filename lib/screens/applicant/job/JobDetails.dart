@@ -1,241 +1,120 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Job.dart';
-import 'package:readmore/readmore.dart';
+import 'package:hirehub/screens/applicant/job/CompanyTab.dart';
+import 'package:hirehub/screens/applicant/job/DescriptionTab.dart';
 
-class JobDetails extends StatelessWidget {
+class JobDetail extends StatelessWidget {
   final Job job;
+  const JobDetail({Key? key, required this.job}) : super(key: key);
 
-  const JobDetails({Key? key, required this.job}) : super(key: key);
-
-  static const description =
-      "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of de Finibus Bonorum et Malorum (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, Lorem ipsum dolor sit amet.. comes from a line in section 1.10.32.The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from de Finibus Bonorum et Malorum by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.";
+  static const tags = ["Full Time", "Part Time", "Freelance"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kSilver,
       appBar: AppBar(
-        elevation: 0,
+        title: Text(job.company!, style: kTitleStyle),
         backgroundColor: kSilver,
+        elevation: 0,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: kBlack,
-          ),
-          onPressed: () {},
-        ),
-        title: Text(
-          job.company!,
-          style: kTitleStyle.copyWith(
-              fontFamily: "Poppins", fontWeight: FontWeight.w600, fontSize: 20),
-        ),
+            onPressed: () {},
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: kBlack,
+            )),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    job.logoUrl!,
-                    width: 50,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    job.title!,
-                    style: kTitleStyle.copyWith(
-                        fontFamily: "Poppins", fontSize: 26),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    job.company!,
-                    style: kTitleStyle.copyWith(
-                        fontFamily: "Poppins", fontSize: 14),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  Text(
-                    job.time!,
-                    style: kSubtitleStyle.copyWith(
-                        fontFamily: "Poppins", fontSize: 12, color: kBlack),
-                  )
-                ],
-              ),
+      body: DefaultTabController(
+        length: 2,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40),
+              topRight: Radius.circular(40),
             ),
-            const SizedBox(height: 18),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            "Apply Beofre",
-                            style: kTitleStyle.copyWith(
-                                fontFamily: "Poppins", fontSize: 11.5),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            "30 July, 2022",
-                            style: kSubtitleStyle.copyWith(
-                                fontFamily: "Poppins",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
+          ),
+          child: Column(
+            children: [
+              Container(
+                constraints: const BoxConstraints(maxHeight: 250),
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: const DecorationImage(
+                              image:
+                                  AssetImage("assets/images/google_logo.png"),
+                            )),
                       ),
-                      Column(
-                        children: [
-                          Text(
-                            "Job Nature",
-                            style: kTitleStyle.copyWith(
-                                fontFamily: "Poppins", fontSize: 11.5),
-                          ),
-                          const SizedBox(height: 5),
-                          Container(
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.horizontal(),
-                                color: kSilver),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 2),
-                              child: Text(
-                                "Full TIme",
-                                style: kSubtitleStyle.copyWith(
-                                    fontFamily: "Poppins",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      job.title!,
+                      style: kTitleStyle.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 15),
+                    Text(
+                      "Rs. 50,000 - 100,000",
+                      style: kSubtitleStyle,
+                    ),
+                    const SizedBox(height: 15),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: tags
+                            .map(
+                              (e) => Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: kBlack.withOpacity(0.5)),
+                                ),
+                                child: Text(e, style: kSubtitleStyle),
                               ),
+                            )
+                            .toList()),
+                    const SizedBox(height: 16),
+                    Material(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(
+                            color: kBlack.withOpacity(0.2),
+                          ),
+                        ),
+                        child: TabBar(
+                            unselectedLabelColor: kBlack,
+                            indicator: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: kOrange,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            "Apply Beofre",
-                            style: kTitleStyle.copyWith(
-                                fontFamily: "Poppins", fontSize: 11.5),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            "30 July, 2022",
-                            style: kSubtitleStyle.copyWith(
-                                fontFamily: "Poppins",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "Job Nature",
-                            style: kTitleStyle.copyWith(
-                                fontFamily: "Poppins", fontSize: 11.5),
-                          ),
-                          const SizedBox(height: 5),
-                          Container(
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.horizontal(),
-                                color: kSilver),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 2),
-                              child: Text(
-                                "Full TIme",
-                                style: kSubtitleStyle.copyWith(
-                                    fontFamily: "Poppins",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
-                ],
+                            tabs: const [
+                              Tab(text: "Description"),
+                              Tab(text: "Company"),
+                            ])),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 18),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Job Description",
-                    style: kTitleStyle.copyWith(
-                        fontFamily: "Poppins", fontSize: 11.5),
-                  ),
-                  const SizedBox(height: 10),
-                  ReadMoreText(
-                    description,
-                    trimLines: 10,
-                    textAlign: TextAlign.justify,
-                    trimMode: TrimMode.Line,
-                    trimCollapsedText: "See More ",
-                    trimExpandedText: "See Less ",
-                    style: kSubtitleStyle.copyWith(
-                        fontFamily: "Poppins",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 18),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-              decoration: const BoxDecoration(color: Colors.white),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Job Description",
-                    style: kTitleStyle.copyWith(
-                        fontFamily: "Poppins", fontSize: 11.5),
-                  ),
-                  const SizedBox(height: 10),
-                  ReadMoreText(
-                    description,
-                    trimLines: 10,
-                    textAlign: TextAlign.justify,
-                    trimMode: TrimMode.Line,
-                    trimCollapsedText: "See More ",
-                    trimExpandedText: "See Less ",
-                    style: kSubtitleStyle.copyWith(
-                        fontFamily: "Poppins",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ],
-              ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(children: [
+                  DescriptionTab(job: job),
+                  CompanyTab(job: job),
+                ]),
+              )
+            ],
+          ),
         ),
       ),
     );
