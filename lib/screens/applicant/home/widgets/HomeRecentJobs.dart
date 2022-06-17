@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hirehub/models/Job.dart';
+import 'package:hirehub/screens/applicant/home/widgets/HomePopularJobs.dart';
 
 class HomeRecentJobs extends StatelessWidget {
   const HomeRecentJobs({
@@ -7,6 +9,15 @@ class HomeRecentJobs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Flexible(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: Job.generatedJobs()
+            .asMap()
+            .entries
+            .map((item) => JobCard(data: item.value))
+            .toList(),
+      ),
+    );
   }
 }
