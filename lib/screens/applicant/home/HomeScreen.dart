@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hirehub/config/Constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomeAppBar.dart';
-import 'package:hirehub/screens/applicant/home/widgets/JobList.dart';
-import 'package:hirehub/screens/applicant/home/widgets/LatestJobs.dart';
+import 'package:hirehub/screens/applicant/home/widgets/JobWidget.dart';
 import 'package:hirehub/screens/applicant/home/widgets/SearchCard.dart';
-import 'package:hirehub/screens/applicant/home/widgets/TagList.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Stack(
       children: [
         Column(
@@ -21,27 +20,31 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            TagList(),
-            JobList(),
-            Container(
-              margin: const EdgeInsets.only(
-                  left: 15, right: 15, top: 20, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Latest Jobs",
-                    style: kBoldStyle.copyWith(fontSize: 17),
-                  ),
-                  const Spacer(),
-                  Text(
-                    "See all",
-                    style: kMedStyle.copyWith(fontSize: 15),
-                  ),
-                ],
-              ),
+            // TagList(),
+            // JobList(),
+            // Container(
+            //   margin: const EdgeInsets.only(
+            //       left: 15, right: 15, top: 20, bottom: 10),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: [
+            //       Text(
+            //         "Latest Jobs",
+            //         style: kBoldStyle.copyWith(fontSize: 17),
+            //       ),
+            //       const Spacer(),
+            //       Text(
+            //         "See all",
+            //         style: kMedStyle.copyWith(fontSize: 15),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // LatestJobs()
+            const SizedBox(
+              height: 20,
             ),
-            LatestJobs()
+            const JobWidget(),
           ],
         )
       ],

@@ -19,7 +19,7 @@ class SearchCard extends StatelessWidget {
             Icons.search,
             color: Theme.of(context).primaryColor,
           ),
-          hintText: 'Search for jobs',
+          hintText: 'Search for jobs, companies...',
           hintStyle: kMedStyle.copyWith(
             color: Colors.grey,
             fontSize: 16,
