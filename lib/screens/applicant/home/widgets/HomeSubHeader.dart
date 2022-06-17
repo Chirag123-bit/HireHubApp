@@ -16,14 +16,9 @@ class HomeSubHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: [
-              const Expanded(
+            children: const [
+              Expanded(
                 child: SearchControl(),
-              ),
-              SizedBox(width: kSpacingUnit * 2),
-              CircleAvatar(
-                radius: kSpacingUnit * 2,
-                backgroundImage: const AssetImage('assets/images/avatar.png'),
               ),
             ],
           ),

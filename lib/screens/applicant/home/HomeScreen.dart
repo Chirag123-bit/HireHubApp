@@ -16,7 +16,6 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: kSpacingUnit * 6),
             const HomeHeader(),
             SizedBox(height: kSpacingUnit * 3),
             const HomeSubHeader(),

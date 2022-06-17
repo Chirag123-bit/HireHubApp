@@ -12,19 +12,32 @@ class HomeHeader extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: kSpacingUnit * 3,
       ),
-      child: RichText(
-        text: TextSpan(
-          style: kHeadingTextStyle,
-          children: const [
-            TextSpan(text: 'Hey Adam, \n'),
-            TextSpan(
-              text: 'Looking for a Job?',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CircleAvatar(
+                radius: kSpacingUnit * 2,
+                backgroundImage: const AssetImage('assets/images/avatar.png'),
               ),
+            ],
+          ),
+          RichText(
+            text: TextSpan(
+              style: kHeadingTextStyle,
+              children: const [
+                TextSpan(text: 'Hey Chirag, \n'),
+                TextSpan(
+                  text: 'Looking for a Job?',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

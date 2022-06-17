@@ -52,7 +52,7 @@ class JobWidget extends StatelessWidget {
                       )
                     ]),
               ),
-              const HomePopularJobs(),
+              HomePopularJobs(),
               SizedBox(
                 height: getProportionateScreenHeight(5),
               ),

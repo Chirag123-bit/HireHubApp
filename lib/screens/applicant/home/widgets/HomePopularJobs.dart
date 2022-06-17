@@ -19,6 +19,7 @@ class _HomePopularJobsState extends State<HomePopularJobs> {
       height: 175.w,
       child: CarouselSlider.builder(
         options: CarouselOptions(
+          autoPlay: true,
           height: 130.w,
           aspectRatio: 16 / 9,
           viewportFraction: 0.8,
