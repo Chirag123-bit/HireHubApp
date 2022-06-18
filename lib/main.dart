@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
+import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
@@ -10,6 +11,8 @@ import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'config/Palette.dart';
 
 void main() {
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+  //     overlays: [SystemUiOverlay.bottom]);
   runApp(const MyApp());
 }
 
@@ -35,12 +38,13 @@ class MyApp extends StatelessWidget {
             .copyWith(secondary: const Color(0xFFFED408)),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/home",
+      initialRoute: "/category",
       routes: {
         "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const Register(),
+        "/category": (context) => const CategoryScreen(),
       },
     );
   }
