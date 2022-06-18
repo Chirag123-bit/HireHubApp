@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hirehub/config/Constants.dart';
 
 class SearchControl extends StatelessWidget {
@@ -20,11 +18,7 @@ class SearchControl extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(width: kSpacingUnit * 2),
-            SvgPicture.asset(
-              'assets/icons/search.svg',
-              height: 15.sp,
-              width: 15.sp,
-            ),
+            const Icon(Icons.search, color: Colors.orange),
             SizedBox(width: kSpacingUnit),
             Text(
               'Search job titles, companies',
@@ -33,11 +27,7 @@ class SearchControl extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            SvgPicture.asset(
-              'assets/icons/slider_icon.svg',
-              height: 15.sp,
-              width: 15.sp,
-            ),
+            const Icon(Icons.manage_search, color: Colors.orange),
             SizedBox(width: kSpacingUnit * 2),
           ],
         ),

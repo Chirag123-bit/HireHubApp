@@ -23,7 +23,14 @@ class HomeSubHeader extends StatelessWidget {
             ],
           ),
           SizedBox(height: kSpacingUnit * 2),
-          const SearchTag(tag: 'Singapore'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: const [
+              SearchTag(tag: 'Categories'),
+              SearchTag(tag: 'All Jobs'),
+              SearchTag(tag: 'Companies'),
+            ],
+          )
         ],
       ),
     );

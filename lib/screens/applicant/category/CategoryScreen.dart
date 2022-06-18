@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/config/Palette.dart';
 import 'package:hirehub/models/Category.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -19,7 +18,7 @@ class CategoryScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 24),
             height: size.height / 4,
             width: size.width,
-            decoration: const BoxDecoration(color: Palette.purpleCard),
+            decoration: const BoxDecoration(color: Colors.white),
             child: SafeArea(
               child: Align(
                 alignment: Alignment.topCenter,
@@ -30,7 +29,7 @@ class CategoryScreen extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.arrow_back_ios,
-                          color: Colors.white,
+                          color: Colors.blue,
                         ),
                         const SizedBox(
                           width: 12,
@@ -38,7 +37,7 @@ class CategoryScreen extends StatelessWidget {
                         Text(
                           "Category",
                           style: kSubtitleStyle.copyWith(
-                              color: Colors.white, fontSize: 20),
+                              color: Colors.black, fontSize: 20),
                         )
                       ],
                     ),
@@ -48,7 +47,7 @@ class CategoryScreen extends StatelessWidget {
                     Text(
                       "Ready for the next step?",
                       style: kTitleStyle.copyWith(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 28,
                           fontWeight: FontWeight.w600),
                     ),
@@ -58,7 +57,7 @@ class CategoryScreen extends StatelessWidget {
                     Text(
                       "Choose your prefered category",
                       style: kSubtitleStyle.copyWith(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
                       ),
                     ),
@@ -76,7 +75,7 @@ class CategoryScreen extends StatelessWidget {
             width: size.width,
             // margin: const EdgeInsets.only(top: 0),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: kSilverColor,
               borderRadius: BorderRadius.circular(34),
             ),
             child: GridView.builder(
