@@ -31,7 +31,7 @@ class HomeContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Popular Jobs',
+                      'Recommended Jobs',
                       style: kSubTitleTextStyle.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

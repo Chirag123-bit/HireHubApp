@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
 import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
+import 'package:hirehub/screens/applicant/filter/FilterScreen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
@@ -38,13 +39,14 @@ class MyApp extends StatelessWidget {
             .copyWith(secondary: const Color(0xFFFED408)),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/home",
+      initialRoute: "/filter",
       routes: {
         "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const Register(),
         "/category": (context) => const CategoryScreen(),
+        "/filter": (context) => const FilterScreen(),
       },
     );
   }
