@@ -22,7 +22,7 @@ class LatestJobs extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => JobDetails(job: jobList[index]),
+                    builder: (context) => JobDetail(job: jobList[index]),
                   ),
                 );
               },
