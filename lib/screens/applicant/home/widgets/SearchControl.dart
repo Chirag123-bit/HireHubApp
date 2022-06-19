@@ -27,7 +27,16 @@ class SearchControl extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            const Icon(Icons.manage_search, color: Colors.orange),
+            IconButton(
+              icon: const Icon(
+                Icons.tune,
+                color: Colors.orange,
+              ),
+              onPressed: () {
+                // Provider.of<MyBottomSheetModel>(context, listen: false)
+                //     .changeState();
+              },
+            ),
             SizedBox(width: kSpacingUnit * 2),
           ],
         ),
