@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
 
 class TodoScreen extends StatefulWidget {
@@ -9,6 +11,16 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
+  var notifyHelper;
+
+  @override
+  void initState() {
+    super.initState();
+    notifyHelper = NotifyHelper();
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +34,12 @@ class _TodoScreenState extends State<TodoScreen> {
       leading: GestureDetector(
         onTap: () {
           ThemeServices().switchTheme();
+          notifyHelper.displayNotification(
+            title: "Theme Changed",
+            body:
+                Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
+          );
+          notifyHelper.scheduledNotification();
         },
         child: const Icon(
           Icons.nightlight_round,
