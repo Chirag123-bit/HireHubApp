@@ -1,5 +1,6 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const Color bluishClr = Color(0xff4e5ae8);
@@ -14,13 +15,29 @@ class Themes {
   static final light = ThemeData(
     brightness: Brightness.light,
     primaryColor: primaryClr,
-    textTheme: GoogleFonts.muliTextTheme(),
-    visualDensity: VisualDensity.adaptivePlatformDensity,
+    // textTheme: GoogleFonts.muliTextTheme(),
+    // visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 
   static final dark = ThemeData(
     brightness: Brightness.dark,
     primaryColor: darkGreyClr,
-    textTheme: GoogleFonts.muliTextTheme(),
+    // textTheme: GoogleFonts.muliTextTheme(),
   );
+}
+
+TextStyle get subHeadingStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Get.isDarkMode ? Colors.grey[400] : Colors.grey));
+}
+
+TextStyle get headingStyle {
+  return GoogleFonts.lato(
+      textStyle: const TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  ));
 }
