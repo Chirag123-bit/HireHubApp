@@ -108,12 +108,12 @@ class _TodoScreenState extends State<TodoScreen> {
       leading: GestureDetector(
         onTap: () {
           ThemeServices().switchTheme();
-          notifyHelper.displayNotification(
-            title: "Theme Changed",
-            body:
-                Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
-          );
-          notifyHelper.scheduledNotification();
+          // notifyHelper.displayNotification(
+          //   title: "Theme Changed",
+          //   body:
+          //       Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
+          // );
+          // notifyHelper.scheduledNotification();
         },
         child: const Icon(
           Icons.nightlight_round,
