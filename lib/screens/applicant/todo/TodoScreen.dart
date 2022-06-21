@@ -1,9 +1,13 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hirehub/controller/EventController.dart';
+import 'package:hirehub/models/Events.dart';
 import 'package:hirehub/screens/applicant/todo/AddTask.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
+import 'package:hirehub/screens/widgets/TaskTile.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
@@ -19,6 +23,7 @@ class TodoScreen extends StatefulWidget {
 class _TodoScreenState extends State<TodoScreen> {
   var notifyHelper;
   DateTime _selectedDate = DateTime.now();
+  final _eventController = Get.put(EventController());
 
   @override
   void initState() {
@@ -36,7 +41,132 @@ class _TodoScreenState extends State<TodoScreen> {
         children: [
           _addTaskBar(),
           _addDateBar(),
+          const SizedBox(
+            height: 10,
+          ),
+          _showEvents(),
         ],
+      ),
+    );
+  }
+
+  _showEvents() {
+    return Expanded(child: Obx(() {
+      return ListView.builder(
+          itemCount: _eventController.eventList.length,
+          itemBuilder: (_, index) {
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              child: SlideAnimation(
+                child: FadeInAnimation(
+                  child: Row(children: [
+                    GestureDetector(
+                      onTap: () {
+                        _showBottomSheet(
+                            context, _eventController.eventList[index]);
+                      },
+                      child: TaskTile(_eventController.eventList[index]),
+                    )
+                  ]),
+                ),
+              ),
+            );
+          });
+    }));
+  }
+
+  _showBottomSheet(BuildContext context, Event event) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top: 4),
+        height: event.isCompleted == 1
+            ? MediaQuery.of(context).size.height * 0.24
+            : MediaQuery.of(context).size.height * 0.32,
+        color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 6,
+              width: 120,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
+            ),
+            const Spacer(),
+            event.isCompleted == 1
+                ? Container()
+                : _bottomSheetButton(
+                    label: "Task Completed",
+                    context: context,
+                    onTap: () {
+                      // _eventController.updateEvent(
+                      //     event.id, event.isCompleted = 1);
+                      Get.back();
+                    },
+                    clr: primaryClr),
+            _bottomSheetButton(
+                label: "Delete Task",
+                context: context,
+                onTap: () {
+                  _eventController.delete(event);
+                  Get.back();
+                },
+                clr: Colors.red[300]!),
+            const SizedBox(
+              height: 20,
+            ),
+            _bottomSheetButton(
+                label: "Close",
+                context: context,
+                isClose: true,
+                onTap: () {
+                  // _eventController.updateEvent(
+                  //     event.id, event.isCompleted = 1);
+                  Get.back();
+                },
+                clr: Colors.transparent),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _bottomSheetButton(
+      {required String label,
+      required Function()? onTap,
+      required Color clr,
+      required BuildContext context,
+      bool isClose = false}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        height: 55,
+        width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+          color: isClose == true ? Colors.transparent : clr,
+          border: Border.all(
+            width: 2,
+            color: isClose == true
+                ? Get.isDarkMode
+                    ? Colors.grey[600]!
+                    : Colors.grey[200]!
+                : clr,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -64,7 +194,10 @@ class _TodoScreenState extends State<TodoScreen> {
           ),
           MyButton(
               label: "+ Add Task",
-              onTap: () => Get.to(() => const AddTaskPage()))
+              onTap: () async {
+                await Get.to(() => const AddTaskPage());
+                _eventController.getEvents();
+              })
         ],
       ),
     );

@@ -167,6 +167,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       onTap: () {
                         if (_validateData()) {
                           _addEvent();
+                          Get.back();
                         }
                       })
                 ],
@@ -181,8 +182,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
-  _addEvent() {
-    _eventController.addEvent(
+  _addEvent() async {
+    int value = await _eventController.addEvent(
       event: Event(
         title: _titleController.text,
         note: _noteController.text,
@@ -195,6 +196,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         isCompleted: 0,
       ),
     );
+    print("The id is $value");
   }
 
   _validateData() {

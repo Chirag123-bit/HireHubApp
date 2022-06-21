@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hirehub/database/DbHelper.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
 import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
 import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
@@ -14,6 +15,7 @@ import 'package:hirehub/theme/Theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DbHelper.initDb();
   await GetStorage.init();
   runApp(const MyApp());
 }
