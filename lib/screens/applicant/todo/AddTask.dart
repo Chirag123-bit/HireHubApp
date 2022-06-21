@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hirehub/controller/EventController.dart';
+import 'package:hirehub/models/Events.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/screens/widgets/InputField.dart';
 import 'package:hirehub/theme/Theme.dart';
@@ -13,6 +15,7 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  final EventController _eventController = Get.put(EventController());
   DateTime selectedDate = DateTime.now();
   String startTime = DateFormat('HH:mm a').format(DateTime.now());
   String endTime = "9:30 PM";
@@ -162,7 +165,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   MyButton(
                       label: "Create Task",
                       onTap: () {
-                        print(_validateData());
+                        if (_validateData()) {
+                          _addEvent();
+                        }
                       })
                 ],
               ),
@@ -172,6 +177,22 @@ class _AddTaskPageState extends State<AddTaskPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _addEvent() {
+    _eventController.addEvent(
+      event: Event(
+        title: _titleController.text,
+        note: _noteController.text,
+        date: DateFormat.yMd().format(selectedDate),
+        startTime: startTime,
+        endTime: endTime,
+        remind: selectedRemind,
+        repeat: selectedRepeat,
+        color: selectedColor,
+        isCompleted: 0,
       ),
     );
   }
