@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomeCategoryCard.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomePopularJobs.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomeRecentJobs.dart';
@@ -45,17 +47,6 @@ class HomeContent extends StatelessWidget {
               SizedBox(height: kSpacingUnit * 2),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: kSpacingUnit * 4),
-                child: Text(
-                  'Recently Added',
-                  style: kSubTitleTextStyle.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const HomeRecentJobs(),
-              SizedBox(height: kSpacingUnit * 2),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: kSpacingUnit * 4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -65,11 +56,28 @@ class HomeContent extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Text('View All', style: kCardTitleTextStyle),
+                    GestureDetector(
+                      onTap: () => Get.to(() => const CategoryScreen()),
+                      child: Text(
+                        'View All',
+                        style: kCardTitleTextStyle,
+                      ),
+                    ),
                   ],
                 ),
               ),
               const HomePopularCategories(),
+              SizedBox(height: kSpacingUnit * 2),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: kSpacingUnit * 4),
+                child: Text(
+                  'Recently Added',
+                  style: kSubTitleTextStyle.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const HomeRecentJobs(),
             ],
           ),
         ),

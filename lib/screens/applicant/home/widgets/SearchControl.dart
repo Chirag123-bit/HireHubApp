@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/theme/Theme.dart';
 
 class SearchControl extends StatelessWidget {
   const SearchControl({
@@ -18,7 +19,7 @@ class SearchControl extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(width: kSpacingUnit * 2),
-            const Icon(Icons.search, color: Colors.orange),
+            const Icon(Icons.search, color: primaryClr),
             SizedBox(width: kSpacingUnit),
             Text(
               'Search job titles, companies',
@@ -30,7 +31,7 @@ class SearchControl extends StatelessWidget {
             IconButton(
               icon: const Icon(
                 Icons.tune,
-                color: Colors.orange,
+                color: primaryClr,
               ),
               onPressed: () {
                 // Provider.of<MyBottomSheetModel>(context, listen: false)

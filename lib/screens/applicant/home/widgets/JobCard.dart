@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +11,35 @@ import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailScreen.
 class JobCard extends StatelessWidget {
   final Job data;
 
-  const JobCard({Key? key, required this.data}) : super(key: key);
+  JobCard({Key? key, required this.data}) : super(key: key);
+  List<LinearGradient> gradients = [
+    const LinearGradient(
+      colors: [Color(0xffaddbaf), Color(0xff2095f3)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ),
+    const LinearGradient(
+      colors: [Color(0xffb1fff8), Color(0xff2095f3)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ),
+    const LinearGradient(
+      colors: [Color(0xffa8b0e1), Color(0xff2095f3)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ),
+    const LinearGradient(
+      colors: [Color(0xffdf9fea), Color(0xff2095f3)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ),
+    const LinearGradient(
+      colors: [Color(0xfff9978f), Color(0xff2095f3)],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    )
+  ];
+  final _random = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +62,13 @@ class JobCard extends StatelessWidget {
             height: 125.w,
             padding: EdgeInsets.all(kSpacingUnit * 2),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadiusDirectional.circular(kSpacingUnit * 3),
-            ),
+                borderRadius:
+                    BorderRadiusDirectional.circular(kSpacingUnit * 3),
+                gradient: gradients[_random.nextInt(gradients.length)]),
+            // decoration: BoxDecoration(
+            //   color: Colors.white,
+            //   borderRadius: BorderRadiusDirectional.circular(kSpacingUnit * 3),
+            // ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -48,13 +82,15 @@ class JobCard extends StatelessWidget {
                     SizedBox(width: kSpacingUnit),
                     Text(
                       data.companyName,
-                      style: kCardTitleTextStyle,
+                      style:
+                          kCardTitleTextStyle.copyWith(color: Colors.grey[800]),
                     ),
                     const Spacer(),
                     SvgPicture.asset(
                       'assets/icons/heart_icon.svg',
                       height: 20.sp,
                       width: 20.sp,
+                      color: Colors.grey[800],
                     ),
                   ],
                 ),
@@ -66,7 +102,7 @@ class JobCard extends StatelessWidget {
                 SizedBox(height: kSpacingUnit * 0.5),
                 Text(
                   data.location,
-                  style: kCaptionTextStyle,
+                  style: kCaptionTextStyle.copyWith(color: Colors.grey[800]),
                 ),
               ],
             ),
