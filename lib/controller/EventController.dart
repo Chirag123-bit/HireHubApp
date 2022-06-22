@@ -26,4 +26,9 @@ class EventController extends GetxController {
     eventList.remove(event);
     var val = DbHelper.delete(event);
   }
+
+  void markTaskCompleted(int id) async {
+    var val = await DbHelper.update(id);
+    getEvents();
+  }
 }

@@ -55,22 +55,49 @@ class _TodoScreenState extends State<TodoScreen> {
       return ListView.builder(
           itemCount: _eventController.eventList.length,
           itemBuilder: (_, index) {
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              child: SlideAnimation(
-                child: FadeInAnimation(
-                  child: Row(children: [
-                    GestureDetector(
-                      onTap: () {
-                        _showBottomSheet(
-                            context, _eventController.eventList[index]);
-                      },
-                      child: TaskTile(_eventController.eventList[index]),
-                    )
-                  ]),
+            Event event = _eventController.eventList[index];
+            if (event.repeat == "Daily") {
+              DateTime date = DateFormat.jm().parse(event.startTime!);
+              var myTime = DateFormat("HH:mm").format(date);
+              notifyHelper.scheduledNotification(
+                  int.parse(myTime.toString().split(":")[0]),
+                  int.parse(myTime.toString().split(":")[1]),
+                  event);
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                child: SlideAnimation(
+                  child: FadeInAnimation(
+                    child: Row(children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showBottomSheet(context, event);
+                        },
+                        child: TaskTile(event),
+                      )
+                    ]),
+                  ),
                 ),
-              ),
-            );
+              );
+            }
+            if (event.date == DateFormat.yMd().format(_selectedDate)) {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                child: SlideAnimation(
+                  child: FadeInAnimation(
+                    child: Row(children: [
+                      GestureDetector(
+                        onTap: () {
+                          _showBottomSheet(context, event);
+                        },
+                        child: TaskTile(event),
+                      )
+                    ]),
+                  ),
+                ),
+              );
+            } else {
+              return Container();
+            }
           });
     }));
   }
@@ -99,8 +126,7 @@ class _TodoScreenState extends State<TodoScreen> {
                     label: "Task Completed",
                     context: context,
                     onTap: () {
-                      // _eventController.updateEvent(
-                      //     event.id, event.isCompleted = 1);
+                      _eventController.markTaskCompleted(event.id!);
                       Get.back();
                     },
                     clr: primaryClr),
@@ -120,8 +146,6 @@ class _TodoScreenState extends State<TodoScreen> {
                 context: context,
                 isClose: true,
                 onTap: () {
-                  // _eventController.updateEvent(
-                  //     event.id, event.isCompleted = 1);
                   Get.back();
                 },
                 clr: Colors.transparent),
@@ -241,11 +265,11 @@ class _TodoScreenState extends State<TodoScreen> {
       leading: GestureDetector(
         onTap: () {
           ThemeServices().switchTheme();
-          // notifyHelper.displayNotification(
-          //   title: "Theme Changed",
-          //   body:
-          //       Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
-          // );
+          notifyHelper.displayNotification(
+            title: "Theme Changed",
+            body:
+                Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
+          );
           // notifyHelper.scheduledNotification();
         },
         child: const Icon(

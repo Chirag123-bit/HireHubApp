@@ -44,4 +44,13 @@ class DbHelper {
     return await _db
         ?.delete(_tableName, where: "id = ?", whereArgs: [event.id]);
   }
+
+  static update(int id) async {
+    print("Update Function called");
+    return await _db!.rawUpdate('''
+    UPDATE events
+    SET isCompleted = ?
+    WHERE id = ?
+''', [1, id]);
+  }
 }
