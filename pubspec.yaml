@@ -55,6 +55,14 @@ dependencies:
   equatable: ^2.0.3
   provider: ^6.0.3
   bloc: ^8.0.3
+  get_storage: ^2.0.3
+  flutter_local_notifications: ^9.6.1
+  flutter_native_timezone: ^2.0.0
+  intl: ^0.17.0
+  date_picker_timeline: ^1.2.3
+  sqflite: ^2.0.2+1
+  flutter_staggered_animations: ^1.0.0
+  google_nav_bar: ^5.0.6
 
 dev_dependencies:
   flutter_test:

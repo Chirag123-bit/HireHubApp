@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Category.dart';
 
@@ -27,9 +28,12 @@ class CategoryScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.blue,
+                        GestureDetector(
+                          onTap: () => Get.back(),
+                          child: const Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.blue,
+                          ),
                         ),
                         const SizedBox(
                           width: 12,

@@ -1,66 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:hirehub/config/constants.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
 import 'package:hirehub/screens/applicant/home/HomeScreen.dart';
+import 'package:hirehub/screens/applicant/message/MessageScreen.dart';
+import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
+import 'package:hirehub/theme/Theme.dart';
 
-class ApplicantMainPage extends StatelessWidget {
+class ApplicantMainPage extends StatefulWidget {
   const ApplicantMainPage({Key? key}) : super(key: key);
+
+  @override
+  State<ApplicantMainPage> createState() => _ApplicantMainPageState();
+}
+
+class _ApplicantMainPageState extends State<ApplicantMainPage> {
+  int _selectedIndex = 0;
+
+  List<Widget> applicantScreens = [
+    HomeScreen(),
+    const FilterPage(),
+    const MessageScreen(),
+    const SettingScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: HomeScreen(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 8,
-        onPressed: (() {}),
-        child: const Icon(
-          Icons.add,
-          color: kBackgroundColor,
-        ),
-      ),
-      bottomNavigationBar: Theme(
-        data: ThemeData(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent),
-        child: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          selectedItemColor: Theme.of(context).primaryColor,
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                size: 20,
-              ),
-              label: "Home",
+      body: applicantScreens[_selectedIndex],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: GNav(
+          tabBackgroundColor: Colors.grey.shade500,
+          gap: 8,
+          padding: const EdgeInsets.all(16),
+          onTabChange: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          tabs: [
+            GButton(
+              icon: Icons.home,
+              text: "Home",
+              backgroundColor: primaryClr.withOpacity(0.7),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.cases_outlined,
-                size: 20,
-              ),
-              label: "Case",
+            GButton(
+              icon: Icons.search,
+              text: "Explore",
+              backgroundColor: yellowClr.withOpacity(0.7),
             ),
-            BottomNavigationBarItem(
-              icon: Text(""),
-              label: "",
+            GButton(
+              icon: Icons.message,
+              text: "Messages",
+              backgroundColor: pinkClr.withOpacity(0.7),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.chat_outlined,
-                size: 20,
-              ),
-              label: "Chat",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person_outlined,
-                size: 20,
-              ),
-              label: "Profile",
+            GButton(
+              icon: Icons.settings,
+              text: "Settings",
+              backgroundColor: Colors.green.withOpacity(0.7),
             ),
           ],
         ),
