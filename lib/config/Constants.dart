@@ -11,13 +11,11 @@ const kOrange = Color(0xFFFA5805);
 var kPageTitleStyle = GoogleFonts.roboto(
   fontSize: 23,
   fontWeight: FontWeight.w800,
-  color: kBlack,
   wordSpacing: 2.5,
 );
 var kTitleStyle = GoogleFonts.roboto(
   fontSize: 18,
   fontWeight: FontWeight.w600,
-  color: kBlack,
 );
 var kSubtitleStyle = GoogleFonts.roboto(
   fontSize: 14,
