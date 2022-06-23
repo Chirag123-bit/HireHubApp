@@ -63,6 +63,8 @@ dependencies:
   sqflite: ^2.0.2+1
   flutter_staggered_animations: ^1.0.0
   google_nav_bar: ^5.0.6
+  wear: ^1.1.0
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,6 @@ import 'package:hirehub/screens/applicant/todo/AddTask.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/screens/widgets/TaskTile.dart';
 import 'package:hirehub/services/notification_services.dart';
-import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:intl/intl.dart';
 
@@ -264,24 +263,21 @@ class _TodoScreenState extends State<TodoScreen> {
       backgroundColor: context.theme.backgroundColor,
       leading: GestureDetector(
         onTap: () {
-          ThemeServices().switchTheme();
-          notifyHelper.displayNotification(
-            title: "Theme Changed",
-            body:
-                Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
-          );
-          // notifyHelper.scheduledNotification();
+          Get.back();
         },
         child: const Icon(
-          Icons.nightlight_round,
+          Icons.arrow_back_ios,
           size: 20,
         ),
       ),
-      actions: const [
-        CircleAvatar(
-          backgroundImage: AssetImage("assets/images/profile.jpg"),
-        )
-      ],
+      title: Text(
+        "My Events",
+        style: GoogleFonts.lato(
+          fontSize: 24,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      centerTitle: true,
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:hirehub/database/DbHelper.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
 import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
 import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
+import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/applicant/todo/TodoScreen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
@@ -13,12 +14,14 @@ import 'package:hirehub/screens/auth/Register.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
+// import 'package:hirehub/wearOs/main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.initDb();
   await GetStorage.init();
   runApp(const MyApp());
+  // runApp(const WearOsApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -53,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       theme: Themes.light,
       themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/edit_basic",
+      initialRoute: "/home",
       routes: {
         "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
@@ -63,6 +66,7 @@ class _MyAppState extends State<MyApp> {
         "/filter": (context) => const FilterPage(),
         "/todo": (context) => const TodoScreen(),
         "/edit_basic": (context) => const EditBasicInfoScreen(),
+        "/settings": (context) => const SettingScreen(),
       },
     );
   }
