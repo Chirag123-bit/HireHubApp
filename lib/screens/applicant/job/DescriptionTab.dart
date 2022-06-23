@@ -18,7 +18,7 @@ class DescriptionTab extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Text(
-          job.desc!,
+          job.description!,
           style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,
@@ -32,7 +32,7 @@ class DescriptionTab extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Column(
-          children: job.req!
+          children: job.requirements!
               .map(
                 (e) => Row(
                   crossAxisAlignment: CrossAxisAlignment.start,

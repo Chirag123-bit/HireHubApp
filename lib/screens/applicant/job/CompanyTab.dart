@@ -16,7 +16,7 @@ class CompanyTab extends StatelessWidget {
               style: kTitleStyle.copyWith(fontWeight: FontWeight.w600)),
           const SizedBox(height: 15),
           Text(
-            job.company_desc!,
+            job.company!.about!,
             style: kSubtitleStyle.copyWith(
               fontWeight: FontWeight.w300,
               height: 1.5,

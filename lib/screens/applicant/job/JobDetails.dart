@@ -17,7 +17,7 @@ class JobDetail extends StatelessWidget {
     return Scaffold(
         backgroundColor: kSilver,
         appBar: AppBar(
-          title: Text(job.company!, style: kTitleStyle),
+          title: Text(job.company!.name!, style: kTitleStyle),
           backgroundColor: kSilver,
           elevation: 0,
           leading: IconButton(

@@ -20,7 +20,7 @@ class CompanyCard extends StatelessWidget {
         children: [
           const Spacer(),
           SvgPicture.asset(
-            company.logo!,
+            company.avatarImage!,
             height: 50,
             width: 50,
           ),
