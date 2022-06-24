@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/models/TestJob.dart';
+import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/screens/applicant/home/widgets/DetailItem.dart';
 
 class DetailContent extends StatelessWidget {
@@ -38,18 +38,18 @@ class DetailContent extends StatelessWidget {
                 child: Column(
                   children: [
                     SvgPicture.asset(
-                      data.imgUrl,
+                      data.company!.avatarImage!,
                       height: 50.sp,
                       width: 50.sp,
                     ),
                     SizedBox(height: kSpacingUnit * 2),
                     Text(
-                      data.companyName,
+                      data.company!.name!,
                       style: kTitleTextStyle,
                     ),
                     SizedBox(height: kSpacingUnit),
                     Text(
-                      data.location,
+                      data.company!.country! + ", " + data.company!.region!,
                       style: kCaptionTextStyle,
                     ),
                   ],
@@ -61,20 +61,18 @@ class DetailContent extends StatelessWidget {
                 style: kSubTitleTextStyle,
               ),
               SizedBox(height: kSpacingUnit * 2),
-              if (data.responsibilities.isNotEmpty)
-                ...data.responsibilities
-                    .map((responsibility) => DetailItem(data: responsibility))
-                    .toList(),
+              ...data.responsibilities!
+                  .map((responsibility) => DetailItem(data: responsibility))
+                  .toList(),
               SizedBox(height: kSpacingUnit),
               Text(
                 'Qualifications',
                 style: kSubTitleTextStyle,
               ),
               SizedBox(height: kSpacingUnit * 2),
-              if (data.qualifications.isNotEmpty)
-                ...data.qualifications
-                    .map((qualification) => DetailItem(data: qualification))
-                    .toList(),
+              ...data.requirements!
+                  .map((qualification) => DetailItem(data: qualification))
+                  .toList(),
               SizedBox(height: kSpacingUnit * 15),
             ],
           ),

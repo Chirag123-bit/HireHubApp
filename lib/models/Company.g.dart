@@ -16,9 +16,6 @@ Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
       country: json['country'] as String?,
       region: json['region'] as String?,
       avatarImage: json['avatarImage'] as String?,
-      jobs: (json['jobs'] as List<dynamic>?)
-          ?.map((e) => Job.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
 Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
@@ -31,5 +28,4 @@ Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
       'country': instance.country,
       'region': instance.region,
       'avatarImage': instance.avatarImage,
-      'jobs': instance.jobs,
     };

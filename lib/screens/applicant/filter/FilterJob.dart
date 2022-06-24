@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/config/test_data.dart';
+import 'package:hirehub/models/Job.dart';
+import 'package:hirehub/repository/job_repository.dart';
+import 'package:hirehub/response/get_jobs_response.dart';
 import 'package:hirehub/screens/applicant/home/widgets/JobCard.dart';
 
 class FilterJob extends StatelessWidget {
@@ -8,18 +11,34 @@ class FilterJob extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: recentJobs.length,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            JobCard(data: recentJobs[index]),
-            SizedBox(height: kSpacingUnit * 2),
-          ],
-        );
-      },
-    );
+    return FutureBuilder<JobsResponse?>(
+        future: JobsRepository().getAllJobs(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              List<Job> lstJobs = snapshot.data!.data!;
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: recentJobs.length,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      JobCard(data: lstJobs[index]),
+                      SizedBox(height: kSpacingUnit * 2),
+                    ],
+                  );
+                },
+              );
+            }
+            return const Text("No Jobs Found");
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return const Text("Error retriving data");
+          }
+        });
   }
 }

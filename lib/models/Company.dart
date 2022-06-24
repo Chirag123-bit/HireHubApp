@@ -17,17 +17,18 @@ class Company {
   String? avatarImage;
   List<Job>? jobs;
 
-  Company(
-      {this.id,
-      this.name,
-      this.sector,
-      this.phone,
-      this.about,
-      this.desc,
-      this.country,
-      this.region,
-      this.avatarImage,
-      this.jobs});
+  Company({
+    this.id,
+    this.name,
+    this.sector,
+    this.phone,
+    this.about,
+    this.desc,
+    this.country,
+    this.region,
+    this.avatarImage,
+    // this.jobs
+  });
 
   factory Company.fromJson(Map<String, dynamic> json) =>
       _$CompanyFromJson(json);
