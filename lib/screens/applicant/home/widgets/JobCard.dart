@@ -74,7 +74,7 @@ class JobCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(
+                    Image.network(
                       data.company!.avatarImage!,
                       height: 30.sp,
                       width: 30.sp,

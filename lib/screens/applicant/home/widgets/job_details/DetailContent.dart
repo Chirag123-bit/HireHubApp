@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/screens/applicant/home/widgets/DetailItem.dart';
@@ -37,10 +36,10 @@ class DetailContent extends StatelessWidget {
               Center(
                 child: Column(
                   children: [
-                    SvgPicture.asset(
+                    Image.network(
                       data.company!.avatarImage!,
-                      height: 50.sp,
-                      width: 50.sp,
+                      height: 55.sp,
+                      width: 55.sp,
                     ),
                     SizedBox(height: kSpacingUnit * 2),
                     Text(
