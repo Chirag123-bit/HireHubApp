@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/models/Category.dart';
+import 'package:hirehub/models/category/Category.dart';
 import 'package:hirehub/theme/Theme.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -42,6 +42,7 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(data.image);
     return Stack(
       children: [
         Container(

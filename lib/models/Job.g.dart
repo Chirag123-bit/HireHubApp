@@ -10,7 +10,9 @@ Job _$JobFromJson(Map<String, dynamic> json) => Job(
       id: json['_id'] as String?,
       title: json['title'] as String?,
       about: json['about'] as String?,
-      sector: json['sector'] as String?,
+      sector: json['sector'] == null
+          ? null
+          : Category.fromJson(json['sector'] as Map<String, dynamic>),
       skills:
           (json['skills'] as List<dynamic>?)?.map((e) => e as String).toList(),
       sallary: json['sallary'] as int?,

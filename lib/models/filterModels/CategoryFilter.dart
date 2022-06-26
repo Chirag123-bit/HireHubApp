@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:hirehub/models/Category.dart';
+import 'package:hirehub/models/category/Category.dart';
 
 class CategoryFilter extends Equatable {
   final String id;

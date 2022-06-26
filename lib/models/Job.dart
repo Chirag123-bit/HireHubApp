@@ -1,4 +1,5 @@
 import 'package:hirehub/models/Company.dart';
+import 'package:hirehub/models/category/Category.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Job.g.dart';
@@ -9,7 +10,7 @@ class Job {
   String? id;
   String? title;
   String? about;
-  String? sector;
+  Category? sector;
   List<String>? skills;
   int? sallary;
   String? description;

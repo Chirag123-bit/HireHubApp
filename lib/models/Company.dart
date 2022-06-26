@@ -1,4 +1,3 @@
-import 'package:hirehub/models/Job.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'Company.g.dart';
@@ -15,7 +14,7 @@ class Company {
   String? country;
   String? region;
   String? avatarImage;
-  List<Job>? jobs;
+  // List<Job>? jobs;
 
   Company({
     this.id,

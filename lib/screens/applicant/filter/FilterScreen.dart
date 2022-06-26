@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hirehub/models/Category.dart';
+import 'package:hirehub/models/category/Category.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({Key? key}) : super(key: key);

@@ -101,7 +101,8 @@ class JobCard extends StatelessWidget {
                 ),
                 SizedBox(height: kSpacingUnit * 0.5),
                 Text(
-                  data.company!.country! + " " + data.company!.region!,
+                  // data.sector!.title!,
+                  data.company!.region! + ", " + data.company!.country!,
                   style: kCaptionTextStyle.copyWith(color: Colors.grey[800]),
                 ),
               ],
