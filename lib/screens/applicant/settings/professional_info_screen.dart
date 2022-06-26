@@ -19,6 +19,7 @@ class EditProfessionalInfoScreen extends StatefulWidget {
 class _EditProfessionalInfoScreenState
     extends State<EditProfessionalInfoScreen> {
   User user = User();
+  List<String> skills = [""];
   List<DropdownMenuItem<String>> workOptions = const [
     DropdownMenuItem(
       child: Text('Full Time'),
@@ -29,8 +30,8 @@ class _EditProfessionalInfoScreenState
       value: "Part Time",
     ),
   ];
-  TextEditingController firstnameController = TextEditingController();
-  TextEditingController lastnameController = TextEditingController();
+  TextEditingController preferedTitleController = TextEditingController();
+  TextEditingController aboutController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   final formKeys = GlobalKey<FormState>();
   String? jobType;
@@ -40,6 +41,8 @@ class _EditProfessionalInfoScreenState
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        title: const Text("Professional Details"),
+        centerTitle: true,
         leading: IconButton(
           onPressed: () {
             Get.back();
@@ -126,26 +129,14 @@ class _EditProfessionalInfoScreenState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // const Spacer(),
-                    const SizedBox(height: 15),
-                    Row(children: [
-                      Flexible(
-                        child: TextFieldGenerator(
-                          label: "First Name",
-                          controller: firstnameController,
-                          keyboardType: TextInputType.text,
-                          validatorText: "First Name is required",
-                        ),
-                      ),
-                      Flexible(
-                        child: TextFieldGenerator(
-                          label: "Last Name",
-                          controller: lastnameController,
-                          keyboardType: TextInputType.text,
-                          validatorText: "Last Name is required",
-                        ),
-                      )
-                    ]),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 10),
+                    TextFieldGenerator(
+                      label: "Prefered Job Title",
+                      controller: preferedTitleController,
+                      keyboardType: TextInputType.text,
+                      validatorText: "Job Title is required",
+                    ),
+
                     FutureBuilder<List<DropdownCategory?>>(
                         future: CategoryRepository().getCategoriesDropdown(),
                         builder: (context, snapshot) {
@@ -195,20 +186,139 @@ class _EditProfessionalInfoScreenState
                             return const Text("Error retriving data");
                           }
                         }),
-                    const SizedBox(height: 15),
+
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      child: SizedBox(
+                        height: 120,
+                        child: TextFormField(
+                          initialValue: aboutController.text,
+                          onChanged: (value) {
+                            setState(() {
+                              aboutController.text = value;
+                            });
+                          },
+                          expands: true,
+                          maxLines: null,
+                          decoration: const InputDecoration(
+                              labelText: "About Yourself",
+                              border: OutlineInputBorder()),
+                        ),
+                      ),
+                    ),
+                    _skillsContainer(),
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
               MyButton(
                   label: "Update Info",
                   onTap: () {
                     if (formKeys.currentState!.validate()) {
                       Get.back();
                     }
-                  })
+                  }),
+              const SizedBox(height: 25),
             ],
           )),
     );
+  }
+
+  Widget _skillsContainer() {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Text(
+            "Skill(s)",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 16),
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
+            itemCount: skills.length,
+            itemBuilder: (context, index) {
+              return Column(children: [
+                skillUi(index),
+              ]);
+            },
+            separatorBuilder: (context, index) => const Divider(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget skillUi(int index) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Row(children: [
+        Flexible(
+          child: TextFormField(
+            // initialValue: widget.user.skills[index] ?? "",
+            onChanged: (value) {
+              setState(() {
+                skills[index] = value;
+              });
+            },
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Skill ${index + 1} is required";
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+                labelText: 'Skill ${index + 1}',
+                border: const OutlineInputBorder()),
+          ),
+        ),
+        Visibility(
+          child: SizedBox(
+            width: 35,
+            child: IconButton(
+              icon: const Icon(
+                Icons.add_circle,
+                color: Colors.orange,
+              ),
+              onPressed: () {
+                addEmailControl();
+              },
+            ),
+          ),
+          visible: index == skills.length - 1,
+        ),
+        Visibility(
+          child: SizedBox(
+            width: 35,
+            child: IconButton(
+              icon: const Icon(
+                Icons.remove_circle,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                removeEmailControl(index);
+              },
+            ),
+          ),
+          visible: index > 0,
+        ),
+      ]),
+    );
+  }
+
+  void addEmailControl() {
+    setState(() {
+      skills.add("");
+    });
+  }
+
+  void removeEmailControl(int index) {
+    setState(() {
+      if (skills.length > 1) {
+        skills.removeAt(index);
+      }
+    });
   }
 }

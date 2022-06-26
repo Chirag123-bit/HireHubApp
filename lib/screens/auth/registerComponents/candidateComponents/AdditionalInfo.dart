@@ -133,12 +133,13 @@ class _AdditionalInfoState extends State<AdditionalInfo> {
             },
             validator: (value) {
               if (value!.isEmpty) {
-                return "Skill $index is required";
+                return "Skill ${index + 1} is required";
               }
               return null;
             },
             decoration: InputDecoration(
-                labelText: 'Skill $index', border: const OutlineInputBorder()),
+                labelText: 'Skill ${index + 1}',
+                border: const OutlineInputBorder()),
           ),
         ),
         Visibility(
