@@ -42,7 +42,6 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(data.image);
     return Stack(
       children: [
         Container(

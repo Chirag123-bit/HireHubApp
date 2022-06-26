@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
+import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
 import 'package:hirehub/screens/applicant/todo/TodoScreen.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
@@ -96,9 +98,15 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             BuildSettingOption(
               title: "Basic Info",
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => const EditBasicInfoScreen());
+              },
             ),
-            BuildSettingOption(title: "Professional Info", onPressed: () {}),
+            BuildSettingOption(
+                title: "Professional Info",
+                onPressed: () {
+                  Get.to(() => const EditProfessionalInfoScreen());
+                }),
             BuildSettingOption(title: "Educational Records", onPressed: () {}),
             BuildSettingOption(title: "Experience Records", onPressed: () {}),
             BuildSettingOption(title: "Change Password", onPressed: () {}),

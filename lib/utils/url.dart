@@ -4,5 +4,6 @@ const loginUrl = "auth/login";
 const registerUrl = "auth/register";
 const jobsUrl = "job/getAllJobs";
 const categoryUrl = "category/getCategory";
+const getAllCat = "category/getAllCategories";
 
 String? token;

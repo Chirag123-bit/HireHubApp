@@ -10,7 +10,7 @@ CategoryResponse _$CategoryResponseFromJson(Map<String, dynamic> json) =>
     CategoryResponse(
       success: json['success'] as bool?,
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => CategoryWithCount.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
