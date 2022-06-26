@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/models/TestJob.dart';
+import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailScreen.dart';
 
 class JobCard extends StatelessWidget {
@@ -74,14 +74,14 @@ class JobCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset(
-                      data.imgUrl,
+                    Image.network(
+                      data.company!.avatarImage!,
                       height: 30.sp,
                       width: 30.sp,
                     ),
                     SizedBox(width: kSpacingUnit),
                     Text(
-                      data.companyName,
+                      data.company!.name!,
                       style:
                           kCardTitleTextStyle.copyWith(color: Colors.grey[800]),
                     ),
@@ -96,12 +96,13 @@ class JobCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  data.position,
+                  data.title!,
                   style: kSubTitleTextStyle,
                 ),
                 SizedBox(height: kSpacingUnit * 0.5),
                 Text(
-                  data.location,
+                  // data.sector!.title!,
+                  data.company!.region! + ", " + data.company!.country!,
                   style: kCaptionTextStyle.copyWith(color: Colors.grey[800]),
                 ),
               ],

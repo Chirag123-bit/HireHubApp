@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/models/Category.dart';
+import 'package:hirehub/models/category/category_with_count.dart';
+import 'package:hirehub/repository/category_repository.dart';
+import 'package:hirehub/response/categoryResponse/get_category_with_count_response.dart';
+import 'package:hirehub/utils/url.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -72,30 +75,47 @@ class CategoryScreen extends StatelessWidget {
           ),
         ),
         Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            height: size.height - (size.height / 5),
-            width: size.width,
-            // margin: const EdgeInsets.only(top: 0),
-            decoration: BoxDecoration(
-              color: kSilverColor,
-              borderRadius: BorderRadius.circular(34),
-            ),
-            child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: 8 / 9),
-                itemCount: Category.generatedCategories().length,
-                itemBuilder: (BuildContext context, int index) {
-                  return (LongCourseCard(
-                      background:
-                          Category.generatedCategories()[index].background!,
-                      title: Category.generatedCategories()[index].title!,
-                      subtitle: Category.generatedCategories()[index].subtitle!,
-                      image: Category.generatedCategories()[index].image!));
-                }),
-          ),
-        ),
+            alignment: Alignment.bottomCenter,
+            child: FutureBuilder<CategoryWithCountResponse?>(
+                future: CategoryRepository().getAllCategory(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      List<CategoryWithCount> lstCats = snapshot.data!.data!;
+                      return Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        height: size.height - (size.height / 5),
+                        width: size.width,
+                        // margin: const EdgeInsets.only(top: 0),
+                        decoration: BoxDecoration(
+                          color: kSilverColor,
+                          borderRadius: BorderRadius.circular(34),
+                        ),
+                        child: GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2, childAspectRatio: 8 / 9),
+                            itemCount: lstCats.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return (LongCourseCard(
+                                  background: Colors.red,
+                                  title: lstCats[index].category!.title!,
+                                  subtitle: lstCats[index].jobs.toString(),
+                                  image: lstCats[index].category!.image!));
+                            }),
+                      );
+                    } else {
+                      return const Text("No Jobs Found");
+                    }
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    return const Text("Error retriving data");
+                  }
+                })),
       ],
     ));
   }
@@ -116,6 +136,7 @@ class LongCourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imgUrl = (baseImgUrl + image.replaceAll("\\", "/"));
     return Container(
       width: 155,
       height: 192,
@@ -140,10 +161,12 @@ class LongCourseCard extends StatelessWidget {
             style: kTitleStyle.copyWith(color: Colors.white),
           ),
           Text(
-            subtitle,
+            subtitle + " Jobs Available",
             style: kSubtitleStyle.copyWith(color: Colors.white),
           ),
-          Expanded(child: Image.asset(image)),
+          Expanded(
+            child: Image.network(imgUrl),
+          ),
         ],
       ),
     );

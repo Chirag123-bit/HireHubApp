@@ -37,21 +37,6 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return GetMaterialApp(
-      // theme: ThemeData(
-      //   backgroundColor: kSilver,
-      //   primaryColor: const Color.fromARGB(255, 41, 63, 233),
-      //   brightness: Brightness.light,
-      //   visualDensity: VisualDensity.adaptivePlatformDensity,
-      //   textTheme: GoogleFonts.muliTextTheme(),
-      //   appBarTheme: const AppBarTheme(
-      //     color: Palette.darkBlue,
-      //     systemOverlayStyle: SystemUiOverlayStyle.light,
-      //   ),
-      //   colorScheme: ColorScheme.fromSwatch()
-      //       .copyWith(secondary: Palette.darkOrange)
-      //       .copyWith(secondary: const Color(0xFFFED408)),
-      // ),
-
       darkTheme: Themes.dark,
       theme: Themes.light,
       themeMode: ThemeServices().theme,

@@ -11,7 +11,6 @@ class UserAPI {
     var dio = HttpServices().getDioInstance();
     try {
       response = await dio.post(url, data: user.toJson());
-      print(response);
       if (response.statusCode == 200) {
         isLogin = true;
       } else {
@@ -30,7 +29,6 @@ class UserAPI {
     var dio = HttpServices().getDioInstance();
     try {
       response = await dio.post(url, data: user.toJson());
-      print(response);
       if (response.statusCode == 200) {
         isLogin = true;
       } else {

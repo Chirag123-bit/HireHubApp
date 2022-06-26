@@ -37,13 +37,13 @@ class JobItem extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Image.asset(job.logoUrl!),
+                        child: Image.asset("assets/images/google_logo.png"),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       Text(
-                        job.company!,
+                        job.company!.name!,
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 16,
@@ -52,10 +52,8 @@ class JobItem extends StatelessWidget {
                     ],
                   ),
                   Icon(
-                    job.isMark!
-                        ? Icons.bookmark
-                        : Icons.bookmark_outline_outlined,
-                    color: job.isMark!
+                    false ? Icons.bookmark : Icons.bookmark_outline_outlined,
+                    color: false
                         ? Theme.of(context).primaryColor
                         : isSelected
                             ? Colors.white
@@ -79,9 +77,10 @@ class JobItem extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconText(Icons.location_on_outlined, job.location!, 1),
+                  IconText(Icons.location_on_outlined,
+                      job.company!.country! + " " + job.company!.region!, 1),
                   if (showTime)
-                    IconText(Icons.access_time_outlined, job.time!, 1)
+                    IconText(Icons.access_time_outlined, job.closeDate!, 1)
                 ],
               )
             ],

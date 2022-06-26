@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/models/category/category_dropdown.dart';
+import 'package:hirehub/repository/category_repository.dart';
 import 'package:hirehub/screens/auth/TextComponent.dart';
-import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 
 class AdditionalInfo extends StatefulWidget {
   User user;
@@ -20,30 +21,7 @@ class AdditionalInfo extends StatefulWidget {
 }
 
 class _AdditionalInfoState extends State<AdditionalInfo> {
-  List<DropdownMenuItem<String>> jobOptions = const [
-    DropdownMenuItem(
-      child: Text('Information Technology'),
-      value: "Information Technology",
-    ),
-    DropdownMenuItem(
-      child: Text('Healthcare'),
-      value: "Health",
-    ),
-    DropdownMenuItem(
-      child: Text('Entertainment'),
-      value: "Entertainment",
-    ),
-    DropdownMenuItem(
-      child: Text('Real Estate'),
-      value: "Real Estate",
-    ),
-    DropdownMenuItem(
-      child: Text('Finance'),
-      value: "Finance",
-    ),
-  ];
-
-  String? jobType = "Information Technology";
+  String? jobType;
 
   @override
   void initState() {
@@ -68,17 +46,53 @@ class _AdditionalInfoState extends State<AdditionalInfo> {
             validatorText: "Preferred Title is required",
           ),
           const SizedBox(height: 15),
-          DropdownComponent(
-            items: jobOptions,
-            valueHolder: widget.user.sector,
-            onChanged: (value) {
-              setState(
-                () {
-                  widget.user.sector = value;
-                },
-              );
-            },
-          ),
+          FutureBuilder<List<DropdownCategory?>>(
+              future: CategoryRepository().getCategoriesDropdown(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done ||
+                    snapshot.hasData) {
+                  if (snapshot.hasData) {
+                    return Theme(
+                      data: ThemeData(
+                        canvasColor: const Color(0xfff3f3f4),
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        child: DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            labelText: "Preffered Job Sector",
+                            // prefixIcon: Icon(Icons.category),
+                            hintText: "Select Job Sector",
+                            border: OutlineInputBorder(),
+                          ),
+                          value: jobType,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              jobType = newValue;
+                            });
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                          items: snapshot.data!.map((DropdownCategory? sector) {
+                            return DropdownMenuItem(
+                              child: Text(sector!.title!),
+                              value: sector.id,
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    );
+                  }
+                  return const Text("No Sectors Found");
+                } else if (snapshot.connectionState ==
+                        ConnectionState.waiting &&
+                    snapshot.hasData == false) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return const Text("Error retriving data");
+                }
+              }),
           const SizedBox(height: 15),
           Container(
             padding: const EdgeInsets.all(8),
@@ -119,12 +133,13 @@ class _AdditionalInfoState extends State<AdditionalInfo> {
             },
             validator: (value) {
               if (value!.isEmpty) {
-                return "Skill $index is required";
+                return "Skill ${index + 1} is required";
               }
               return null;
             },
             decoration: InputDecoration(
-                labelText: 'Skill $index', border: const OutlineInputBorder()),
+                labelText: 'Skill ${index + 1}',
+                border: const OutlineInputBorder()),
           ),
         ),
         Visibility(

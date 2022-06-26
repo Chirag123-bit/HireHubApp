@@ -12,6 +12,7 @@ class DetailItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: kSpacingUnit * 2),
       child: Text(
         data,
+        textAlign: TextAlign.justify,
         style: kCaptionTextStyle.copyWith(
           color: kPrimaryTextColor,
           fontWeight: FontWeight.w400,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hirehub/wearOs/dashboard.dart';
 
 class WearOsHome extends StatefulWidget {
@@ -67,8 +67,8 @@ class _WearOsHomeState extends State<WearOsHome> {
                               builder: (context) => const DashboardScreen(),
                             ));
                       } else {
-                        Fluttertoast.showToast(
-                            msg: "Invalid username or password");
+                        // Fluttertoast.showToast(
+                        //     msg: "Invalid username or password");
                       }
                     }
                   },

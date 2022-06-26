@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/models/TestJob.dart';
+import 'package:hirehub/models/Job.dart';
 
 class DetailHeader extends StatelessWidget {
   const DetailHeader({
@@ -31,7 +31,7 @@ class DetailHeader extends StatelessWidget {
             ),
           ),
           Text(
-            data.companyName,
+            data.company!.name!,
             style: kSubTitleTextStyle.copyWith(
               fontWeight: FontWeight.w600,
             ),
