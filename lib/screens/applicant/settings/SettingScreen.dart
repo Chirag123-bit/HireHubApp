@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
+import 'package:hirehub/screens/applicant/settings/education_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
+import 'package:hirehub/screens/applicant/settings/work_info_screen.dart';
 import 'package:hirehub/screens/applicant/todo/TodoScreen.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
@@ -107,8 +109,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 onPressed: () {
                   Get.to(() => const EditProfessionalInfoScreen());
                 }),
-            BuildSettingOption(title: "Educational Records", onPressed: () {}),
-            BuildSettingOption(title: "Experience Records", onPressed: () {}),
+            BuildSettingOption(
+                title: "Educational Records",
+                onPressed: () {
+                  Get.to(() => const EditEducationalInfoScreen());
+                }),
+            BuildSettingOption(
+                title: "Experience Records",
+                onPressed: () {
+                  Get.to(() => EditWorkInfoScreen());
+                }),
             BuildSettingOption(title: "Change Password", onPressed: () {}),
             const SizedBox(
               height: 40,
