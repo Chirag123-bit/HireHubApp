@@ -42,7 +42,10 @@ class _SettingScreenState extends State<SettingScreen> {
             Text(
               "Settings",
               style: titleStyle.copyWith(
-                  fontSize: 24, fontFamily: GoogleFonts.lato().fontFamily),
+                fontSize: 24,
+                fontFamily: GoogleFonts.lato().fontFamily,
+                color: isDarkMode ? Colors.white : Colors.black,
+              ),
             ),
             const SizedBox(height: 40),
             Row(

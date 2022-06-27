@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/models/Education.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditEducationalInfoScreen extends StatefulWidget {
   const EditEducationalInfoScreen({Key? key}) : super(key: key);
@@ -22,6 +25,7 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
   TextEditingController phoneController = TextEditingController();
   final formKeys = GlobalKey<FormState>();
   String? jobType;
+  File? img;
 
   @override
   void initState() {
@@ -84,8 +88,10 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                               offset: const Offset(0, 10)),
                         ],
                         image: DecorationImage(
-                            image:
-                                Image.asset("assets/images/profile.jpg").image,
+                            image: img != null
+                                ? FileImage(img!)
+                                : Image.asset("assets/images/profile.jpg")
+                                    .image,
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -104,7 +110,9 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                           ),
                         ),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showBottomSheet(context);
+                          },
                           icon: const Icon(
                             Icons.edit,
                             color: Colors.white,
@@ -382,5 +390,115 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
         educations.removeAt(index);
       }
     });
+  }
+
+  Future _loadImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(
+          () {
+            img = File(image.path);
+          },
+        );
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint("Failed to pick image $e");
+    }
+  }
+
+  _showBottomSheet(BuildContext context) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top: 4),
+        height: MediaQuery.of(context).size.height * 0.32,
+        color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 6,
+              width: 120,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
+            ),
+            const Spacer(),
+            _bottomSheetButton(
+                label: "Open Camera",
+                context: context,
+                onTap: () {
+                  _loadImage(ImageSource.camera);
+                  Get.back();
+                },
+                clr: primaryClr),
+            _bottomSheetButton(
+                label: "Open Gallery",
+                context: context,
+                onTap: () {
+                  _loadImage(ImageSource.gallery);
+                  Get.back();
+                },
+                clr: Colors.red[300]!),
+            const SizedBox(
+              height: 20,
+            ),
+            _bottomSheetButton(
+                label: "Close",
+                context: context,
+                isClose: true,
+                onTap: () {
+                  Get.back();
+                },
+                clr: Colors.transparent),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _bottomSheetButton(
+      {required String label,
+      required Function()? onTap,
+      required Color clr,
+      required BuildContext context,
+      bool isClose = false}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        height: 55,
+        width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+          color: isClose == true ? Colors.transparent : clr,
+          border: Border.all(
+            width: 2,
+            color: isClose == true
+                ? Get.isDarkMode
+                    ? Colors.grey[600]!
+                    : Colors.grey[200]!
+                : clr,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              color: isClose
+                  ? Get.isDarkMode
+                      ? Colors.white
+                      : Colors.black
+                  : Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
