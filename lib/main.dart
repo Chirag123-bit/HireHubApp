@@ -3,12 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hirehub/database/DbHelper.dart';
+import 'package:hirehub/database/TodoHelper.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
 import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
+import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
 import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
 import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
-import 'package:hirehub/screens/applicant/todo/TodoScreen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
@@ -19,6 +20,7 @@ import 'package:hirehub/theme/Theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.initDb();
+  await TodoHelper.initDb();
   await GetStorage.init();
   runApp(const MyApp());
   // runApp(const WearOsApp());
@@ -49,7 +51,7 @@ class _MyAppState extends State<MyApp> {
         "/register": (context) => const Register(),
         "/category": (context) => const CategoryScreen(),
         "/filter": (context) => const FilterPage(),
-        "/todo": (context) => const TodoScreen(),
+        "/todo": (context) => const EventsScreen(),
         "/edit_basic": (context) => const EditBasicInfoScreen(),
         "/settings": (context) => const SettingScreen(),
       },

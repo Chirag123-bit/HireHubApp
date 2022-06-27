@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/education_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/work_info_screen.dart';
-import 'package:hirehub/screens/applicant/todo/TodoScreen.dart';
+import 'package:hirehub/screens/applicant/todos/TodoScreen.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
@@ -149,9 +150,13 @@ class _SettingScreenState extends State<SettingScreen> {
             BuildSettingOption(
                 title: "My Events",
                 onPressed: () async {
-                  await Get.to(() => const TodoScreen());
+                  await Get.to(() => const EventsScreen());
                 }),
-            BuildSettingOption(title: "My ToDos", onPressed: () {}),
+            BuildSettingOption(
+                title: "My ToDos",
+                onPressed: () {
+                  Get.to(() => const TodoScreen());
+                }),
             const SizedBox(
               height: 20,
             ),
