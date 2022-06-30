@@ -66,6 +66,8 @@ dependencies:
   wear: ^1.1.0
   fluttertoast: ^8.0.9
   image_picker: ^0.8.5+3
+  shared_preferences: ^2.0.15
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
