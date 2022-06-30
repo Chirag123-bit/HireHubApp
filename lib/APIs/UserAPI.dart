@@ -7,7 +7,7 @@ class UserAPI {
   Future<bool> registerUser(User user) async {
     bool isLogin = false;
     Response response;
-    var url = baseUrl + registerUrl;
+    var url = testUrl + registerUrl;
     var dio = HttpServices().getDioInstance();
     try {
       response = await dio.post(url, data: user.toJson());
@@ -25,7 +25,7 @@ class UserAPI {
   Future<bool> loginUser(User user) async {
     bool isLogin = false;
     Response response;
-    var url = baseUrl + loginUrl;
+    var url = testUrl + loginUrl;
     var dio = HttpServices().getDioInstance();
     try {
       response = await dio.post(url, data: user.toJson());

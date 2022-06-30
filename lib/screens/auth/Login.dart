@@ -132,6 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             )),
                             child: TextFormField(
+                              key: const ValueKey("txtUsername"),
                               controller: _usernameController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -149,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             child: TextFormField(
+                              key: const ValueKey("txtPassword"),
                               controller: _passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
@@ -181,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ])),
                     child: Center(
                       child: GestureDetector(
+                          key: const ValueKey("btnLogin"),
                           child: const Text(
                             'Login',
                             style: TextStyle(

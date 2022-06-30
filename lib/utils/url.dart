@@ -6,4 +6,6 @@ const jobsUrl = "job/getAllJobs";
 const categoryUrl = "category/getCategory";
 const getAllCat = "category/getAllCategories";
 
+const testUrl = "http://localhost:5000/api/";
+
 String? token;
