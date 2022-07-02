@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/auth/TextComponent.dart';
 import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditBasicInfoScreen extends StatefulWidget {
   const EditBasicInfoScreen({Key? key}) : super(key: key);
@@ -18,12 +20,43 @@ class EditBasicInfoScreen extends StatefulWidget {
 }
 
 class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
-  User user = User();
-  TextEditingController firstnameController = TextEditingController();
-  TextEditingController lastnameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  bool isLoading = false;
+  bool isImageLoading = false;
+  late String _imageUrl;
+  late SharedPreferences prefs;
+  late User user;
+  late UserRepository _userRepository;
+  late TextEditingController firstnameController;
+  late TextEditingController lastnameController;
+  late TextEditingController phoneController;
+  String? genderType;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAndSetDate();
+  }
+
+  void getAndSetDate() async {
+    setState(() {
+      isLoading = true;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _userRepository = UserRepository();
+    user = await _userRepository.getBasicUserDetails();
+    setState(() {
+      isLoading = false;
+      firstnameController = TextEditingController(text: user.firstName);
+      lastnameController = TextEditingController(text: user.lastName);
+      phoneController = TextEditingController(text: user.phone);
+      genderType = user.gender;
+      isLoading = false;
+      print(genderType);
+    });
+  }
+
   final formKeys = GlobalKey<FormState>();
-  String? genderType = "Male";
+
   File? img;
 
   List<DropdownMenuItem<String>> genderOptions = const [
@@ -156,41 +189,51 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
                     const SizedBox(height: 15),
                     Row(children: [
                       Flexible(
-                        child: TextFieldGenerator(
-                          label: "First Name",
-                          controller: firstnameController,
-                          keyboardType: TextInputType.text,
-                          validatorText: "First Name is required",
-                        ),
+                        child: isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : TextFieldGenerator(
+                                label: "First Name",
+                                controller: firstnameController,
+                                keyboardType: TextInputType.text,
+                                validatorText: "First Name is required",
+                              ),
                       ),
                       Flexible(
-                        child: TextFieldGenerator(
-                          label: "Last Name",
-                          controller: lastnameController,
-                          keyboardType: TextInputType.text,
-                          validatorText: "Last Name is required",
-                        ),
+                        child: isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : TextFieldGenerator(
+                                label: "Last Name",
+                                controller: lastnameController,
+                                keyboardType: TextInputType.text,
+                                validatorText: "Last Name is required",
+                              ),
                       )
                     ]),
                     const SizedBox(height: 15),
-                    DropdownComponent(
-                      items: genderOptions,
-                      valueHolder: user.gender,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            user.gender = value;
-                          },
-                        );
-                      },
-                    ),
+                    isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : DropdownComponent(
+                            items: genderOptions,
+                            valueHolder: user.gender,
+                            value: genderType,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  user.gender = value;
+                                  genderType = value;
+                                },
+                              );
+                            },
+                          ),
                     const SizedBox(height: 15),
-                    TextFieldGenerator(
-                      label: "Phone Number",
-                      controller: phoneController,
-                      keyboardType: TextInputType.number,
-                      validatorText: "Phone Number is required",
-                    ),
+                    isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : TextFieldGenerator(
+                            label: "Phone Number",
+                            controller: phoneController,
+                            keyboardType: TextInputType.number,
+                            validatorText: "Phone Number is required",
+                          ),
                   ],
                 ),
               ),

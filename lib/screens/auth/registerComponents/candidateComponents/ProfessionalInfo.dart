@@ -37,7 +37,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
     widget.user.workSet!.add(Work(
       job_title: "",
       company: "",
-      work_location: "",
+      company_location: "",
       work_type: "Full Time",
       startDate: "",
       endDate: "",
@@ -266,11 +266,12 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     getTextField(
                       "Work Location",
-                      widget.user.workSet![index].work_location!,
+                      widget.user.workSet![index].company_location!,
                       (value) {
                         setState(
                           () {
-                            widget.user.workSet![index].work_location = value;
+                            widget.user.workSet![index].company_location =
+                                value;
                           },
                         );
                       },
@@ -438,7 +439,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
       widget.user.workSet!.add(Work(
           job_title: "",
           company: "",
-          work_location: "",
+          company_location: "",
           work_type: "",
           startDate: "",
           endDate: ""));

@@ -31,7 +31,7 @@ class UserAPI {
       Response response = await dio.post(url, data: user.toJson());
       if (response.statusCode == 200) {
         login = LoginResponse.fromJson(response.data);
-        // print(response.data);
+        print(response.data);
         // print(response.data);
       } else {
         login = null;

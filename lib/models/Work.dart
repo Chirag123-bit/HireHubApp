@@ -10,7 +10,7 @@ class Work {
   String? id;
   String? job_title;
   String? company;
-  String? work_location;
+  String? company_location;
   String? work_type;
   String? startDate;
   String? endDate;
@@ -19,7 +19,7 @@ class Work {
     this.id,
     this.job_title,
     this.company,
-    this.work_location,
+    this.company_location,
     this.work_type,
     this.startDate,
     this.endDate,

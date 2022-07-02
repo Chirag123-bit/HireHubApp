@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/models/Work.dart';
+import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditWorkInfoScreen extends StatefulWidget {
   EditWorkInfoScreen({Key? key}) : super(key: key);
@@ -27,22 +29,18 @@ class EditWorkInfoScreen extends StatefulWidget {
 }
 
 class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
-  List<Work> works = List<Work>.empty(growable: true);
-  Work work1 = Work(
-    job_title: "",
-    company: "",
-    work_location: "",
-    work_type: "Full Time",
-    startDate: "",
-    endDate: "",
-  );
-
   TextEditingController preferedTitleController = TextEditingController();
   TextEditingController aboutController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   final formKeys = GlobalKey<FormState>();
   String? jobType;
   File? img;
+  bool isLoading = false;
+  bool isImageLoading = false;
+  late SharedPreferences prefs;
+  late List<Work> works;
+  late UserRepository _userRepository;
+
   Future _loadImage(ImageSource imageSource) async {
     try {
       final image = await ImagePicker().pickImage(source: imageSource);
@@ -63,7 +61,21 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
   @override
   void initState() {
     super.initState();
-    works.add(work1);
+    getAndSetData();
+  }
+
+  void getAndSetData() async {
+    setState(() {
+      isLoading = true;
+    });
+    prefs = await SharedPreferences.getInstance();
+    _userRepository = UserRepository();
+    List<Work> workSaved = await _userRepository.getWorkDetails();
+    setState(() {
+      isLoading = false;
+      works = workSaved;
+      isLoading = false;
+    });
   }
 
   @override
@@ -91,7 +103,7 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
           child: ListView(
             children: [
               Text(
-                "Edit Professional Information",
+                "Edit Experience Records",
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
                     fontSize: 25,
@@ -156,10 +168,12 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                   ],
                 ),
               ),
-              Form(
-                child: _workSetContainer(),
-                key: formKeys,
-              ),
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : Form(
+                      child: _workSetContainer(),
+                      key: formKeys,
+                    ),
               MyButton(
                   label: "Update Info",
                   onTap: () {
@@ -322,11 +336,11 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                     ),
                     getTextField(
                       "Work Location",
-                      works[index].work_location!,
+                      works[index].company_location ?? "",
                       (value) {
                         setState(
                           () {
-                            works[index].work_location = value;
+                            works[index].company_location = value;
                           },
                         );
                       },
@@ -350,7 +364,7 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                       children: [
                         getDateField(
                           "Start Date",
-                          works[index].startDate!,
+                          works[index].startDate!.split("T")[0],
                           (value) {
                             setState(
                               () {
@@ -359,7 +373,8 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                             );
                           },
                         ),
-                        getDateField("End Date", works[index].endDate!,
+                        getDateField(
+                            "End Date", works[index].endDate!.split("T")[0],
                             (value) {
                           setState(
                             () {
@@ -448,7 +463,7 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
       works.add(Work(
           job_title: "",
           company: "",
-          work_location: "",
+          company_location: "",
           work_type: "",
           startDate: "",
           endDate: ""));

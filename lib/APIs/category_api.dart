@@ -34,7 +34,7 @@ class CategoryAPI {
         categoryResponse = CategoryResponse.fromJson(response.data);
 
         for (var data in categoryResponse.data!) {
-          categoryLst.add(DropdownCategory(id: data.id!, title: data.title));
+          categoryLst.add(DropdownCategory(id: data.title!, title: data.title));
         }
         print(categoryLst);
       }

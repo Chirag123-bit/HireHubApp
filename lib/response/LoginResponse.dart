@@ -9,6 +9,7 @@ class LoginResponse {
   LoginResponse({this.token, this.success, this.user});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    print(json['user']['additional']);
     return LoginResponse(
         token: json['token'],
         success: json['status'],

@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/models/Education.dart';
+import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditEducationalInfoScreen extends StatefulWidget {
   const EditEducationalInfoScreen({Key? key}) : super(key: key);
@@ -17,21 +19,37 @@ class EditEducationalInfoScreen extends StatefulWidget {
 }
 
 class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
-  List<Education> educations = List<Education>.empty(growable: true);
   Education edu1 =
       Education(degree: "", college: "", startDate: "", endDate: "");
 
-  TextEditingController preferedTitleController = TextEditingController();
-  TextEditingController aboutController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
   final formKeys = GlobalKey<FormState>();
   String? jobType;
   File? img;
+  bool isLoading = false;
+  bool isImageLoading = false;
+  late SharedPreferences prefs;
+  late List<Education> educations;
+  late UserRepository _userRepository;
 
   @override
   void initState() {
     super.initState();
-    educations.add(edu1);
+    getAndSetData();
+  }
+
+  void getAndSetData() async {
+    setState(() {
+      isLoading = true;
+    });
+    prefs = await SharedPreferences.getInstance();
+    _userRepository = UserRepository();
+    List<Education> educationSaved =
+        await _userRepository.getEducationDetails();
+    setState(() {
+      isLoading = false;
+      educations = educationSaved;
+      isLoading = false;
+    });
   }
 
   @override
@@ -124,7 +142,9 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                   ],
                 ),
               ),
-              _educationSetContainer(),
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : _educationSetContainer(),
               MyButton(
                   label: "Update Info",
                   onTap: () {
@@ -287,7 +307,7 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                         children: [
                           getDateField(
                             "Start Date",
-                            educations[index].startDate!,
+                            educations[index].startDate!.split("T")[0],
                             (value) {
                               setState(
                                 () {
@@ -296,7 +316,8 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                               );
                             },
                           ),
-                          getDateField("End Date", educations[index].endDate!,
+                          getDateField("End Date",
+                              educations[index].endDate!.split("T")[0],
                               (value) {
                             setState(
                               () {

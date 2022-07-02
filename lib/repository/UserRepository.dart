@@ -62,6 +62,7 @@ class UserRepository {
     prefs.setString(companyAboutKey, user.cabout!);
     prefs.setString(companyDescKey, user.cdesc!);
     prefs.setString(companySectorKey, user.csector!);
+    prefs.setString(idKey, user.id!);
   }
 
   //function to store job details in shared preferences
@@ -71,6 +72,7 @@ class UserRepository {
     prefs.setString(sectorKey, user.sector!);
     // prefs.setString(summaryKey, user.summary!);
     prefs.setStringList(skillsKey, user.skills!);
+    prefs.setString(idKey, user.id!);
   }
 
   //function to store work experience in shared preferences
@@ -110,14 +112,14 @@ class UserRepository {
   Future<User> getBasicUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return User(
-      firstName: prefs.getString(fnameKey),
-      lastName: prefs.getString(lnameKey),
-      email: prefs.getString(emailKey),
-      username: prefs.getString(usernameKey),
-      phone: prefs.getString(phoneKey),
-      type: prefs.getString(typeKey),
-      id: prefs.getString(idKey),
-    );
+        firstName: prefs.getString(fnameKey),
+        lastName: prefs.getString(lnameKey),
+        email: prefs.getString(emailKey),
+        username: prefs.getString(usernameKey),
+        phone: prefs.getString(phoneKey),
+        type: prefs.getString(typeKey),
+        id: prefs.getString(idKey),
+        gender: prefs.getString(genderKey));
   }
 
   //function to get company details from shared preferences
@@ -130,6 +132,7 @@ class UserRepository {
       cabout: prefs.getString(companyAboutKey),
       cdesc: prefs.getString(companyDescKey),
       csector: prefs.getString(companySectorKey),
+      id: prefs.getString(idKey),
     );
   }
 
@@ -141,6 +144,7 @@ class UserRepository {
       sector: prefs.getString(sectorKey),
       // summary: prefs.getString(summaryKey),
       skills: prefs.getStringList(skillsKey),
+      id: prefs.getString(idKey),
     );
   }
 
