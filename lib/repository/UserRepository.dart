@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hirehub/APIs/UserAPI.dart';
 import 'package:hirehub/models/Education.dart';
 import 'package:hirehub/models/Users.dart';
@@ -67,20 +69,41 @@ class UserRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(titleKey, user.title!);
     prefs.setString(sectorKey, user.sector!);
-    prefs.setString(summaryKey, user.summary!);
+    // prefs.setString(summaryKey, user.summary!);
     prefs.setStringList(skillsKey, user.skills!);
   }
 
   //function to store work experience in shared preferences
-  Future<void> storeWorkExperience(List<Work> work) async {
+  Future<void> storeWorkDetails(List<Work> works) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(workSetKey, Work.encode(work));
+    List<String> worksEncoded =
+        works.map((work) => jsonEncode(work.toJson())).toList();
+    prefs.setStringList(workSetKey, worksEncoded);
+    // print(education[0].etitle);
   }
 
   //function to store education details in shared preferences
-  Future<void> storeEducationDetails(List<Education> education) async {
+  Future<void> storeEducationDetails(List<Education> educations) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(educationSetKey, Education.encode(education));
+    List<String> educationEncoded =
+        educations.map((education) => jsonEncode(education.toJson())).toList();
+    prefs.setStringList(educationSetKey, educationEncoded);
+    // print(education[0].etitle);
+  }
+
+  Future<List<Education>> getEducationDetails() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String>? educationEncoded = prefs.getStringList(educationSetKey);
+
+    if (educationEncoded == null) {
+      List<Education> empty = [];
+      return empty;
+    }
+
+    List<Education> educations = educationEncoded
+        .map((education) => Education.fromJson(jsonDecode(education)))
+        .toList();
+    return educations;
   }
 
   //function to get basic user details from shared preferences
@@ -116,20 +139,23 @@ class UserRepository {
     return User(
       title: prefs.getString(titleKey),
       sector: prefs.getString(sectorKey),
-      summary: prefs.getString(summaryKey),
+      // summary: prefs.getString(summaryKey),
       skills: prefs.getStringList(skillsKey),
     );
   }
 
   //function to get work experience from shared preferences
-  Future<List<Work>> getWorkExperience() async {
+  Future<List<Work>> getWorkDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return Work.decode(prefs.getString(workSetKey) ?? "[]");
-  }
+    List<String>? workEncoded = prefs.getStringList(workSetKey);
 
-  //function to get education details from shared preferences
-  Future<List<Education>> getEducationDetails() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return Education.decode(prefs.getString(educationSetKey) ?? "[]");
+    if (workEncoded == null) {
+      List<Work> empty = [];
+      return empty;
+    }
+
+    List<Work> educations =
+        workEncoded.map((work) => Work.fromJson(jsonDecode(work))).toList();
+    return educations;
   }
 }

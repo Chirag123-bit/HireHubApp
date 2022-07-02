@@ -8,20 +8,20 @@ part of 'Work.dart';
 
 Work _$WorkFromJson(Map<String, dynamic> json) => Work(
       id: json['_id'] as String?,
-      wtitle: json['wtitle'] as String?,
-      wcompany: json['wcompany'] as String?,
-      wlocation: json['wlocation'] as String?,
-      wtype: json['wtype'] as String?,
-      wstart: json['wstart'] as String?,
-      wend: json['wend'] as String?,
+      job_title: json['job_title'] as String?,
+      company: json['company'] as String?,
+      work_location: json['work_location'] as String?,
+      work_type: json['work_type'] as String?,
+      startDate: json['startDate'] as String?,
+      endDate: json['endDate'] as String?,
     );
 
 Map<String, dynamic> _$WorkToJson(Work instance) => <String, dynamic>{
       '_id': instance.id,
-      'wtitle': instance.wtitle,
-      'wcompany': instance.wcompany,
-      'wlocation': instance.wlocation,
-      'wtype': instance.wtype,
-      'wstart': instance.wstart,
-      'wend': instance.wend,
+      'job_title': instance.job_title,
+      'company': instance.company,
+      'work_location': instance.work_location,
+      'work_type': instance.work_type,
+      'startDate': instance.startDate,
+      'endDate': instance.endDate,
     };

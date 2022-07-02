@@ -8,16 +8,16 @@ part of 'Education.dart';
 
 Education _$EducationFromJson(Map<String, dynamic> json) => Education(
       id: json['_id'] as String?,
-      etitle: json['etitle'] as String?,
-      eschool: json['eschool'] as String?,
-      estart: json['estart'] as String?,
-      eend: json['eend'] as String?,
+      degree: json['degree'] as String?,
+      college: json['college'] as String?,
+      startDate: json['startDate'] as String?,
+      endDate: json['endDate'] as String?,
     );
 
 Map<String, dynamic> _$EducationToJson(Education instance) => <String, dynamic>{
       '_id': instance.id,
-      'etitle': instance.etitle,
-      'eschool': instance.eschool,
-      'estart': instance.estart,
-      'eend': instance.eend,
+      'degree': instance.degree,
+      'college': instance.college,
+      'startDate': instance.startDate,
+      'endDate': instance.endDate,
     };

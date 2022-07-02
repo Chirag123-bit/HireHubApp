@@ -26,12 +26,28 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoading = true;
     });
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
 
     LoginResponse? login = await UserRepository().loginUser(user);
     try {
-      if (login!.success!) {
-        prefs.setString("token", login.token!);
-        Navigator.popAndPushNamed(context, "/home");
+      if (login == null) {
+        MotionToast.error(
+          description: const Text("Incorrect Username or Password"),
+        ).show(context);
+        return;
+      }
+      if (login.success!) {
+        User loggedUser = login.user!;
+        UserRepository userRepository = UserRepository();
+
+        if (loggedUser.type == "Applicant") {
+          await userRepository.storeBasicUserDetails(loggedUser);
+          await userRepository.storeProfessionalDetails(loggedUser);
+          await userRepository.storeEducationDetails(loggedUser.educationSet!);
+          await userRepository.storeWorkDetails(loggedUser.workSet!);
+          prefs.setString("token", login.token!);
+          Navigator.popAndPushNamed(context, "/home");
+        }
       } else {
         MotionToast.error(
           description: const Text("Incorrect Username or Password"),

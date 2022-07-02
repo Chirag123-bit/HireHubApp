@@ -29,12 +29,12 @@ class EditWorkInfoScreen extends StatefulWidget {
 class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
   List<Work> works = List<Work>.empty(growable: true);
   Work work1 = Work(
-    wtitle: "",
-    wcompany: "",
-    wlocation: "",
-    wtype: "Full Time",
-    wstart: "",
-    wend: "",
+    job_title: "",
+    company: "",
+    work_location: "",
+    work_type: "Full Time",
+    startDate: "",
+    endDate: "",
   );
 
   TextEditingController preferedTitleController = TextEditingController();
@@ -293,11 +293,11 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                       Flexible(
                         child: getTextField(
                           "Job Title",
-                          works[index].wtitle!,
+                          works[index].job_title!,
                           (value) {
                             setState(
                               () {
-                                works[index].wtitle = value;
+                                works[index].job_title = value;
                               },
                             );
                           },
@@ -306,11 +306,11 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                       Flexible(
                         child: getTextField(
                           "Company Name",
-                          works[index].wcompany!,
+                          works[index].company!,
                           (value) {
                             setState(
                               () {
-                                works[index].wcompany = value;
+                                works[index].company = value;
                               },
                             );
                           },
@@ -322,11 +322,11 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                     ),
                     getTextField(
                       "Work Location",
-                      works[index].wlocation!,
+                      works[index].work_location!,
                       (value) {
                         setState(
                           () {
-                            works[index].wlocation = value;
+                            works[index].work_location = value;
                           },
                         );
                       },
@@ -336,11 +336,11 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                     ),
                     DropdownComponent(
                       items: widget.workOptions,
-                      valueHolder: works[index].wtype,
+                      valueHolder: works[index].work_type,
                       onChanged: (value) {
                         setState(
                           () {
-                            works[index].wtype = value;
+                            works[index].work_type = value;
                           },
                         );
                       },
@@ -350,22 +350,23 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                       children: [
                         getDateField(
                           "Start Date",
-                          works[index].wstart!,
+                          works[index].startDate!,
                           (value) {
                             setState(
                               () {
-                                works[index].wstart = value;
+                                works[index].startDate = value;
                               },
                             );
                           },
                         ),
-                        getDateField("End Date", works[index].wend!, (value) {
+                        getDateField("End Date", works[index].endDate!,
+                            (value) {
                           setState(
                             () {
-                              works[index].wend = value;
+                              works[index].endDate = value;
                             },
                           );
-                        }, finalDate: works[index].wstart!),
+                        }, finalDate: works[index].startDate!),
                       ],
                     )
                   ],
@@ -445,12 +446,12 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
   void addWorkControl() {
     setState(() {
       works.add(Work(
-          wtitle: "",
-          wcompany: "",
-          wlocation: "",
-          wtype: "",
-          wstart: "",
-          wend: ""));
+          job_title: "",
+          company: "",
+          work_location: "",
+          work_type: "",
+          startDate: "",
+          endDate: ""));
     });
   }
 

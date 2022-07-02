@@ -18,7 +18,8 @@ class EditEducationalInfoScreen extends StatefulWidget {
 
 class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
   List<Education> educations = List<Education>.empty(growable: true);
-  Education edu1 = Education(etitle: "", eschool: "", estart: "", eend: "");
+  Education edu1 =
+      Education(degree: "", college: "", startDate: "", endDate: "");
 
   TextEditingController preferedTitleController = TextEditingController();
   TextEditingController aboutController = TextEditingController();
@@ -258,11 +259,11 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                     ),
                     getTextField(
                       "Degree Title",
-                      educations[index].etitle!,
+                      educations[index].degree!,
                       (value) {
                         setState(
                           () {
-                            educations[index].etitle = value;
+                            educations[index].degree = value;
                           },
                         );
                       },
@@ -272,11 +273,11 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                     ),
                     getTextField(
                       "College/University",
-                      educations[index].eschool!,
+                      educations[index].college!,
                       (value) {
                         setState(
                           () {
-                            educations[index].eschool = value;
+                            educations[index].college = value;
                           },
                         );
                       },
@@ -286,23 +287,23 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                         children: [
                           getDateField(
                             "Start Date",
-                            educations[index].estart!,
+                            educations[index].startDate!,
                             (value) {
                               setState(
                                 () {
-                                  educations[index].estart = value;
+                                  educations[index].startDate = value;
                                 },
                               );
                             },
                           ),
-                          getDateField("End Date", educations[index].eend!,
+                          getDateField("End Date", educations[index].endDate!,
                               (value) {
                             setState(
                               () {
-                                educations[index].eend = value;
+                                educations[index].endDate = value;
                               },
                             );
-                          }, finalDate: educations[index].estart!),
+                          }, finalDate: educations[index].startDate!),
                         ])
                   ],
                 ),
@@ -380,7 +381,8 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
 
   void addEduControl() {
     setState(() {
-      educations.add(Education(etitle: "", eschool: "", estart: "", eend: ""));
+      educations
+          .add(Education(degree: "", college: "", startDate: "", endDate: ""));
     });
   }
 

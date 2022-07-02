@@ -32,15 +32,15 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
     super.initState();
     widget.user.educationSet = List<Education>.empty(growable: true);
     widget.user.educationSet!
-        .add(Education(etitle: "", eschool: "", estart: "", eend: ""));
+        .add(Education(degree: "", college: "", startDate: "", endDate: ""));
     widget.user.workSet = List<Work>.empty(growable: true);
     widget.user.workSet!.add(Work(
-      wtitle: "",
-      wcompany: "",
-      wlocation: "",
-      wtype: "Full Time",
-      wstart: "",
-      wend: "",
+      job_title: "",
+      company: "",
+      work_location: "",
+      work_type: "Full Time",
+      startDate: "",
+      endDate: "",
     ));
   }
 
@@ -127,11 +127,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                   children: [
                     getTextField(
                       "Degree Title",
-                      widget.user.educationSet![index].etitle!,
+                      widget.user.educationSet![index].degree!,
                       (value) {
                         setState(
                           () {
-                            widget.user.educationSet![index].etitle = value;
+                            widget.user.educationSet![index].degree = value;
                           },
                         );
                       },
@@ -141,11 +141,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     getTextField(
                       "College/University",
-                      widget.user.educationSet![index].eschool!,
+                      widget.user.educationSet![index].college!,
                       (value) {
                         setState(
                           () {
-                            widget.user.educationSet![index].eschool = value;
+                            widget.user.educationSet![index].college = value;
                           },
                         );
                       },
@@ -155,26 +155,28 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                         children: [
                           getDateField(
                             "Start Date",
-                            widget.user.educationSet![index].estart!,
+                            widget.user.educationSet![index].startDate!,
                             (value) {
                               setState(
                                 () {
-                                  widget.user.educationSet![index].estart =
+                                  widget.user.educationSet![index].endDate =
                                       value;
                                 },
                               );
                             },
                           ),
                           getDateField("End Date",
-                              widget.user.educationSet![index].eend!, (value) {
+                              widget.user.educationSet![index].endDate!,
+                              (value) {
                             setState(
                               () {
-                                widget.user.educationSet![index].eend = value;
+                                widget.user.educationSet![index].endDate =
+                                    value;
                               },
                             );
                           },
                               finalDate:
-                                  widget.user.educationSet![index].estart!),
+                                  widget.user.educationSet![index].endDate!),
                         ])
                   ],
                 ),
@@ -235,11 +237,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                       Flexible(
                         child: getTextField(
                           "Job Title",
-                          widget.user.workSet![index].wtitle!,
+                          widget.user.workSet![index].job_title!,
                           (value) {
                             setState(
                               () {
-                                widget.user.workSet![index].wtitle = value;
+                                widget.user.workSet![index].job_title = value;
                               },
                             );
                           },
@@ -248,11 +250,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                       Flexible(
                         child: getTextField(
                           "Company Name",
-                          widget.user.workSet![index].wcompany!,
+                          widget.user.workSet![index].company!,
                           (value) {
                             setState(
                               () {
-                                widget.user.workSet![index].wcompany = value;
+                                widget.user.workSet![index].company = value;
                               },
                             );
                           },
@@ -264,11 +266,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     getTextField(
                       "Work Location",
-                      widget.user.workSet![index].wlocation!,
+                      widget.user.workSet![index].work_location!,
                       (value) {
                         setState(
                           () {
-                            widget.user.workSet![index].wlocation = value;
+                            widget.user.workSet![index].work_location = value;
                           },
                         );
                       },
@@ -278,11 +280,11 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     DropdownComponent(
                       items: widget.workOptions,
-                      valueHolder: widget.user.workSet![index].wtype,
+                      valueHolder: widget.user.workSet![index].work_type,
                       onChanged: (value) {
                         setState(
                           () {
-                            widget.user.workSet![index].wtype = value;
+                            widget.user.workSet![index].work_type = value;
                           },
                         );
                       },
@@ -292,24 +294,24 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                       children: [
                         getDateField(
                           "Start Date",
-                          widget.user.workSet![index].wstart!,
+                          widget.user.workSet![index].startDate!,
                           (value) {
                             setState(
                               () {
-                                widget.user.workSet![index].wstart = value;
+                                widget.user.workSet![index].startDate = value;
                               },
                             );
                           },
                         ),
                         getDateField(
-                            "End Date", widget.user.workSet![index].wend!,
+                            "End Date", widget.user.workSet![index].endDate!,
                             (value) {
                           setState(
                             () {
-                              widget.user.workSet![index].wend = value;
+                              widget.user.workSet![index].endDate = value;
                             },
                           );
-                        }, finalDate: widget.user.workSet![index].wstart!),
+                        }, finalDate: widget.user.workSet![index].startDate!),
                       ],
                     )
                   ],
@@ -419,7 +421,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
   void addEduControl() {
     setState(() {
       widget.user.educationSet!
-          .add(Education(etitle: "", eschool: "", estart: "", eend: ""));
+          .add(Education(degree: "", college: "", startDate: "", endDate: ""));
     });
   }
 
@@ -434,12 +436,12 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
   void addWorkControl() {
     setState(() {
       widget.user.workSet!.add(Work(
-          wtitle: "",
-          wcompany: "",
-          wlocation: "",
-          wtype: "",
-          wstart: "",
-          wend: ""));
+          job_title: "",
+          company: "",
+          work_location: "",
+          work_type: "",
+          startDate: "",
+          endDate: ""));
     });
   }
 
