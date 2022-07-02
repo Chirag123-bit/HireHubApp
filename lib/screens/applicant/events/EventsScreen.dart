@@ -5,21 +5,21 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/controller/EventController.dart';
 import 'package:hirehub/models/Events.dart';
-import 'package:hirehub/screens/applicant/todo/AddTask.dart';
+import 'package:hirehub/screens/applicant/events/AddTask.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/screens/widgets/TaskTile.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:intl/intl.dart';
 
-class TodoScreen extends StatefulWidget {
-  const TodoScreen({Key? key}) : super(key: key);
+class EventsScreen extends StatefulWidget {
+  const EventsScreen({Key? key}) : super(key: key);
 
   @override
-  State<TodoScreen> createState() => _TodoScreenState();
+  State<EventsScreen> createState() => _EventsScreenState();
 }
 
-class _TodoScreenState extends State<TodoScreen> {
+class _EventsScreenState extends State<EventsScreen> {
   var notifyHelper;
   DateTime _selectedDate = DateTime.now();
   final _eventController = Get.put(EventController());

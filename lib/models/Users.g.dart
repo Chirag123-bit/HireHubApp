@@ -16,21 +16,22 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       username: json['username'] as String?,
       gender: json['gender'] as String?,
       type: json['type'] as String?,
-      cname: json['cname'] as String?,
-      country: json['country'] as String?,
-      cabout: json['cabout'] as String?,
-      cdesc: json['cdesc'] as String?,
-      csector: json['csector'] as String?,
-      region: json['region'] as String?,
-      sector: json['sector'] as String?,
-      skills:
-          (json['skills'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      // cname: json['cname'] as String?,
+      // country: json['country'] as String?,
+      // cabout: json['cabout'] as String?,
+      // cdesc: json['cdesc'] as String?,
+      // csector: json['csector'] as String?,
+      // region: json['region'] as String?,
+      sector: json["professional"]['sector'] as String?,
+      skills: (json["professional"]['skills'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       summary: json['summary'] as String?,
-      title: json['title'] as String?,
-      workSet: (json['workSet'] as List<dynamic>?)
+      title: json["professional"]['title'] as String?,
+      workSet: (json["additional"][0]['experience'] as List<dynamic>?)
           ?.map((e) => Work.fromJson(e as Map<String, dynamic>))
           .toList(),
-      educationSet: (json['educationSet'] as List<dynamic>?)
+      educationSet: (json["additional"][0]['education'] as List<dynamic>?)
           ?.map((e) => Education.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

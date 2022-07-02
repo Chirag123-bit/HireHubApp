@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/education_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/work_info_screen.dart';
-import 'package:hirehub/screens/applicant/todo/TodoScreen.dart';
+import 'package:hirehub/screens/applicant/todos/TodoScreen.dart';
+import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -41,7 +44,10 @@ class _SettingScreenState extends State<SettingScreen> {
             Text(
               "Settings",
               style: titleStyle.copyWith(
-                  fontSize: 24, fontFamily: GoogleFonts.lato().fontFamily),
+                fontSize: 24,
+                fontFamily: GoogleFonts.lato().fontFamily,
+                color: isDarkMode ? Colors.white : Colors.black,
+              ),
             ),
             const SizedBox(height: 40),
             Row(
@@ -149,9 +155,13 @@ class _SettingScreenState extends State<SettingScreen> {
             BuildSettingOption(
                 title: "My Events",
                 onPressed: () async {
-                  await Get.to(() => const TodoScreen());
+                  await Get.to(() => const EventsScreen());
                 }),
-            BuildSettingOption(title: "My ToDos", onPressed: () {}),
+            BuildSettingOption(
+                title: "My ToDos",
+                onPressed: () {
+                  Get.to(() => const TodoScreen());
+                }),
             const SizedBox(
               height: 20,
             ),
@@ -159,7 +169,11 @@ class _SettingScreenState extends State<SettingScreen> {
               style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)))),
-              onPressed: () {},
+              onPressed: () async {
+                SharedPreferences pref = await SharedPreferences.getInstance();
+                pref.clear();
+                Get.offAll(const LoginScreen());
+              },
               child: Text(
                 "Sign Out",
                 style: TextStyle(

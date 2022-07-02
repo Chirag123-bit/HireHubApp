@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/auth/TextComponent.dart';
 import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditBasicInfoScreen extends StatefulWidget {
   const EditBasicInfoScreen({Key? key}) : super(key: key);
@@ -15,12 +20,44 @@ class EditBasicInfoScreen extends StatefulWidget {
 }
 
 class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
-  User user = User();
-  TextEditingController firstnameController = TextEditingController();
-  TextEditingController lastnameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  bool isLoading = false;
+  bool isImageLoading = false;
+  late String _imageUrl;
+  late SharedPreferences prefs;
+  late User user;
+  late UserRepository _userRepository;
+  late TextEditingController firstnameController;
+  late TextEditingController lastnameController;
+  late TextEditingController phoneController;
+  String? genderType;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAndSetDate();
+  }
+
+  void getAndSetDate() async {
+    setState(() {
+      isLoading = true;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _userRepository = UserRepository();
+    user = await _userRepository.getBasicUserDetails();
+    setState(() {
+      isLoading = false;
+      firstnameController = TextEditingController(text: user.firstName);
+      lastnameController = TextEditingController(text: user.lastName);
+      phoneController = TextEditingController(text: user.phone);
+      genderType = user.gender;
+      isLoading = false;
+      print(genderType);
+    });
+  }
+
   final formKeys = GlobalKey<FormState>();
-  String? genderType = "Male";
+
+  File? img;
 
   List<DropdownMenuItem<String>> genderOptions = const [
     DropdownMenuItem(
@@ -36,6 +73,24 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
       value: "Others",
     ),
   ];
+
+  Future _loadImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(
+          () {
+            img = File(image.path);
+          },
+        );
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint("Failed to pick image $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,8 +144,10 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
                               offset: const Offset(0, 10)),
                         ],
                         image: DecorationImage(
-                            image:
-                                Image.asset("assets/images/profile.jpg").image,
+                            image: img != null
+                                ? FileImage(img!)
+                                : Image.asset("assets/images/profile.jpg")
+                                    .image,
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -109,7 +166,9 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
                           ),
                         ),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showBottomSheet(context);
+                          },
                           icon: const Icon(
                             Icons.edit,
                             color: Colors.white,
@@ -130,41 +189,51 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
                     const SizedBox(height: 15),
                     Row(children: [
                       Flexible(
-                        child: TextFieldGenerator(
-                          label: "First Name",
-                          controller: firstnameController,
-                          keyboardType: TextInputType.text,
-                          validatorText: "First Name is required",
-                        ),
+                        child: isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : TextFieldGenerator(
+                                label: "First Name",
+                                controller: firstnameController,
+                                keyboardType: TextInputType.text,
+                                validatorText: "First Name is required",
+                              ),
                       ),
                       Flexible(
-                        child: TextFieldGenerator(
-                          label: "Last Name",
-                          controller: lastnameController,
-                          keyboardType: TextInputType.text,
-                          validatorText: "Last Name is required",
-                        ),
+                        child: isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : TextFieldGenerator(
+                                label: "Last Name",
+                                controller: lastnameController,
+                                keyboardType: TextInputType.text,
+                                validatorText: "Last Name is required",
+                              ),
                       )
                     ]),
                     const SizedBox(height: 15),
-                    DropdownComponent(
-                      items: genderOptions,
-                      valueHolder: user.gender,
-                      onChanged: (value) {
-                        setState(
-                          () {
-                            user.gender = value;
-                          },
-                        );
-                      },
-                    ),
+                    isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : DropdownComponent(
+                            items: genderOptions,
+                            valueHolder: user.gender,
+                            value: genderType,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  user.gender = value;
+                                  genderType = value;
+                                },
+                              );
+                            },
+                          ),
                     const SizedBox(height: 15),
-                    TextFieldGenerator(
-                      label: "Phone Number",
-                      controller: phoneController,
-                      keyboardType: TextInputType.number,
-                      validatorText: "Phone Number is required",
-                    ),
+                    isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : TextFieldGenerator(
+                            label: "Phone Number",
+                            controller: phoneController,
+                            keyboardType: TextInputType.number,
+                            validatorText: "Phone Number is required",
+                          ),
                   ],
                 ),
               ),
@@ -178,6 +247,99 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
                   })
             ],
           )),
+    );
+  }
+
+  _showBottomSheet(BuildContext context) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top: 4),
+        height: MediaQuery.of(context).size.height * 0.32,
+        color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 6,
+              width: 120,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
+            ),
+            const Spacer(),
+            _bottomSheetButton(
+                label: "Open Camera",
+                context: context,
+                onTap: () {
+                  _loadImage(ImageSource.camera);
+                  Get.back();
+                },
+                clr: primaryClr),
+            _bottomSheetButton(
+                label: "Open Gallery",
+                context: context,
+                onTap: () {
+                  _loadImage(ImageSource.gallery);
+                  Get.back();
+                },
+                clr: Colors.red[300]!),
+            const SizedBox(
+              height: 20,
+            ),
+            _bottomSheetButton(
+                label: "Close",
+                context: context,
+                isClose: true,
+                onTap: () {
+                  Get.back();
+                },
+                clr: Colors.transparent),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _bottomSheetButton(
+      {required String label,
+      required Function()? onTap,
+      required Color clr,
+      required BuildContext context,
+      bool isClose = false}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        height: 55,
+        width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+          color: isClose == true ? Colors.transparent : clr,
+          border: Border.all(
+            width: 2,
+            color: isClose == true
+                ? Get.isDarkMode
+                    ? Colors.grey[600]!
+                    : Colors.grey[200]!
+                : clr,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              color: isClose
+                  ? Get.isDarkMode
+                      ? Colors.white
+                      : Colors.black
+                  : Colors.white,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

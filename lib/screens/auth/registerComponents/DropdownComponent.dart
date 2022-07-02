@@ -4,8 +4,10 @@ class DropdownComponent extends StatefulWidget {
   final List<DropdownMenuItem<String>> items;
   String? valueHolder;
   Function onChanged;
+  String? value;
   DropdownComponent(
       {Key? key,
+      this.value,
       required this.items,
       required this.valueHolder,
       required this.onChanged})
@@ -28,6 +30,7 @@ class _DropdownComponentState extends State<DropdownComponent> {
           hint: const Text('Select your Choice'),
           items: widget.items,
           isExpanded: true,
+          value: widget.value ?? widget.valueHolder,
           onChanged: (value) {
             widget.onChanged(value.toString());
           },

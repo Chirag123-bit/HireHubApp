@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/models/Education.dart';
+import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditEducationalInfoScreen extends StatefulWidget {
   const EditEducationalInfoScreen({Key? key}) : super(key: key);
@@ -14,19 +19,37 @@ class EditEducationalInfoScreen extends StatefulWidget {
 }
 
 class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
-  List<Education> educations = List<Education>.empty(growable: true);
-  Education edu1 = Education(etitle: "", eschool: "", estart: "", eend: "");
+  Education edu1 =
+      Education(degree: "", college: "", startDate: "", endDate: "");
 
-  TextEditingController preferedTitleController = TextEditingController();
-  TextEditingController aboutController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
   final formKeys = GlobalKey<FormState>();
   String? jobType;
+  File? img;
+  bool isLoading = false;
+  bool isImageLoading = false;
+  late SharedPreferences prefs;
+  late List<Education> educations;
+  late UserRepository _userRepository;
 
   @override
   void initState() {
     super.initState();
-    educations.add(edu1);
+    getAndSetData();
+  }
+
+  void getAndSetData() async {
+    setState(() {
+      isLoading = true;
+    });
+    prefs = await SharedPreferences.getInstance();
+    _userRepository = UserRepository();
+    List<Education> educationSaved =
+        await _userRepository.getEducationDetails();
+    setState(() {
+      isLoading = false;
+      educations = educationSaved;
+      isLoading = false;
+    });
   }
 
   @override
@@ -84,8 +107,10 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                               offset: const Offset(0, 10)),
                         ],
                         image: DecorationImage(
-                            image:
-                                Image.asset("assets/images/profile.jpg").image,
+                            image: img != null
+                                ? FileImage(img!)
+                                : Image.asset("assets/images/profile.jpg")
+                                    .image,
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -104,7 +129,9 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                           ),
                         ),
                         child: IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _showBottomSheet(context);
+                          },
                           icon: const Icon(
                             Icons.edit,
                             color: Colors.white,
@@ -115,7 +142,9 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                   ],
                 ),
               ),
-              _educationSetContainer(),
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : _educationSetContainer(),
               MyButton(
                   label: "Update Info",
                   onTap: () {
@@ -250,11 +279,11 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                     ),
                     getTextField(
                       "Degree Title",
-                      educations[index].etitle!,
+                      educations[index].degree!,
                       (value) {
                         setState(
                           () {
-                            educations[index].etitle = value;
+                            educations[index].degree = value;
                           },
                         );
                       },
@@ -264,11 +293,11 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                     ),
                     getTextField(
                       "College/University",
-                      educations[index].eschool!,
+                      educations[index].college!,
                       (value) {
                         setState(
                           () {
-                            educations[index].eschool = value;
+                            educations[index].college = value;
                           },
                         );
                       },
@@ -278,23 +307,24 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                         children: [
                           getDateField(
                             "Start Date",
-                            educations[index].estart!,
+                            educations[index].startDate!.split("T")[0],
                             (value) {
                               setState(
                                 () {
-                                  educations[index].estart = value;
+                                  educations[index].startDate = value;
                                 },
                               );
                             },
                           ),
-                          getDateField("End Date", educations[index].eend!,
+                          getDateField("End Date",
+                              educations[index].endDate!.split("T")[0],
                               (value) {
                             setState(
                               () {
-                                educations[index].eend = value;
+                                educations[index].endDate = value;
                               },
                             );
-                          }, finalDate: educations[index].estart!),
+                          }, finalDate: educations[index].startDate!),
                         ])
                   ],
                 ),
@@ -372,7 +402,8 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
 
   void addEduControl() {
     setState(() {
-      educations.add(Education(etitle: "", eschool: "", estart: "", eend: ""));
+      educations
+          .add(Education(degree: "", college: "", startDate: "", endDate: ""));
     });
   }
 
@@ -382,5 +413,115 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
         educations.removeAt(index);
       }
     });
+  }
+
+  Future _loadImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(
+          () {
+            img = File(image.path);
+          },
+        );
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint("Failed to pick image $e");
+    }
+  }
+
+  _showBottomSheet(BuildContext context) {
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.only(top: 4),
+        height: MediaQuery.of(context).size.height * 0.32,
+        color: Get.isDarkMode ? darkGreyClr : Colors.white,
+        child: Column(
+          children: [
+            Container(
+              height: 6,
+              width: 120,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Get.isDarkMode ? Colors.grey[600] : Colors.grey[300]),
+            ),
+            const Spacer(),
+            _bottomSheetButton(
+                label: "Open Camera",
+                context: context,
+                onTap: () {
+                  _loadImage(ImageSource.camera);
+                  Get.back();
+                },
+                clr: primaryClr),
+            _bottomSheetButton(
+                label: "Open Gallery",
+                context: context,
+                onTap: () {
+                  _loadImage(ImageSource.gallery);
+                  Get.back();
+                },
+                clr: Colors.red[300]!),
+            const SizedBox(
+              height: 20,
+            ),
+            _bottomSheetButton(
+                label: "Close",
+                context: context,
+                isClose: true,
+                onTap: () {
+                  Get.back();
+                },
+                clr: Colors.transparent),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _bottomSheetButton(
+      {required String label,
+      required Function()? onTap,
+      required Color clr,
+      required BuildContext context,
+      bool isClose = false}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        height: 55,
+        width: MediaQuery.of(context).size.width * 0.9,
+        decoration: BoxDecoration(
+          color: isClose == true ? Colors.transparent : clr,
+          border: Border.all(
+            width: 2,
+            color: isClose == true
+                ? Get.isDarkMode
+                    ? Colors.grey[600]!
+                    : Colors.grey[200]!
+                : clr,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              color: isClose
+                  ? Get.isDarkMode
+                      ? Colors.white
+                      : Colors.black
+                  : Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

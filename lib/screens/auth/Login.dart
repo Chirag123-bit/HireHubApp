@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/repository/UserRepository.dart';
+import 'package:hirehub/response/LoginResponse.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,14 +19,46 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _passwordController = TextEditingController();
 
+  bool isLoading = false;
+
   _loginUser(User user) async {
-    bool isLogin = await UserRepository().loginUser(user);
-    if (isLogin) {
-      Navigator.pushNamed(context, "/home");
-    } else {
-      MotionToast.error(
-        description: const Text("Incorrect Username or Password"),
-      ).show(context);
+    setState(() {
+      isLoading = true;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    LoginResponse? login = await UserRepository().loginUser(user);
+    try {
+      if (login == null) {
+        MotionToast.error(
+          description: const Text("Incorrect Username or Password"),
+        ).show(context);
+        return;
+      }
+      if (login.success!) {
+        User loggedUser = login.user!;
+        UserRepository userRepository = UserRepository();
+
+        if (loggedUser.type == "Applicant") {
+          await userRepository.storeBasicUserDetails(loggedUser);
+          await userRepository.storeProfessionalDetails(loggedUser);
+          await userRepository.storeEducationDetails(loggedUser.educationSet!);
+          await userRepository.storeWorkDetails(loggedUser.workSet!);
+          prefs.setString("token", login.token!);
+          Navigator.popAndPushNamed(context, "/home");
+        }
+      } else {
+        MotionToast.error(
+          description: const Text("Incorrect Username or Password"),
+        ).show(context);
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -132,6 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             )),
                             child: TextFormField(
+                              key: const ValueKey("txtUsername"),
                               controller: _usernameController,
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -149,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             padding: const EdgeInsets.all(8),
                             child: TextFormField(
+                              key: const ValueKey("txtPassword"),
                               controller: _passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
@@ -181,23 +217,42 @@ class _LoginScreenState extends State<LoginScreen> {
                         ])),
                     child: Center(
                       child: GestureDetector(
-                          child: const Text(
-                            'Login',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
+                          key: const ValueKey("btnLogin"),
+                          child: isLoading
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    CircularProgressIndicator(
+                                        color: Colors.white),
+                                    SizedBox(
+                                      width: 25,
+                                    ),
+                                    Text(
+                                      "Verifying...",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                  ],
+                                )
+                              : const Text(
+                                  'Login',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
                           onTap: () {
-                            Navigator.pushNamed(context, "/home");
+                            // Navigator.pushNamed(context, "/home");
 
-                            // if (_formKey.currentState!.validate()) {
-                            //   User user = User(
-                            //     username: _usernameController.text,
-                            //     password: _passwordController.text,
-                            //   );
-                            //   _loginUser(user);
-                            // }
+                            if (_formKey.currentState!.validate()) {
+                              User user = User(
+                                username: _usernameController.text,
+                                password: _passwordController.text,
+                              );
+                              _loginUser(user);
+                            }
                           }),
                     ),
                   ),
