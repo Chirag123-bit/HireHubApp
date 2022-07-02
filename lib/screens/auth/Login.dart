@@ -28,17 +28,22 @@ class _LoginScreenState extends State<LoginScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     LoginResponse? login = await UserRepository().loginUser(user);
-    if (login!.success!) {
-      prefs.setString("token", login.token!);
-      Navigator.popAndPushNamed(context, "/home");
-    } else {
-      MotionToast.error(
-        description: const Text("Incorrect Username or Password"),
-      ).show(context);
+    try {
+      if (login!.success!) {
+        prefs.setString("token", login.token!);
+        Navigator.popAndPushNamed(context, "/home");
+      } else {
+        MotionToast.error(
+          description: const Text("Incorrect Username or Password"),
+        ).show(context);
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 
   @override

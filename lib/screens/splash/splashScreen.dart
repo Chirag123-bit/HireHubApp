@@ -17,9 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _getToken().whenComplete(() => {
-          token != null
-              ? Navigator.pushReplacementNamed(context, '/home')
-              : Navigator.pushReplacementNamed(context, '/login')
+          if (token != null) {Navigator.pushReplacementNamed(context, '/home')}
         });
   }
 

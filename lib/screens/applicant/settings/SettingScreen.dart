@@ -9,9 +9,11 @@ import 'package:hirehub/screens/applicant/settings/education_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/work_info_screen.dart';
 import 'package:hirehub/screens/applicant/todos/TodoScreen.dart';
+import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -167,7 +169,11 @@ class _SettingScreenState extends State<SettingScreen> {
               style: ButtonStyle(
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)))),
-              onPressed: () {},
+              onPressed: () async {
+                SharedPreferences pref = await SharedPreferences.getInstance();
+                pref.clear();
+                Get.offAll(const LoginScreen());
+              },
               child: Text(
                 "Sign Out",
                 style: TextStyle(

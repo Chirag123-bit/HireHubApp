@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       theme: Themes.light,
       themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/login",
+      initialRoute: "/",
       routes: {
         "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
