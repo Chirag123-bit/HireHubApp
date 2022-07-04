@@ -4,6 +4,7 @@ const loginUrl = "auth/login";
 const registerUrl = "auth/register";
 const updateUserUrl = "auth/updateUser";
 const jobsUrl = "job/getAllJobs";
+const applyJobUrl = "job/applyForJob";
 const categoryUrl = "category/getCategory";
 const getAllCat = "category/getAllCategories";
 

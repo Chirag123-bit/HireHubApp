@@ -49,7 +49,7 @@ class DetailContent extends StatelessWidget {
                     SizedBox(height: kSpacingUnit),
                     Text(
                       data.company!.country! + ", " + data.company!.region!,
-                      style: kCaptionTextStyle,
+                      style: kCaptionTextStyle.copyWith(fontSize: 16),
                     ),
                   ],
                 ),
@@ -57,7 +57,8 @@ class DetailContent extends StatelessWidget {
               SizedBox(height: kSpacingUnit * 5),
               Text(
                 'Responsibilities',
-                style: kSubTitleTextStyle,
+                style: kSubTitleTextStyle.copyWith(
+                    fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(height: kSpacingUnit * 2),
               ...data.responsibilities!
@@ -66,7 +67,8 @@ class DetailContent extends StatelessWidget {
               SizedBox(height: kSpacingUnit),
               Text(
                 'Qualifications',
-                style: kSubTitleTextStyle,
+                style: kSubTitleTextStyle.copyWith(
+                    fontWeight: FontWeight.bold, fontSize: 20),
               ),
               SizedBox(height: kSpacingUnit * 2),
               ...data.requirements!
