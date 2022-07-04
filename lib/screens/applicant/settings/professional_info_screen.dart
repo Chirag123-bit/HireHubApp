@@ -11,6 +11,7 @@ import 'package:hirehub/screens/auth/TextComponent.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfessionalInfoScreen extends StatefulWidget {
@@ -36,6 +37,7 @@ class _EditProfessionalInfoScreenState
   ];
   bool isLoading = false;
   bool isImageLoading = false;
+  bool isUpdating = false;
   late String _imageUrl;
   late SharedPreferences prefs;
   late User user;
@@ -68,6 +70,21 @@ class _EditProfessionalInfoScreenState
       skills = user.skills ?? [""];
       isLoading = false;
     });
+  }
+
+  void updateProfessionalInfo(User user) async {
+    setState(() {
+      isUpdating = true;
+    });
+    await _userRepository.updateInfo(
+        {"title": user.title, "sector": user.sector, "skills": user.skills});
+    setState(() {
+      isUpdating = false;
+    });
+    Get.back();
+    MotionToast.success(
+      description: const Text("Professional Info Updated"),
+    ).show(context);
   }
 
   Future _loadImage(ImageSource imageSource) async {
@@ -266,9 +283,15 @@ class _EditProfessionalInfoScreenState
               ),
               MyButton(
                   label: "Update Info",
+                  isUpdating: isUpdating,
                   onTap: () {
                     if (formKeys.currentState!.validate()) {
-                      Get.back();
+                      user.title = preferedTitleController.text;
+                      user.sector = jobType;
+                      // user. = phoneController.text;
+                      user.skills = skills;
+                      _userRepository.storeProfessionalDetails(user);
+                      updateProfessionalInfo(user);
                     }
                   }),
               const SizedBox(height: 25),
@@ -313,7 +336,7 @@ class _EditProfessionalInfoScreenState
             ? const CircularProgressIndicator()
             : Flexible(
                 child: TextFormField(
-                  initialValue: skills[index] ?? "Test",
+                  initialValue: skills[index],
                   onChanged: (value) {
                     setState(() {
                       skills[index] = value;

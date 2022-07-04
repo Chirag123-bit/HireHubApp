@@ -25,6 +25,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   var notifyHelper;
   bool isDarkMode = Get.isDarkMode;
+  late String token;
 
   @override
   void initState() {
@@ -32,6 +33,17 @@ class _SettingScreenState extends State<SettingScreen> {
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
+    _getToken();
+  }
+
+  Future _getToken() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var storedToken = sharedPreferences.getString('token');
+
+    setState(() {
+      token = storedToken!;
+    });
   }
 
   @override
@@ -107,7 +119,7 @@ class _SettingScreenState extends State<SettingScreen> {
             BuildSettingOption(
               title: "Basic Info",
               onPressed: () {
-                Get.to(() => const EditBasicInfoScreen());
+                Get.to(() => EditBasicInfoScreen());
               },
             ),
             BuildSettingOption(

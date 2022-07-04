@@ -9,6 +9,7 @@ import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditWorkInfoScreen extends StatefulWidget {
@@ -36,6 +37,7 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
   String? jobType;
   File? img;
   bool isLoading = false;
+  bool isUpdating = false;
   bool isImageLoading = false;
   late SharedPreferences prefs;
   late List<Work> works;
@@ -76,6 +78,20 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
       works = workSaved;
       isLoading = false;
     });
+  }
+
+  void updateWorksInfo() async {
+    setState(() {
+      isUpdating = true;
+    });
+    await _userRepository.updateInfo({"works": works});
+    setState(() {
+      isUpdating = false;
+    });
+    // Get.back();
+    MotionToast.success(
+      description: const Text("Education Records Updated"),
+    ).show(context);
   }
 
   @override
@@ -176,9 +192,11 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                     ),
               MyButton(
                   label: "Update Info",
+                  isUpdating: isUpdating,
                   onTap: () {
                     if (formKeys.currentState!.validate()) {
-                      Get.back();
+                      updateWorksInfo();
+                      // Get.back();
                     }
                   }),
               const SizedBox(height: 25),
@@ -464,7 +482,7 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
           job_title: "",
           company: "",
           company_location: "",
-          work_type: "",
+          work_type: "Part Time",
           startDate: "",
           endDate: ""));
     });

@@ -8,6 +8,7 @@ import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditEducationalInfoScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
   String? jobType;
   File? img;
   bool isLoading = false;
+  bool isUpdating = false;
   bool isImageLoading = false;
   late SharedPreferences prefs;
   late List<Education> educations;
@@ -52,12 +54,26 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
     });
   }
 
+  void updateEducationalInfo() async {
+    setState(() {
+      isUpdating = true;
+    });
+    await _userRepository.updateInfo({"education": educations});
+    setState(() {
+      isUpdating = false;
+    });
+    Get.back();
+    MotionToast.success(
+      description: const Text("Education Records Updated"),
+    ).show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text("Professional Details"),
+        title: const Text("Educational Records"),
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
@@ -77,7 +93,7 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
           child: ListView(
             children: [
               Text(
-                "Edit Professional Information",
+                "Edit Education Records",
                 style: GoogleFonts.lato(
                   textStyle: const TextStyle(
                     fontSize: 25,
@@ -147,9 +163,11 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                   : _educationSetContainer(),
               MyButton(
                   label: "Update Info",
+                  isUpdating: isUpdating,
                   onTap: () {
                     if (formKeys.currentState!.validate()) {
-                      Get.back();
+                      updateEducationalInfo();
+                      // Get.back();
                     }
                   }),
               const SizedBox(height: 25),

@@ -12,6 +12,10 @@ class UserRepository {
     return await UserAPI().registerUser(user);
   }
 
+  Future<bool> updateInfo(Map<String, dynamic> user) async {
+    return await UserAPI().updateInfo(user);
+  }
+
   Future<LoginResponse?> loginUser(User user) async {
     return await UserAPI().loginUser(user);
   }

@@ -10,6 +10,7 @@ import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
 import 'package:hirehub/screens/widgets/Button.dart';
 import 'package:hirehub/theme/Theme.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditBasicInfoScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class EditBasicInfoScreen extends StatefulWidget {
 
 class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
   bool isLoading = false;
+  bool isUpdating = false;
   bool isImageLoading = false;
   late String _imageUrl;
   late SharedPreferences prefs;
@@ -37,6 +39,25 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
     getAndSetDate();
   }
 
+  void updateBasicInfo(User user) async {
+    setState(() {
+      isUpdating = true;
+    });
+    await _userRepository.updateInfo({
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "phone": user.phone,
+      "gender": user.gender
+    });
+    setState(() {
+      isUpdating = false;
+    });
+    Get.back();
+    MotionToast.success(
+      description: const Text("Basic Info Updated"),
+    ).show(context);
+  }
+
   void getAndSetDate() async {
     setState(() {
       isLoading = true;
@@ -51,7 +72,6 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
       phoneController = TextEditingController(text: user.phone);
       genderType = user.gender;
       isLoading = false;
-      print(genderType);
     });
   }
 
@@ -240,9 +260,15 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
               const SizedBox(height: 25),
               MyButton(
                   label: "Update Info",
+                  isUpdating: isUpdating,
                   onTap: () {
                     if (formKeys.currentState!.validate()) {
-                      Get.back();
+                      user.firstName = firstnameController.text;
+                      user.lastName = lastnameController.text;
+                      user.phone = phoneController.text;
+                      user.gender = genderType;
+                      _userRepository.storeBasicUserDetails(user);
+                      updateBasicInfo(user);
                     }
                   })
             ],

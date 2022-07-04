@@ -26,10 +26,7 @@ class TextFieldGenerator extends StatelessWidget {
         obscureText: obscureText,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-            fillColor: const Color(0xfff3f3f4),
-            filled: true,
-            labelText: label,
-            border: const OutlineInputBorder()),
+            filled: true, labelText: label, border: const OutlineInputBorder()),
         validator: (value) {
           if (value!.isEmpty) {
             return validatorText;
