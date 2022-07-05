@@ -23,7 +23,9 @@ class DetailScreen extends StatelessWidget {
                 DetailContent(data: data),
               ],
             ),
-            const DetailFooter(),
+            DetailFooter(
+              data: data,
+            ),
           ],
         ),
       ),

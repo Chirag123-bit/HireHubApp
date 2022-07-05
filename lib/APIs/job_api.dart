@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:hirehub/APIs/HttpServices.dart';
 import 'package:hirehub/response/get_jobs_response.dart';
 import 'package:hirehub/utils/url.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JobsAPI {
   Future<JobsResponse?> getAllJobs() async {
@@ -19,5 +22,40 @@ class JobsAPI {
       print(e);
     }
     return jobsResponse;
+  }
+
+  Future _getToken() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    var storedToken = sharedPreferences.getString('token');
+    return storedToken;
+  }
+
+  Future<bool> applyForJob(String jobId) async {
+    bool isSuccess = false;
+    Response response;
+    String token = await _getToken();
+    var url = baseUrl + applyJobUrl;
+    var dio = HttpServices().getDioInstance();
+    var data = {
+      'job': jobId,
+    };
+    try {
+      response = await dio.post(url,
+          data: jsonEncode(data),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }));
+      if (response.statusCode == 200) {
+        isSuccess = true;
+      } else {
+        isSuccess = false;
+      }
+    } catch (e) {
+      // print(e);
+    }
+    return isSuccess;
   }
 }

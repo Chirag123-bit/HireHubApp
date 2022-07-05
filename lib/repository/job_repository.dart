@@ -5,4 +5,8 @@ class JobsRepository {
   Future<JobsResponse?> getAllJobs() async {
     return await JobsAPI().getAllJobs();
   }
+
+  Future<bool?> applyForJob(String jobID) async {
+    return await JobsAPI().applyForJob(jobID);
+  }
 }

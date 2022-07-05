@@ -2,11 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/models/Job.dart';
+import 'package:hirehub/repository/job_repository.dart';
+import 'package:motion_toast/motion_toast.dart';
 
-class DetailFooter extends StatelessWidget {
+class DetailFooter extends StatefulWidget {
+  final Job data;
   const DetailFooter({
     Key? key,
+    required this.data,
   }) : super(key: key);
+
+  @override
+  State<DetailFooter> createState() => _DetailFooterState();
+}
+
+class _DetailFooterState extends State<DetailFooter> {
+  bool isLoading = false;
+  bool isApplied = false;
+  bool isSaved = false;
+  JobsRepository repo = JobsRepository();
+
+  void applyForJob() {
+    setState(() {
+      isLoading = true;
+    });
+    repo.applyForJob(widget.data.id!).then((value) {
+      if (value != null && value == true) {
+        MotionToast.success(
+          description: const Text("Successfully applied for the job"),
+        ).show(context);
+      } else {
+        MotionToast.error(
+          description: const Text("Error applying for job"),
+        ).show(context);
+      }
+    });
+    setState(() {
+      isLoading = false;
+      isApplied = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +82,18 @@ class DetailFooter extends StatelessWidget {
                   color: kAccentColor,
                   borderRadius: BorderRadius.circular(kSpacingUnit * 3),
                 ),
-                child: Center(
-                  child: Text(
-                    'Apply Now',
-                    style: kTitleTextStyle.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
+                child: GestureDetector(
+                  onTap: isLoading ? () {} : applyForJob,
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : Center(
+                          child: Text(
+                            'Apply Now',
+                            style: kTitleTextStyle.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                 ),
               ),
             ),
