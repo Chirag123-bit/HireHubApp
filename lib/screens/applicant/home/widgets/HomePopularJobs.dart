@@ -8,6 +8,8 @@ import 'package:hirehub/response/get_jobs_response.dart';
 import 'package:hirehub/screens/applicant/home/widgets/JobCard.dart';
 
 class HomePopularJobs extends StatefulWidget {
+  const HomePopularJobs({Key? key}) : super(key: key);
+
   @override
   _HomePopularJobsState createState() => _HomePopularJobsState();
 }
