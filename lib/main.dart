@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hirehub/database/DbHelper.dart';
+import 'package:hirehub/database/JobHelper.dart';
 import 'package:hirehub/database/TodoHelper.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
 import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
@@ -21,6 +22,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.initDb();
   await TodoHelper.initDb();
+  await JobHelper.initDb();
   await GetStorage.init();
   runApp(const MyApp());
   // runApp(const WearOsApp());

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hirehub/controller/AppliedJobController.dart';
 import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/repository/UserRepository.dart';
+import 'package:hirehub/repository/job_repository.dart';
 import 'package:hirehub/response/LoginResponse.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           await userRepository.storeEducationDetails(loggedUser.educationSet!);
           await userRepository.storeWorkDetails(loggedUser.workSet!);
           prefs.setString("token", login.token!);
+          getAppliedJobs();
           Navigator.popAndPushNamed(context, "/home");
         }
       } else {
@@ -59,6 +62,20 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isLoading = false;
       });
+    }
+  }
+
+  getAppliedJobs() async {
+    final JobsRepository _jobRepository = JobsRepository();
+    final appldJobs = await _jobRepository.getAppliedJobs();
+    final appliedJobs = appldJobs?.data;
+
+    //store appliedJobs in sqlite db
+    if (appliedJobs != null) {
+      JobController _jobHelper = JobController();
+      for (var data in appliedJobs) {
+        _jobHelper.addAppliedJob(appliedJob: data);
+      }
     }
   }
 

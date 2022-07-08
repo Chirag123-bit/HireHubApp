@@ -43,7 +43,7 @@ class HomeContent extends StatelessWidget {
                   ],
                 ),
               ),
-              HomePopularJobs(),
+              const HomePopularJobs(),
               SizedBox(height: kSpacingUnit * 2),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: kSpacingUnit * 4),

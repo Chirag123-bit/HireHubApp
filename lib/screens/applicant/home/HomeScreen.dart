@@ -6,6 +6,8 @@ import 'package:hirehub/screens/applicant/home/widgets/HomeHeader.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomeSubHeader.dart';
 
 class HomeScreen extends StatelessWidget {
+  //get applied jobs
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
@@ -20,7 +22,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: kSpacingUnit * 3),
             const HomeSubHeader(),
             SizedBox(height: kSpacingUnit * 3),
-            const HomeContent(),
+            HomeContent(),
           ],
         ),
       ),
