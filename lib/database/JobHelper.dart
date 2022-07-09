@@ -45,6 +45,11 @@ class JobHelper {
         ?.delete(_tableName, where: "id = ?", whereArgs: [event.id]);
   }
 
+  static deleteAll() async {
+    print("Delete All Function called");
+    return await _db?.execute("DELETE FROM $_tableName");
+  }
+
   static update(int id, String status) async {
     print("Update Function called");
     return await _db!.rawUpdate('''
