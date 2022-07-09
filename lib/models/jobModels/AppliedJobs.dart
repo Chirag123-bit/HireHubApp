@@ -25,4 +25,7 @@ class AppliedJob {
   factory AppliedJob.fromJson(Map<String, dynamic> json) =>
       _$AppliedJobFromJson(json);
   Map<String, dynamic> toJson() => _$AppliedJobToJson(this);
+
+  factory AppliedJob.fromJsonTable(Map<String, dynamic> json) =>
+      _$AppliedJobFromJsonTable(json);
 }

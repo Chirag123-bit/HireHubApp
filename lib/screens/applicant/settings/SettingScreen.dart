@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
+import 'package:hirehub/screens/applicant/job/AppliedJobsScreen.dart';
+import 'package:hirehub/screens/applicant/job/SavedJobScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/education_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
@@ -119,7 +121,7 @@ class _SettingScreenState extends State<SettingScreen> {
             BuildSettingOption(
               title: "Basic Info",
               onPressed: () {
-                Get.to(() => EditBasicInfoScreen());
+                Get.to(() => const EditBasicInfoScreen());
               },
             ),
             BuildSettingOption(
@@ -173,6 +175,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 title: "My ToDos",
                 onPressed: () {
                   Get.to(() => const TodoScreen());
+                }),
+            BuildSettingOption(
+                title: "Applied Jobs",
+                onPressed: () {
+                  Get.to(() => const AppliedJobScreen());
+                }),
+            BuildSettingOption(
+                title: "Saved Jobs",
+                onPressed: () {
+                  Get.to(() => const SavedJobScreen());
                 }),
             const SizedBox(
               height: 20,

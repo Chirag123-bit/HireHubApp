@@ -15,6 +15,15 @@ AppliedJob _$AppliedJobFromJson(Map<String, dynamic> json) => AppliedJob(
       status: json['status'] as String?,
       appliedDate: json['appliedDate'] as String?,
     );
+AppliedJob _$AppliedJobFromJsonTable(Map<String, dynamic> json) => AppliedJob(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+      companyName: json['companyName'] as String?,
+      companyCountry: json['companyCountry'] as String?,
+      companyRegion: json['companyRegion'] as String?,
+      status: json['status'] as String?,
+      appliedDate: json['appliedDate'] as String?,
+    );
 
 Map<String, dynamic> _$AppliedJobToJson(AppliedJob instance) =>
     <String, dynamic>{

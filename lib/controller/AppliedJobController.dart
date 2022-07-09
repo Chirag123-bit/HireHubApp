@@ -6,7 +6,7 @@ class JobController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    getTodos();
+    getAppliedJobs();
   }
 
   var appliedJobsList = <AppliedJob>[].obs;
@@ -16,10 +16,10 @@ class JobController extends GetxController {
   }
 
   //get all events form database
-  void getTodos() async {
+  void getAppliedJobs() async {
     List<Map<String, dynamic>> events = await JobHelper.query();
-    appliedJobsList
-        .assignAll(events.map((data) => AppliedJob.fromJson(data)).toList());
+    appliedJobsList.assignAll(
+        events.map((data) => AppliedJob.fromJsonTable(data)).toList());
     print(appliedJobsList.length);
   }
 
@@ -30,6 +30,6 @@ class JobController extends GetxController {
 
   void markTaskCompleted(int id, String status) async {
     var val = await JobHelper.update(id, status);
-    getTodos();
+    getAppliedJobs();
   }
 }
