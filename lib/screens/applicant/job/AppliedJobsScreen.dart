@@ -13,6 +13,21 @@ class AppliedJobScreen extends StatefulWidget {
 
 class _AppliedJobScreenState extends State<AppliedJobScreen> {
   final appliedJobsController = Get.put(JobController());
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    setState(() {
+      isLoading = true;
+    });
+    super.initState();
+    appliedJobsController.getAppliedJobs();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,20 +75,23 @@ class _AppliedJobScreenState extends State<AppliedJobScreen> {
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Obx(() {
-                return ListView.builder(
-                  itemCount: appliedJobsController.appliedJobsList.length,
-                  itemBuilder: (_, index) {
-                    return AppliedCard(
-                      appliedJob: appliedJobsController.appliedJobsList[index],
-                      index: index,
-                    );
-                  },
-                );
-              }),
-            ),
+            child: isLoading
+                ? const CircularProgressIndicator()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Obx(() {
+                      return ListView.builder(
+                        itemCount: appliedJobsController.appliedJobsList.length,
+                        itemBuilder: (_, index) {
+                          return AppliedCard(
+                            appliedJob:
+                                appliedJobsController.appliedJobsList[index],
+                            index: index,
+                          );
+                        },
+                      );
+                    }),
+                  ),
           )
         ],
       ),

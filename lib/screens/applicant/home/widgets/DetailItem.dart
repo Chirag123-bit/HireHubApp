@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 
 class DetailItem extends StatelessWidget {
@@ -14,9 +15,9 @@ class DetailItem extends StatelessWidget {
         "⦿ " + data,
         textAlign: TextAlign.justify,
         style: kCaptionTextStyle.copyWith(
-          color: kPrimaryTextColor,
           fontWeight: FontWeight.w400,
           fontSize: 13,
+          color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/models/category/Category.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -39,7 +40,9 @@ class _FilterScreenState extends State<FilterScreen> {
                 }),
             Text(
               "Category",
-              style: Theme.of(context).textTheme.headline5!,
+              style: Theme.of(context).textTheme.headline5!.copyWith(
+                    color: Get.isDarkMode ? Colors.white : Colors.grey[600],
+                  ),
             ),
             CustomCategoryFilter(categories: Category.generatedCategories())
           ],
@@ -68,7 +71,7 @@ class CustomCategoryFilter extends StatelessWidget {
               vertical: 10,
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              // color: Colors.white,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(

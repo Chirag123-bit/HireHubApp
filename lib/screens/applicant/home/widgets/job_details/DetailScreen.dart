@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailContent.dart';
 import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailFooter.dart';
@@ -13,7 +12,6 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kSilverColor,
       body: SafeArea(
         child: Stack(
           children: [

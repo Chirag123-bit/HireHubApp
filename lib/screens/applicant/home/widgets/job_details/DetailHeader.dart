@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Job.dart';
 
@@ -28,12 +29,14 @@ class DetailHeader extends StatelessWidget {
               'assets/icons/chevron_left_icon.svg',
               height: 30.sp,
               width: 30.sp,
+              color: Get.isDarkMode ? Colors.white : Colors.blue,
             ),
           ),
           Text(
             data.company!.name!,
             style: kSubTitleTextStyle.copyWith(
               fontWeight: FontWeight.w600,
+              color: Get.isDarkMode ? Colors.white : Colors.black,
             ),
           ),
           SizedBox(width: 30.sp),

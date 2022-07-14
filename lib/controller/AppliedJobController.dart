@@ -6,6 +6,7 @@ import 'package:hirehub/repository/job_repository.dart';
 class JobController extends GetxController {
   @override
   void onReady() {
+    print("Hre");
     super.onReady();
     getAppliedJobs();
   }
@@ -18,15 +19,32 @@ class JobController extends GetxController {
 
   //get all events form database
   getAppliedJobs() async {
+    final JobsRepository _jobRepository = JobsRepository();
+    final appldJobs = await _jobRepository.getAppliedJobs();
+    final appliedJobs = appldJobs?.data;
+    if (appliedJobs != null) {
+      deleteAll();
+      for (var data in appliedJobs) {
+        addAppliedJob(appliedJob: data);
+      }
+    }
+    print("snasdnaskdnasdaskldaskldnasklndaskln");
     List<Map<String, dynamic>> events = await JobHelper.query();
+    print("events: $events");
     appliedJobsList.assignAll(
         events.map((data) => AppliedJob.fromJsonTable(data)).toList());
+
     return appliedJobsList;
   }
 
   void delete(AppliedJob appliedJob) {
     appliedJobsList.remove(appliedJob);
     var val = JobHelper.delete(appliedJob);
+  }
+
+  void deleteAll() {
+    appliedJobsList.clear();
+    var val = JobHelper.deleteAll();
   }
 
   void markTaskCompleted(int id, String status) async {

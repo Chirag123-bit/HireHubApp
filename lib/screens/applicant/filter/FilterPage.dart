@@ -27,10 +27,9 @@ class _FilterPageState extends State<FilterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(300),
-                  decoration: const BoxDecoration(color: Colors.white),
                   child: Column(
                     children: [
                       SvgPicture.asset(
@@ -60,8 +59,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
                 SizedBox(height: kSpacingUnit * 3),
-                Container(
-                  decoration: const BoxDecoration(color: Colors.white),
+                SizedBox(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(200),
                   child: Column(
@@ -104,7 +102,6 @@ class _FilterPageState extends State<FilterPage> {
                 ),
                 SizedBox(height: kSpacingUnit * 2),
                 Container(
-                  color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

@@ -73,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
     //store appliedJobs in sqlite db
     if (appliedJobs != null) {
       JobController _jobHelper = JobController();
+      _jobHelper.deleteAll();
       for (var data in appliedJobs) {
         _jobHelper.addAppliedJob(appliedJob: data);
       }

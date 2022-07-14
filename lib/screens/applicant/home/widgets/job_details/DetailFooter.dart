@@ -102,7 +102,7 @@ class _DetailFooterState extends State<DetailFooter> {
       child: Container(
         padding: EdgeInsets.all(kSpacingUnit * 2),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).primaryColor,
           boxShadow: [kFooterShadow],
         ),
         child: Row(
@@ -160,7 +160,7 @@ class _DetailFooterState extends State<DetailFooter> {
                     height: kSpacingUnit * 6,
                     width: kSpacingUnit * 8,
                     decoration: BoxDecoration(
-                      color: kSilverColor,
+                      color: Get.isDarkMode ? Colors.black : kSilverColor,
                       borderRadius: BorderRadius.circular(kSpacingUnit * 3),
                     ),
                     child: Center(
@@ -168,7 +168,7 @@ class _DetailFooterState extends State<DetailFooter> {
                         'assets/icons/heart_icon.svg',
                         height: 20.sp,
                         width: 20.sp,
-                        color: kAccentColor,
+                        color: Get.isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
@@ -177,7 +177,7 @@ class _DetailFooterState extends State<DetailFooter> {
                     child: Container(
                       height: kSpacingUnit * 6,
                       decoration: BoxDecoration(
-                        color: kAccentColor,
+                        color: Colors.blue,
                         borderRadius: BorderRadius.circular(kSpacingUnit * 3),
                       ),
                       child: isvalidating
