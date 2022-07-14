@@ -7,9 +7,12 @@ import 'package:hirehub/screens/applicant/home/widgets/HomeHeader.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomeSubHeader.dart';
 import 'package:hirehub/theme/Theme.dart';
 
-class HomeScreen extends StatelessWidget {
-  //get applied jobs
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
@@ -30,4 +33,10 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  // @override
+  // void dispose() {
+  //   detector.stopListening();
+  //   super.dispose();
+  // }
 }

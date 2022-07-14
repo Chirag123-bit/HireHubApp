@@ -11,9 +11,9 @@ import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
 import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
 import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
+import 'package:hirehub/screens/auth/FingerPrintScreen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
-import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
 // import 'package:hirehub/wearOs/main.dart';
@@ -45,9 +45,9 @@ class _MyAppState extends State<MyApp> {
       theme: Themes.light,
       themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: "/lock",
       routes: {
-        "/": (context) => const SplashScreen(),
+        // "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const Register(),
@@ -56,6 +56,7 @@ class _MyAppState extends State<MyApp> {
         "/todo": (context) => const EventsScreen(),
         "/edit_basic": (context) => const EditBasicInfoScreen(),
         "/settings": (context) => const SettingScreen(),
+        "/lock": (context) => const FingerPrintScreen(),
       },
     );
   }

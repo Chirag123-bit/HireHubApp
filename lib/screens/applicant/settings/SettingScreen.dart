@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:all_sensors2/all_sensors2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,6 +31,9 @@ class _SettingScreenState extends State<SettingScreen> {
   var notifyHelper;
   bool isDarkMode = Get.isDarkMode;
   late String token;
+  final double _proximityValue = 0;
+  final List<StreamSubscription<dynamic>> _streamSubscriptions =
+      <StreamSubscription<dynamic>>[];
 
   @override
   void initState() {
@@ -36,6 +42,23 @@ class _SettingScreenState extends State<SettingScreen> {
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
     _getToken();
+    _streamSubscriptions.add(proximityEvents!.listen((ProximityEvent event) {
+      if (event.proximity < 3) {
+        ThemeServices().switchTheme();
+        notifyHelper.displayNotification(
+          title: "Theme Changed",
+          body: Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
+        );
+      }
+    }));
+  }
+
+  @override
+  void dispose() {
+    for (var subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+    super.dispose();
   }
 
   Future _getToken() async {
