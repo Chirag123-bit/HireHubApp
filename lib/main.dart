@@ -11,7 +11,6 @@ import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
 import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
 import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
-import 'package:hirehub/screens/auth/FingerPrintScreen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
 import 'package:hirehub/services/theme_services.dart';
@@ -45,7 +44,7 @@ class _MyAppState extends State<MyApp> {
       theme: Themes.light,
       themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/lock",
+      initialRoute: "/",
       routes: {
         // "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
@@ -56,7 +55,6 @@ class _MyAppState extends State<MyApp> {
         "/todo": (context) => const EventsScreen(),
         "/edit_basic": (context) => const EditBasicInfoScreen(),
         "/settings": (context) => const SettingScreen(),
-        "/lock": (context) => const FingerPrintScreen(),
       },
     );
   }
