@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hirehub/APIs/UserAPI.dart';
+import 'package:hirehub/models/Company.dart';
 import 'package:hirehub/models/Education.dart';
 import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/models/Work.dart';
@@ -14,6 +15,10 @@ class UserRepository {
 
   Future<bool> updateInfo(Map<String, dynamic> user) async {
     return await UserAPI().updateInfo(user);
+  }
+
+  Future<bool> updateCompanyInfo(Map<String, dynamic> user) async {
+    return await UserAPI().updateCompanyInfo(user);
   }
 
   Future<LoginResponse?> loginUser(User user) async {
@@ -48,25 +53,41 @@ class UserRepository {
   Future<void> storeBasicUserDetails(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(fnameKey, user.firstName!);
+
     prefs.setString(lnameKey, user.lastName!);
+
     prefs.setString(emailKey, user.email!);
+
     prefs.setString(usernameKey, user.username!);
+
     prefs.setString(phoneKey, user.phone!);
+
     prefs.setString(typeKey, user.type!);
+
     prefs.setString(idKey, user.id!);
+
     prefs.setString(genderKey, user.gender!);
   }
 
   //function to store company details in shared preferences
-  Future<void> storeCompanyDetails(User user) async {
+  Future<void> storeCompanyDetails(Company company) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(companyNameKey, user.cname!);
-    prefs.setString(countryKey, user.country!);
-    prefs.setString(regionKey, user.region!);
-    prefs.setString(companyAboutKey, user.cabout!);
-    prefs.setString(companyDescKey, user.cdesc!);
-    prefs.setString(companySectorKey, user.csector!);
-    prefs.setString(idKey, user.id!);
+
+    prefs.setString(countryKey, company.country!);
+
+    prefs.setString(companyNameKey, company.name!);
+
+    prefs.setString(regionKey, company.region!);
+    prefs.setString(companySectorKey, company.sector!);
+    prefs.setString(phoneKey, company.phone!);
+
+    // prefs.setString(companyAboutKey, company.about!);
+
+    // prefs.setString(companyDescKey, company.desc!);
+
+    // prefs.setString(companySectorKey, company.sector!);
+
+    // prefs.setString(idKey, company.id!);
   }
 
   //function to store job details in shared preferences
@@ -136,6 +157,7 @@ class UserRepository {
       cabout: prefs.getString(companyAboutKey),
       cdesc: prefs.getString(companyDescKey),
       csector: prefs.getString(companySectorKey),
+      phone: prefs.getString(phoneKey),
       id: prefs.getString(idKey),
     );
   }

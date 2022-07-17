@@ -50,6 +50,16 @@ class _LoginScreenState extends State<LoginScreen> {
           prefs.setString("token", login.token!);
           getAppliedJobs();
           Navigator.popAndPushNamed(context, "/home");
+        } else if (loggedUser.type == "Company") {
+          await userRepository.storeBasicUserDetails(loggedUser);
+          await userRepository.storeCompanyDetails(login.company!);
+
+          prefs.setString("token", login.token!);
+          Navigator.popAndPushNamed(context, "/homeEmployer");
+        } else {
+          MotionToast.error(
+            description: const Text("Some Unknown error occured"),
+          ).show(context);
         }
       } else {
         MotionToast.error(

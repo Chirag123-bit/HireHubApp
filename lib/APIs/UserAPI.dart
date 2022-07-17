@@ -62,6 +62,37 @@ class UserAPI {
     return isLogin;
   }
 
+  Future<bool> updateCompanyInfo(Map<String, dynamic> user) async {
+    bool isLogin = false;
+    Response response;
+    String token = await _getToken();
+    var url = baseUrl + updateCompanyUrl;
+    var dio = HttpServices().getDioInstance();
+    var data = {};
+    try {
+      for (String key in user.keys) {
+        data[key] = user[key];
+      }
+      // response = await dio.post(url, data: user.toJson());
+      response = await dio.put(url,
+          data: data,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }));
+      if (response.statusCode == 200) {
+        isLogin = true;
+      } else {
+        isLogin = false;
+      }
+      print(isLogin);
+    } catch (e) {
+      print(e);
+    }
+    return isLogin;
+  }
+
   Future<LoginResponse?> loginUser(User user) async {
     LoginResponse? login;
     var url = baseUrl + loginUrl;
@@ -70,7 +101,6 @@ class UserAPI {
       Response response = await dio.post(url, data: user.toJson());
       if (response.statusCode == 200) {
         login = LoginResponse.fromJson(response.data);
-        // print(response.data);
       } else {
         login = null;
       }
