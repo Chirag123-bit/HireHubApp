@@ -53,9 +53,6 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
         );
       }
     }));
-    // userAccelerometerEvents!.listen((UserAccelerometerEvent event) {
-    //   // print(event);
-    // });
   }
 
   @override

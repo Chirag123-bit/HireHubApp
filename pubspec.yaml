@@ -73,6 +73,9 @@ dependencies:
   sensors_plus: ^1.3.2
   all_sensors2: ^1.0.1
   shake_event: ^0.0.9
+  country_state_city_picker: ^1.2.8
+  flutter_country_state: ^0.2.6
+  country_state_city_pro: ^0.0.3
 
 dev_dependencies:
   flutter_test:

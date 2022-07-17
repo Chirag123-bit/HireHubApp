@@ -6,6 +6,8 @@ import 'package:hirehub/screens/auth/registerComponents/AccountComponents.dart';
 import 'package:hirehub/screens/auth/registerComponents/BasicComponents.dart';
 import 'package:hirehub/screens/auth/registerComponents/candidateComponents/AdditionalInfo.dart';
 import 'package:hirehub/screens/auth/registerComponents/candidateComponents/ProfessionalInfo.dart';
+import 'package:hirehub/screens/auth/registerComponents/employerComponents/AdditionalInfo.dart';
+import 'package:hirehub/screens/auth/registerComponents/employerComponents/ProfessionalInfo.dart';
 import 'package:motion_toast/motion_toast.dart';
 
 class Register extends StatefulWidget {
@@ -32,6 +34,12 @@ class _RegisterState extends State<Register> {
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
   final jobTitleController = TextEditingController();
+  final countryController = TextEditingController();
+  final stateController = TextEditingController();
+  final cityController = TextEditingController();
+  final companyNameController = TextEditingController();
+  final companyAboutController = TextEditingController();
+  final companyDescController = TextEditingController();
   User user = User();
 
   _registerUser() async {
@@ -87,6 +95,11 @@ class _RegisterState extends State<Register> {
                           user.password = passwordController.text;
                           user.email = emailController.text;
                           user.title = jobTitleController.text;
+                          user.country = countryController.text;
+                          user.region = stateController.text;
+                          user.cabout = companyAboutController.text;
+                          user.cdesc = companyDescController.text;
+                          user.cname = companyNameController.text;
                           _registerUser();
                         } else {
                           MotionToast.error(
@@ -129,7 +142,7 @@ class _RegisterState extends State<Register> {
 
   List<Step> getSteps() => [
         Step(
-          title: const Text('Basic'),
+          title: const Text(''),
           content: BasicComponents(
             user: user,
             firstnameController: firstnameController,
@@ -140,7 +153,7 @@ class _RegisterState extends State<Register> {
           isActive: _currentStep >= 0,
         ),
         Step(
-          title: const Text('Account'),
+          title: const Text(''),
           content: AccountComponents(
             user: user,
             usernameController: usernameController,
@@ -151,20 +164,37 @@ class _RegisterState extends State<Register> {
           isActive: _currentStep >= 1,
         ),
         Step(
-          title: const Text('Additional'),
-          content: AdditionalInfo(
-            formKeys: formKeys,
-            user: user,
-            jobTitleController: jobTitleController,
-          ),
+          title: const Text(''),
+          content: user.type == "Applicant"
+              ? AdditionalInfo(
+                  formKeys: formKeys,
+                  user: user,
+                  jobTitleController: jobTitleController,
+                )
+              : AdditionalInfoEmployer(
+                  formKeys: formKeys,
+                  user: user,
+                  country: countryController,
+                  state: stateController,
+                  city: cityController,
+                  jobTitleController: jobTitleController,
+                  companyNameController: companyNameController,
+                ),
           isActive: _currentStep >= 2,
         ),
         Step(
-          title: const Text('Professional'),
-          content: ProfessionalInfo(
-            formKeys: formKeys,
-            user: user,
-          ),
+          title: const Text(''),
+          content: user.type == "Applicant"
+              ? ProfessionalInfo(
+                  formKeys: formKeys,
+                  user: user,
+                )
+              : ProfessionalInfoEmployer(
+                  formKeys: formKeys,
+                  user: user,
+                  companyAboutController: companyAboutController,
+                  companyDescController: companyDescController,
+                ),
           isActive: _currentStep >= 3,
         ),
       ];
