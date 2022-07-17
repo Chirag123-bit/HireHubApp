@@ -22,7 +22,9 @@ class CategoryScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 24),
             height: size.height / 4,
             width: size.width,
-            decoration: const BoxDecoration(color: Colors.white),
+            decoration: const BoxDecoration(
+                // color: Get.isDarkMode ? Colors.white : Colors.grey[600],
+                ),
             child: SafeArea(
               child: Align(
                 alignment: Alignment.topCenter,
@@ -44,7 +46,10 @@ class CategoryScreen extends StatelessWidget {
                         Text(
                           "Category",
                           style: kSubtitleStyle.copyWith(
-                              color: Colors.black, fontSize: 20),
+                              color: Get.isDarkMode
+                                  ? Colors.white
+                                  : Colors.grey[600],
+                              fontSize: 20),
                         )
                       ],
                     ),
@@ -54,7 +59,8 @@ class CategoryScreen extends StatelessWidget {
                     Text(
                       "Ready for the next step?",
                       style: kTitleStyle.copyWith(
-                          color: Colors.black,
+                          color:
+                              Get.isDarkMode ? Colors.white : Colors.grey[600],
                           fontSize: 28,
                           fontWeight: FontWeight.w600),
                     ),
@@ -64,7 +70,7 @@ class CategoryScreen extends StatelessWidget {
                     Text(
                       "Choose your prefered category",
                       style: kSubtitleStyle.copyWith(
-                        color: Colors.black,
+                        color: Get.isDarkMode ? Colors.white : Colors.grey[600],
                         fontSize: 16,
                       ),
                     ),
@@ -88,7 +94,7 @@ class CategoryScreen extends StatelessWidget {
                         width: size.width,
                         // margin: const EdgeInsets.only(top: 0),
                         decoration: BoxDecoration(
-                          color: kSilverColor,
+                          color: Get.isDarkMode ? Colors.grey[900] : kSilver,
                           borderRadius: BorderRadius.circular(34),
                         ),
                         child: GridView.builder(
@@ -143,7 +149,8 @@ class LongCourseCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: background,
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: Colors.white, width: 5),
+          border: Border.all(
+              color: Get.isDarkMode ? Colors.grey[900]! : kSilver, width: 5),
           boxShadow: [
             BoxShadow(
                 blurRadius: 50,
@@ -158,11 +165,13 @@ class LongCourseCard extends StatelessWidget {
           ),
           Text(
             title,
-            style: kTitleStyle.copyWith(color: Colors.white),
+            style: kTitleStyle.copyWith(
+                color: Get.isDarkMode ? Colors.white : Colors.grey[600]),
           ),
           Text(
             subtitle + " Jobs Available",
-            style: kSubtitleStyle.copyWith(color: Colors.white),
+            style: kSubtitleStyle.copyWith(
+                color: Get.isDarkMode ? Colors.white : Colors.grey[600]),
           ),
           Expanded(
             child: Image.network(imgUrl),

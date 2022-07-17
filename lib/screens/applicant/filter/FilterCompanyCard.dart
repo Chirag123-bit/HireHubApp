@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Company.dart';
 
@@ -13,7 +14,8 @@ class CompanyCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: kSpacingUnit * 1),
       margin: EdgeInsets.symmetric(horizontal: kSpacingUnit * 0.5),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black, width: 1),
+        border: Border.all(
+            color: Get.isDarkMode ? Colors.white : Colors.black, width: 1),
         borderRadius: BorderRadius.circular(kSpacingUnit * 2),
       ),
       child: Column(

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hirehub/database/DbHelper.dart';
+import 'package:hirehub/database/JobHelper.dart';
 import 'package:hirehub/database/TodoHelper.dart';
 import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
 import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
@@ -12,7 +13,6 @@ import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
-import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
 // import 'package:hirehub/wearOs/main.dart';
@@ -21,6 +21,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.initDb();
   await TodoHelper.initDb();
+  await JobHelper.initDb();
   await GetStorage.init();
   runApp(const MyApp());
   // runApp(const WearOsApp());
@@ -45,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const SplashScreen(),
+        // "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const Register(),

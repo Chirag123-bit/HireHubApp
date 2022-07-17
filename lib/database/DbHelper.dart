@@ -9,6 +9,7 @@ class DbHelper {
   static const String _dbName = 'hirehub';
   static const String _tableName = 'events';
   static const String _tableName2 = 'todos';
+  static const String _tableName3 = 'appliedJobs';
 
   static Future<void> initDb() async {
     if (_db != null) {
@@ -26,6 +27,8 @@ class DbHelper {
             "CREATE TABLE $_tableName(id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, note TEXT, date STRING, startTime STRING, endTime STRING, remind INTEGER, color INTEGER,  isCompleted INTEGER, repeat INTEGER)");
         db.execute(
             "CREATE TABLE $_tableName2(id INTEGER PRIMARY KEY AUTOINCREMENT, title STRING, note TEXT, date STRING, startTime STRING, endTime STRING, remind INTEGER, color INTEGER,  isCompleted INTEGER, repeat INTEGER)");
+        db.execute(
+            "CREATE TABLE $_tableName3(id STRING PRIMARY KEY, title STRING, companyName STRING,companyCountry STRING,companyRegion STRING,status STRING, appliedDate STRING)");
         return;
       });
     } catch (e) {

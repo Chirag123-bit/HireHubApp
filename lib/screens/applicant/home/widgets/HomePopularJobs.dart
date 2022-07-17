@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/repository/job_repository.dart';
-import 'package:hirehub/response/get_jobs_response.dart';
+import 'package:hirehub/response/jobResponse/get_jobs_response.dart';
 import 'package:hirehub/screens/applicant/home/widgets/JobCard.dart';
 
 class HomePopularJobs extends StatefulWidget {
+  const HomePopularJobs({Key? key}) : super(key: key);
+
   @override
   _HomePopularJobsState createState() => _HomePopularJobsState();
 }

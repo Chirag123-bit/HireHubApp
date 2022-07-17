@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -25,7 +26,9 @@ class HomeHeader extends StatelessWidget {
           ),
           RichText(
             text: TextSpan(
-              style: kHeadingTextStyle,
+              style: kHeadingTextStyle.copyWith(
+                color: Get.isDarkMode ? Colors.white : Colors.grey[600],
+              ),
               children: const [
                 TextSpan(text: 'Hey Chirag, \n'),
                 TextSpan(

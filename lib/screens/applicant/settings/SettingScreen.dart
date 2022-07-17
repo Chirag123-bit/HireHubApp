@@ -1,9 +1,14 @@
+import 'dart:async';
+
+import 'package:all_sensors2/all_sensors2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
+import 'package:hirehub/screens/applicant/job/AppliedJobsScreen.dart';
+import 'package:hirehub/screens/applicant/job/SavedJobScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/education_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
@@ -26,6 +31,9 @@ class _SettingScreenState extends State<SettingScreen> {
   var notifyHelper;
   bool isDarkMode = Get.isDarkMode;
   late String token;
+  final double _proximityValue = 0;
+  final List<StreamSubscription<dynamic>> _streamSubscriptions =
+      <StreamSubscription<dynamic>>[];
 
   @override
   void initState() {
@@ -34,6 +42,23 @@ class _SettingScreenState extends State<SettingScreen> {
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
     _getToken();
+    _streamSubscriptions.add(proximityEvents!.listen((ProximityEvent event) {
+      if (event.proximity < 3) {
+        ThemeServices().switchTheme();
+        notifyHelper.displayNotification(
+          title: "Theme Changed",
+          body: Get.isDarkMode ? "Activated Light mode" : "Activeted Dark Mode",
+        );
+      }
+    }));
+  }
+
+  @override
+  void dispose() {
+    for (var subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+    super.dispose();
   }
 
   Future _getToken() async {
@@ -119,7 +144,7 @@ class _SettingScreenState extends State<SettingScreen> {
             BuildSettingOption(
               title: "Basic Info",
               onPressed: () {
-                Get.to(() => EditBasicInfoScreen());
+                Get.to(() => const EditBasicInfoScreen());
               },
             ),
             BuildSettingOption(
@@ -173,6 +198,16 @@ class _SettingScreenState extends State<SettingScreen> {
                 title: "My ToDos",
                 onPressed: () {
                   Get.to(() => const TodoScreen());
+                }),
+            BuildSettingOption(
+                title: "Applied Jobs",
+                onPressed: () {
+                  Get.to(() => const AppliedJobScreen());
+                }),
+            BuildSettingOption(
+                title: "Saved Jobs",
+                onPressed: () {
+                  Get.to(() => const SavedJobScreen());
                 }),
             const SizedBox(
               height: 20,

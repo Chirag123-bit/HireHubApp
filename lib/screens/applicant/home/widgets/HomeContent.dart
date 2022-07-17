@@ -16,7 +16,7 @@ class HomeContent extends StatelessWidget {
     return Flexible(
       child: Container(
         decoration: BoxDecoration(
-          color: kSilverColor,
+          color: Get.isDarkMode ? Colors.grey[900] : kSilver,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(kSpacingUnit * 5),
             topRight: Radius.circular(kSpacingUnit * 5),
@@ -37,13 +37,18 @@ class HomeContent extends StatelessWidget {
                       'Recommended Jobs',
                       style: kSubTitleTextStyle.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: Get.isDarkMode ? Colors.white : Colors.grey[600],
                       ),
                     ),
-                    Text('View All', style: kCardTitleTextStyle),
+                    Text('View All',
+                        style: kCardTitleTextStyle.copyWith(
+                          color:
+                              Get.isDarkMode ? Colors.white : Colors.grey[600],
+                        )),
                   ],
                 ),
               ),
-              HomePopularJobs(),
+              const HomePopularJobs(),
               SizedBox(height: kSpacingUnit * 2),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: kSpacingUnit * 4),
@@ -54,13 +59,17 @@ class HomeContent extends StatelessWidget {
                       'Popular Categories',
                       style: kSubTitleTextStyle.copyWith(
                         fontWeight: FontWeight.w600,
+                        color: Get.isDarkMode ? Colors.white : Colors.grey[600],
                       ),
                     ),
                     GestureDetector(
                       onTap: () => Get.to(() => const CategoryScreen()),
                       child: Text(
                         'View All',
-                        style: kCardTitleTextStyle,
+                        style: kCardTitleTextStyle.copyWith(
+                          color:
+                              Get.isDarkMode ? Colors.white : Colors.grey[600],
+                        ),
                       ),
                     ),
                   ],
@@ -74,6 +83,7 @@ class HomeContent extends StatelessWidget {
                   'Recently Added',
                   style: kSubTitleTextStyle.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: Get.isDarkMode ? Colors.white : Colors.grey[600],
                   ),
                 ),
               ),

@@ -42,7 +42,6 @@ class UserAPI {
       for (String key in user.keys) {
         data[key] = user[key];
       }
-      print(data);
       // response = await dio.post(url, data: user.toJson());
       response = await dio.put(url,
           data: data,
@@ -71,7 +70,6 @@ class UserAPI {
       Response response = await dio.post(url, data: user.toJson());
       if (response.statusCode == 200) {
         login = LoginResponse.fromJson(response.data);
-        print(response.data);
         // print(response.data);
       } else {
         login = null;

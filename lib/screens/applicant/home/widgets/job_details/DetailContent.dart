@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/screens/applicant/home/widgets/DetailItem.dart';
@@ -21,7 +22,7 @@ class DetailContent extends StatelessWidget {
           horizontal: kSpacingUnit * 4,
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Get.isDarkMode ? Colors.grey[900] : Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(kSpacingUnit * 5),
             topRight: Radius.circular(kSpacingUnit * 5),
@@ -44,12 +45,17 @@ class DetailContent extends StatelessWidget {
                     SizedBox(height: kSpacingUnit * 2),
                     Text(
                       data.company!.name!,
-                      style: kTitleTextStyle,
+                      style: kTitleTextStyle.copyWith(
+                        color: Get.isDarkMode ? Colors.white : Colors.grey[600],
+                      ),
                     ),
                     SizedBox(height: kSpacingUnit),
                     Text(
                       data.company!.country! + ", " + data.company!.region!,
-                      style: kCaptionTextStyle,
+                      style: kCaptionTextStyle.copyWith(
+                          fontSize: 16,
+                          color:
+                              Get.isDarkMode ? Colors.white : Colors.grey[600]),
                     ),
                   ],
                 ),
@@ -57,7 +63,11 @@ class DetailContent extends StatelessWidget {
               SizedBox(height: kSpacingUnit * 5),
               Text(
                 'Responsibilities',
-                style: kSubTitleTextStyle,
+                style: kSubTitleTextStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Get.isDarkMode ? Colors.white : Colors.black,
+                ),
               ),
               SizedBox(height: kSpacingUnit * 2),
               ...data.responsibilities!
@@ -66,7 +76,11 @@ class DetailContent extends StatelessWidget {
               SizedBox(height: kSpacingUnit),
               Text(
                 'Qualifications',
-                style: kSubTitleTextStyle,
+                style: kSubTitleTextStyle.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Get.isDarkMode ? Colors.white : Colors.black,
+                ),
               ),
               SizedBox(height: kSpacingUnit * 2),
               ...data.requirements!
