@@ -18,6 +18,7 @@ import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/services/notification_services.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:shake_event/shake_event.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class SettingScreen extends StatefulWidget {
   State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
   var notifyHelper;
   bool isDarkMode = Get.isDarkMode;
   late String token;
@@ -37,6 +38,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   void initState() {
+    startListeningShake(20);
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
@@ -51,6 +53,15 @@ class _SettingScreenState extends State<SettingScreen> {
         );
       }
     }));
+    // userAccelerometerEvents!.listen((UserAccelerometerEvent event) {
+    //   // print(event);
+    // });
+  }
+
+  @override
+  shakeEventListener() {
+    Get.back();
+    return super.shakeEventListener();
   }
 
   @override
@@ -58,6 +69,7 @@ class _SettingScreenState extends State<SettingScreen> {
     for (var subscription in _streamSubscriptions) {
       subscription.cancel();
     }
+    resetShakeListeners();
     super.dispose();
   }
 

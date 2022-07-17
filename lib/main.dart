@@ -13,6 +13,7 @@ import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
+import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
 // import 'package:hirehub/wearOs/main.dart';
@@ -46,7 +47,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        // "/": (context) => const SplashScreen(),
+        "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const Register(),

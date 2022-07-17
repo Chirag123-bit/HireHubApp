@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailScreen.dart';
+import 'package:hirehub/utils/url.dart';
 
 class JobCard extends StatelessWidget {
   final Job data;
@@ -43,6 +44,11 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var logo = data.company!.avatarImage;
+    if (logo!.contains("uploads\\")) {
+      logo = baseImgUrl + logo;
+      logo = logo.replaceAll("\\", "/");
+    }
     return Container(
       decoration: BoxDecoration(
         boxShadow: [kCardShadow],
@@ -75,7 +81,7 @@ class JobCard extends StatelessWidget {
                 Row(
                   children: [
                     Image.network(
-                      data.company!.avatarImage!,
+                      logo!,
                       height: 30.sp,
                       width: 30.sp,
                     ),
