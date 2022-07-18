@@ -5,6 +5,7 @@ import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/dashboardJobModels/DashboardJob.dart';
 import 'package:hirehub/repository/job_repository.dart';
 import 'package:hirehub/response/jobResponse/dashboard_jobs_response.dart';
+import 'package:hirehub/screens/employer/home/widgets/JobCard.dart';
 import 'package:intl/intl.dart';
 
 class HomeContent extends StatefulWidget {
@@ -33,26 +34,31 @@ class _HomeContentState extends State<HomeContent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Your Jobs',
-                    style: kSubTitleTextStyle.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: Get.isDarkMode ? Colors.white : Colors.grey[600],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Get.to(() => {}),
-                    child: Text(
-                      'View All',
-                      style: kCardTitleTextStyle.copyWith(
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Your Jobs',
+                      style: kSubTitleTextStyle.copyWith(
+                        fontWeight: FontWeight.w600,
                         color: Get.isDarkMode ? Colors.white : Colors.grey[600],
                       ),
                     ),
-                  ),
-                ],
+                    GestureDetector(
+                      onTap: () => Get.to(() => {}),
+                      child: Text(
+                        'View All',
+                        style: kCardTitleTextStyle.copyWith(
+                          color:
+                              Get.isDarkMode ? Colors.white : Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: kSpacingUnit * 2),
               FutureBuilder<DashboardJobsResponse?>(
@@ -67,109 +73,12 @@ class _HomeContentState extends State<HomeContent> {
                             final closeDate =
                                 DateTime.parse(item.value.closeDate!);
                             final closeDateString =
-                                DateFormat.MMMMEEEEd().format(closeDate);
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12.0, vertical: 5),
-                              child: Container(
-                                width: double.infinity,
-                                height: 150,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: kSpacingUnit * 1.2,
-                                  vertical: kSpacingUnit * 2,
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                    vertical: kSpacingUnit),
-                                decoration: const BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        widget.isLoading
-                                            ? const CircularProgressIndicator()
-                                            : CircleAvatar(
-                                                radius: kSpacingUnit * 2,
-                                                backgroundImage:
-                                                    widget.logo.image,
-                                              ),
-                                        SizedBox(width: kSpacingUnit * 1.2),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(item.value.title!,
-                                                style: TextStyle(
-                                                  fontSize: kSpacingUnit * 2,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.grey[600],
-                                                )),
-                                            Text("Kathamndu, Nepal",
-                                                style: TextStyle(
-                                                  fontSize: kSpacingUnit * 1.2,
-                                                  color: Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.grey[600],
-                                                )),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text("Total:  ",
-                                                style: TextStyle(
-                                                  fontSize: kSpacingUnit * 1.5,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.grey[600],
-                                                )),
-                                            Text(
-                                                item.value.applicants!.length
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontSize: kSpacingUnit * 1.5,
-                                                  color: Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.red[600],
-                                                )),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text("Apply By:  ",
-                                                style: TextStyle(
-                                                  fontSize: kSpacingUnit * 1.5,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.grey[600],
-                                                )),
-                                            Text(closeDateString,
-                                                style: TextStyle(
-                                                  fontSize: kSpacingUnit * 1.2,
-                                                  color: Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.grey[600],
-                                                )),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
+                                DateFormat.yMMMd().format(closeDate);
+                            return EmployerJobCard(
+                              closeDateString: closeDateString,
+                              isLoading: widget.isLoading,
+                              logo: widget.logo,
+                              item: item.value,
                             );
                           }).toList(),
                         );

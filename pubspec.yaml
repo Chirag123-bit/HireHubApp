@@ -78,6 +78,7 @@ dependencies:
   country_state_city_pro: ^0.0.3
   card_loading: ^0.2.1
   slimy_card: ^1.0.4
+  number_to_words: ^1.0.0
 
 dev_dependencies:
   flutter_test:

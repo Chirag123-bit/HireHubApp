@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/models/Job.dart';
+import 'package:hirehub/models/dashboardJobModels/DashboardJob.dart';
 
 class DetailHeader extends StatelessWidget {
   const DetailHeader({
@@ -11,7 +11,7 @@ class DetailHeader extends StatelessWidget {
     required this.data,
   }) : super(key: key);
 
-  final Job data;
+  final DashboardJob data;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class DetailHeader extends StatelessWidget {
             ),
           ),
           Text(
-            data.company!.name!,
+            "Google Inc",
             style: kSubTitleTextStyle.copyWith(
               fontWeight: FontWeight.w600,
               color: Get.isDarkMode ? Colors.white : Colors.black,

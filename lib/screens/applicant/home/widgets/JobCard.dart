@@ -71,10 +71,6 @@ class JobCard extends StatelessWidget {
                 borderRadius:
                     BorderRadiusDirectional.circular(kSpacingUnit * 3),
                 gradient: gradients[_random.nextInt(gradients.length)]),
-            // decoration: BoxDecoration(
-            //   color: Colors.white,
-            //   borderRadius: BorderRadiusDirectional.circular(kSpacingUnit * 3),
-            // ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

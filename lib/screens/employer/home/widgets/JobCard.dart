@@ -1,54 +1,33 @@
-import 'dart:math';
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/models/Job.dart';
-import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailScreen.dart';
-import 'package:hirehub/utils/url.dart';
+import 'package:hirehub/models/dashboardJobModels/DashboardJob.dart';
+import 'package:hirehub/screens/employer/home/job_details/DetailScreen.dart';
+import 'package:number_to_words/number_to_words.dart';
 
-class JobCard extends StatelessWidget {
-  final Job data;
+// ignore: must_be_immutable
+class EmployerJobCard extends StatefulWidget {
+  Image logo;
+  bool isLoading;
+  final String closeDateString;
+  final DashboardJob item;
 
-  JobCard({Key? key, required this.data}) : super(key: key);
-  List<LinearGradient> gradients = [
-    const LinearGradient(
-      colors: [Color(0xffaddbaf), Color(0xff2095f3)],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-    ),
-    const LinearGradient(
-      colors: [Color(0xffb1fff8), Color(0xff2095f3)],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-    ),
-    const LinearGradient(
-      colors: [Color(0xffa8b0e1), Color(0xff2095f3)],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-    ),
-    const LinearGradient(
-      colors: [Color(0xffdf9fea), Color(0xff2095f3)],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-    ),
-    const LinearGradient(
-      colors: [Color(0xfff9978f), Color(0xff2095f3)],
-      begin: Alignment.bottomLeft,
-      end: Alignment.topRight,
-    )
-  ];
-  final _random = Random();
+  EmployerJobCard(
+      {Key? key,
+      required this.closeDateString,
+      required this.isLoading,
+      required this.item,
+      required this.logo})
+      : super(key: key);
 
   @override
+  State<EmployerJobCard> createState() => _EmployerJobCardState();
+}
+
+class _EmployerJobCardState extends State<EmployerJobCard> {
+  @override
   Widget build(BuildContext context) {
-    var logo = data.company!.avatarImage;
-    if (logo!.contains("uploads\\")) {
-      logo = baseImgUrl + logo;
-      logo = logo.replaceAll("\\", "/");
-    }
     return Container(
       decoration: BoxDecoration(
         boxShadow: [kCardShadow],
@@ -59,59 +38,110 @@ class JobCard extends StatelessWidget {
         openColor: kSilverColor,
         openElevation: 0,
         openBuilder: (context, action) {
-          return DetailScreen(data: data);
+          return JobDetailScreen(data: widget.item);
         },
         closedColor: Colors.transparent,
         closedElevation: 0,
         closedBuilder: (context, action) {
-          return Container(
-            height: 125.w,
-            padding: EdgeInsets.all(kSpacingUnit * 2),
-            decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadiusDirectional.circular(kSpacingUnit * 3),
-                gradient: gradients[_random.nextInt(gradients.length)]),
-            // decoration: BoxDecoration(
-            //   color: Colors.white,
-            //   borderRadius: BorderRadiusDirectional.circular(kSpacingUnit * 3),
-            // ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Image.network(
-                      logo!,
-                      height: 30.sp,
-                      width: 30.sp,
-                    ),
-                    SizedBox(width: kSpacingUnit),
-                    Text(
-                      data.company!.name!,
-                      style:
-                          kCardTitleTextStyle.copyWith(color: Colors.grey[800]),
-                    ),
-                    const Spacer(),
-                    SvgPicture.asset(
-                      'assets/icons/heart_icon.svg',
-                      height: 20.sp,
-                      width: 20.sp,
-                      color: Colors.grey[800],
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Text(
-                  data.title!,
-                  style: kSubTitleTextStyle,
-                ),
-                SizedBox(height: kSpacingUnit * 0.5),
-                Text(
-                  // data.sector!.title!,
-                  data.company!.region! + ", " + data.company!.country!,
-                  style: kCaptionTextStyle.copyWith(color: Colors.grey[800]),
-                ),
-              ],
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
+            child: Container(
+              width: double.infinity,
+              height: 150,
+              padding: EdgeInsets.symmetric(
+                horizontal: kSpacingUnit * 1.2,
+                vertical: kSpacingUnit * 2,
+              ),
+              margin: EdgeInsets.symmetric(vertical: kSpacingUnit),
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      widget.isLoading
+                          ? const CircularProgressIndicator()
+                          : CircleAvatar(
+                              radius: kSpacingUnit * 2,
+                              backgroundImage: widget.logo.image,
+                            ),
+                      SizedBox(width: kSpacingUnit * 1.2),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.item.title!,
+                              style: TextStyle(
+                                fontSize: kSpacingUnit * 2,
+                                fontWeight: FontWeight.bold,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.grey[600],
+                              )),
+                          Text("Kathamndu, Nepal",
+                              style: TextStyle(
+                                fontSize: kSpacingUnit * 1.2,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.grey[600],
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Text("Applicants",
+                              style: TextStyle(
+                                fontSize: kSpacingUnit * 1.5,
+                                fontWeight: FontWeight.bold,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.grey[600],
+                              )),
+                          Text(
+                              NumberToWord()
+                                  .convert(
+                                      'en-in', widget.item.applicants!.length)
+                                  .toUpperCase(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: kSpacingUnit * 1.5,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.red[600],
+                              )),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text("Deadline",
+                              style: TextStyle(
+                                fontSize: kSpacingUnit * 1.5,
+                                fontWeight: FontWeight.bold,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.grey[600],
+                              )),
+                          Text(widget.closeDateString,
+                              style: TextStyle(
+                                fontSize: kSpacingUnit * 1.5,
+                                fontWeight: FontWeight.w600,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.grey[600],
+                              )),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           );
         },
