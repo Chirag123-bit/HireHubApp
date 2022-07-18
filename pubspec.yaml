@@ -76,6 +76,8 @@ dependencies:
   country_state_city_picker: ^1.2.8
   flutter_country_state: ^0.2.6
   country_state_city_pro: ^0.0.3
+  card_loading: ^0.2.1
+  slimy_card: ^1.0.4
 
 dev_dependencies:
   flutter_test:

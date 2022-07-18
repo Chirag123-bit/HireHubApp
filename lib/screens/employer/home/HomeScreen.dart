@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late SharedPreferences prefs;
   late User user;
   late Image profilePic;
+  late Image logo;
   late UserRepository _userRepository;
 
   void getAndSetDate() async {
@@ -33,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
     user = await _userRepository.getBasicUserDetails();
     String prof = await _userRepository.getProfileFromPreferences();
     profilePic = _userRepository.imageFromBase64String(prof);
+    String log = await _userRepository.getLogoFromPreferences();
+    logo = _userRepository.imageFromBase64String(log);
     setState(() {
       isLoading = false;
     });
@@ -64,7 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : HomeHeader(user: user, profilePic: profilePic),
             SizedBox(height: kSpacingUnit * 3),
-            const HomeContent(),
+            HomeContent(
+              logo: logo,
+              isLoading: isLoading,
+            ),
           ],
         ),
       ),

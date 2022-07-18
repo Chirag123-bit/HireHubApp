@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:hirehub/APIs/HttpServices.dart';
 import 'package:hirehub/response/jobResponse/applied_jobs_response.dart';
+import 'package:hirehub/response/jobResponse/dashboard_jobs_response.dart';
 import 'package:hirehub/response/jobResponse/get_jobs_response.dart';
 import 'package:hirehub/utils/url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,6 +76,29 @@ class JobsAPI {
           }));
       if (response.statusCode == 200) {
         jobsResponse = AppliedJobsResponse.fromJson(response.data);
+      } else {
+        jobsResponse = null;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return jobsResponse;
+  }
+
+  Future<DashboardJobsResponse?> getDashboardJobs() async {
+    DashboardJobsResponse? jobsResponse;
+    var url = baseUrl + employerDashboardUrl;
+    var dio = HttpServices().getDioInstance();
+    String token = await _getToken();
+    try {
+      Response response = await dio.get(url,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + token
+          }));
+      if (response.statusCode == 200) {
+        jobsResponse = DashboardJobsResponse.fromJson(response.data);
       } else {
         jobsResponse = null;
       }
