@@ -38,6 +38,7 @@ class _EditCompanyInfoScreenState extends State<EditCompanyInfoScreen> {
   late TextEditingController sectorController;
   late TextEditingController phoneController;
   late TextEditingController cityController;
+  late Image profilePic;
   String? genderType;
   @override
   void initState() {
@@ -57,6 +58,7 @@ class _EditCompanyInfoScreenState extends State<EditCompanyInfoScreen> {
       "csector": user.csector,
       "phone": user.phone,
     });
+
     setState(() {
       isUpdating = false;
     });
@@ -73,6 +75,8 @@ class _EditCompanyInfoScreenState extends State<EditCompanyInfoScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _userRepository = UserRepository();
     user = await _userRepository.getCompanyDetails();
+    String prof = await _userRepository.getLogoFromPreferences();
+    profilePic = _userRepository.imageFromBase64String(prof);
     setState(() {
       isLoading = false;
       companynameController = TextEditingController(text: user.cname);
@@ -163,8 +167,7 @@ class _EditCompanyInfoScreenState extends State<EditCompanyInfoScreen> {
                         image: DecorationImage(
                             image: img != null
                                 ? FileImage(img!)
-                                : Image.asset("assets/images/profile.jpg")
-                                    .image,
+                                : profilePic.image,
                             fit: BoxFit.cover),
                       ),
                     ),

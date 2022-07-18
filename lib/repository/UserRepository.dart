@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:hirehub/APIs/UserAPI.dart';
 import 'package:hirehub/models/Company.dart';
 import 'package:hirehub/models/Education.dart';
@@ -33,6 +35,7 @@ class UserRepository {
   static String typeKey = "type";
   static String genderKey = "gender";
   static String idKey = "id";
+  static String imageKey = "profile";
 
   static String companyNameKey = "cname";
   static String countryKey = "country";
@@ -40,6 +43,7 @@ class UserRepository {
   static String companyAboutKey = "cabout";
   static String companyDescKey = "cdesc";
   static String companySectorKey = "csector";
+  static String logoKey = "logo";
 
   static String titleKey = "title";
   static String sectorKey = "sector";
@@ -69,6 +73,26 @@ class UserRepository {
     prefs.setString(genderKey, user.gender!);
   }
 
+  Future<bool> saveProfileToPreferences(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString(imageKey, value);
+  }
+
+  Future<String> getProfileFromPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(imageKey)!;
+  }
+
+  Future<bool> saveLogoToPreferences(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString(logoKey, value);
+  }
+
+  Future<String> getLogoFromPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(logoKey)!;
+  }
+
   //function to store company details in shared preferences
   Future<void> storeCompanyDetails(Company company) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -81,11 +105,9 @@ class UserRepository {
     prefs.setString(companySectorKey, company.sector!);
     prefs.setString(phoneKey, company.phone!);
 
-    // prefs.setString(companyAboutKey, company.about!);
+    prefs.setString(companyAboutKey, company.about!);
 
-    // prefs.setString(companyDescKey, company.desc!);
-
-    // prefs.setString(companySectorKey, company.sector!);
+    prefs.setString(companyDescKey, company.desc!);
 
     // prefs.setString(idKey, company.id!);
   }
@@ -137,14 +159,26 @@ class UserRepository {
   Future<User> getBasicUserDetails() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return User(
-        firstName: prefs.getString(fnameKey),
-        lastName: prefs.getString(lnameKey),
-        email: prefs.getString(emailKey),
-        username: prefs.getString(usernameKey),
-        phone: prefs.getString(phoneKey),
-        type: prefs.getString(typeKey),
-        id: prefs.getString(idKey),
-        gender: prefs.getString(genderKey));
+      firstName: prefs.getString(fnameKey),
+      lastName: prefs.getString(lnameKey),
+      email: prefs.getString(emailKey),
+      username: prefs.getString(usernameKey),
+      phone: prefs.getString(phoneKey),
+      type: prefs.getString(typeKey),
+      id: prefs.getString(idKey),
+      gender: prefs.getString(genderKey),
+    );
+  }
+
+  String base64String(Uint8List data) {
+    return base64Encode(data);
+  }
+
+  Image imageFromBase64String(String base64String) {
+    return Image.memory(
+      base64Decode(base64String),
+      fit: BoxFit.fill,
+    );
   }
 
   //function to get company details from shared preferences

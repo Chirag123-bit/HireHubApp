@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/models/Users.dart';
 
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({
-    Key? key,
-  }) : super(key: key);
+  final User user;
+  const HomeHeader({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //  var logo = widget.user.company!.avatarImage;
+    var fname = user.firstName;
+    // if (logo!.contains("uploads\\")) {
+    //   logo = baseImgUrl + logo;
+    //   logo = logo.replaceAll("\\", "/");
+    // }
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: kSpacingUnit * 3,
@@ -29,10 +35,10 @@ class HomeHeader extends StatelessWidget {
               style: kHeadingTextStyle.copyWith(
                 color: Get.isDarkMode ? Colors.white : Colors.grey[600],
               ),
-              children: const [
-                TextSpan(text: 'Hey Chirag, \n'),
-                TextSpan(
-                  text: 'Looking for a Job?',
+              children: [
+                TextSpan(text: 'Hey $fname, \n'),
+                const TextSpan(
+                  text: 'Looking to Hire?',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

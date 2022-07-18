@@ -44,12 +44,15 @@ class _EditCompanyDetailScreenState extends State<EditCompanyDetailScreen> {
     setState(() {
       isUpdating = true;
     });
+    var dbUser = await _userRepository.getCompanyDetails();
     await _userRepository.updateCompanyInfo({
-      "cname": user.cname,
-      "country": user.country,
-      "region": user.region,
-      "csector": user.csector,
-      "phone": user.phone,
+      "cname": dbUser.cname,
+      "country": dbUser.country,
+      "region": dbUser.region,
+      "csector": dbUser.csector,
+      "phone": dbUser.phone,
+      "cabout": dbUser.cabout,
+      "desc": dbUser.cdesc
     });
     setState(() {
       isUpdating = false;
@@ -230,7 +233,15 @@ class _EditCompanyDetailScreenState extends State<EditCompanyDetailScreen> {
                   isUpdating: isUpdating,
                   onTap: () {
                     if (formKeys.currentState!.validate()) {
-                      Company company = Company();
+                      Company company = Company(
+                        name: user.cname,
+                        country: user.country,
+                        region: user.region,
+                        sector: user.csector,
+                        phone: user.phone,
+                        about: companyAboutController.text,
+                        desc: companyDesController.text,
+                      );
                       _userRepository.storeCompanyDetails(company);
                       updateCompanyInfo(user);
                     }
