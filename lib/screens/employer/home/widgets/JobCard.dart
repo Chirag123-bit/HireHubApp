@@ -12,14 +12,16 @@ class EmployerJobCard extends StatefulWidget {
   bool isLoading;
   final String closeDateString;
   final DashboardJob item;
+  Function needRefresh;
 
-  EmployerJobCard(
-      {Key? key,
-      required this.closeDateString,
-      required this.isLoading,
-      required this.item,
-      required this.logo})
-      : super(key: key);
+  EmployerJobCard({
+    Key? key,
+    required this.closeDateString,
+    required this.isLoading,
+    required this.item,
+    required this.logo,
+    required this.needRefresh,
+  }) : super(key: key);
 
   @override
   State<EmployerJobCard> createState() => _EmployerJobCardState();
@@ -38,7 +40,8 @@ class _EmployerJobCardState extends State<EmployerJobCard> {
         openColor: kSilverColor,
         openElevation: 0,
         openBuilder: (context, action) {
-          return JobDetailScreen(data: widget.item);
+          return JobDetailScreen(
+              data: widget.item, needRefresh: widget.needRefresh);
         },
         closedColor: Colors.transparent,
         closedElevation: 0,

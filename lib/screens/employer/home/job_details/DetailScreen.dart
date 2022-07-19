@@ -6,8 +6,10 @@ import 'package:hirehub/screens/employer/home/job_details/DetailHeader.dart';
 
 class JobDetailScreen extends StatelessWidget {
   final DashboardJob data;
+  Function needRefresh;
 
-  const JobDetailScreen({Key? key, required this.data}) : super(key: key);
+  JobDetailScreen({Key? key, required this.data, required this.needRefresh})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class JobDetailScreen extends StatelessWidget {
               children: [
                 DetailHeader(data: data),
                 DetailContent(data: data),
-                DetailFooter(data: data)
+                DetailFooter(data: data, needRefresh: needRefresh),
               ],
             ),
           ],

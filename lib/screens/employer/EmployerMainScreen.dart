@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:hirehub/screens/employer/home/Applicants/ApplicantTable.dart';
 import 'package:hirehub/screens/employer/home/HomeScreen.dart';
 import 'package:hirehub/screens/employer/message/MessageScreen.dart';
 import 'package:hirehub/screens/employer/settings/SettingScreen.dart';
@@ -17,7 +18,7 @@ class _EmployerMainPageState extends State<EmployerMainPage> {
 
   List<Widget> applicantScreens = [
     HomeScreen(),
-    HomeScreen(),
+    const ApplicantsOverview(),
     const MessageScreen(),
     const SettingScreen(),
   ];

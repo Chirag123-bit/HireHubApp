@@ -61,59 +61,61 @@ class _HomeContentState extends State<HomeContent> {
                 ),
               ),
               SizedBox(height: kSpacingUnit * 2),
-              FutureBuilder<DashboardJobsResponse?>(
-                  future: JobsRepository().getDashboardJobs(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.hasData) {
-                        List<DashboardJob> lstJobs = snapshot.data!.data!;
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: lstJobs.asMap().entries.map((item) {
-                            final closeDate =
-                                DateTime.parse(item.value.closeDate!);
-                            final closeDateString =
-                                DateFormat.yMMMd().format(closeDate);
-                            return EmployerJobCard(
-                              closeDateString: closeDateString,
-                              isLoading: widget.isLoading,
-                              logo: widget.logo,
-                              item: item.value,
-                            );
-                          }).toList(),
-                        );
-                      } else {
-                        return const Text("No Jobs Found");
-                      }
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return Column(
-                        children: const [
-                          CardLoading(
-                            height: 100,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            margin: EdgeInsets.only(bottom: 10),
-                          ),
-                          CardLoading(
-                            height: 50,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            margin: EdgeInsets.only(bottom: 10),
-                          ),
-                          CardLoading(
-                            height: 100,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            margin: EdgeInsets.only(bottom: 10),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return const Text("Error retriving data");
-                    }
-                  }),
+              getDashboardJobsFromDb(),
             ],
           ),
         ),
       ),
     );
+  }
+
+  FutureBuilder<DashboardJobsResponse?> getDashboardJobsFromDb() {
+    return FutureBuilder<DashboardJobsResponse?>(
+        future: JobsRepository().getDashboardJobs(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasData) {
+              List<DashboardJob> lstJobs = snapshot.data!.data!;
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: lstJobs.asMap().entries.map((item) {
+                  final closeDate = DateTime.parse(item.value.closeDate!);
+                  final closeDateString = DateFormat.yMMMd().format(closeDate);
+
+                  return EmployerJobCard(
+                      closeDateString: closeDateString,
+                      isLoading: widget.isLoading,
+                      logo: widget.logo,
+                      item: item.value,
+                      needRefresh: getDashboardJobsFromDb);
+                }).toList(),
+              );
+            } else {
+              return const Text("No Jobs Found");
+            }
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Column(
+              children: const [
+                CardLoading(
+                  height: 100,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  margin: EdgeInsets.only(bottom: 10),
+                ),
+                CardLoading(
+                  height: 50,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  margin: EdgeInsets.only(bottom: 10),
+                ),
+                CardLoading(
+                  height: 100,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  margin: EdgeInsets.only(bottom: 10),
+                ),
+              ],
+            );
+          } else {
+            return const Text("Error retriving data");
+          }
+        });
   }
 }

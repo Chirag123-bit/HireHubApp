@@ -6,10 +6,9 @@ import 'package:hirehub/screens/employer/home/Applicants/ApplicantList.dart';
 
 class DetailFooter extends StatefulWidget {
   final DashboardJob data;
-  const DetailFooter({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
+  Function needRefresh;
+  DetailFooter({Key? key, required this.data, required this.needRefresh})
+      : super(key: key);
 
   @override
   State<DetailFooter> createState() => _DetailFooterState();
@@ -39,7 +38,8 @@ class _DetailFooterState extends State<DetailFooter> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  Get.to(() => ApplicantListScreen(data: widget.data));
+                  Get.to(() => ApplicantListScreen(
+                      data: widget.data, needRefresh: widget.needRefresh));
                 },
                 child: Container(
                   height: kSpacingUnit * 5,

@@ -8,6 +8,7 @@ const updateUserUrl = "auth/updateUser";
 const updateCompanyUrl = "auth/updateCompany";
 const jobsUrl = "job/getAllJobs";
 const appliedJobsUrl = "job/appliedJobsApp";
+const updateJobStatus = "job/updateJobStatus";
 const employerDashboardUrl = "job/getCompanyJobDetailApp";
 const applyJobUrl = "job/applyForJob";
 const categoryUrl = "category/getCategory";
