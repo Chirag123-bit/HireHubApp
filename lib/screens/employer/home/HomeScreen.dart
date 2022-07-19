@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isLoading = false;
+  bool isLoading = true;
   bool isUpdating = false;
   bool isImageLoading = false;
   late String _imageUrl;
@@ -67,10 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : HomeHeader(user: user, profilePic: profilePic),
             SizedBox(height: kSpacingUnit * 3),
-            HomeContent(
-              logo: logo,
-              isLoading: isLoading,
-            ),
+            HomeContent(),
           ],
         ),
       ),

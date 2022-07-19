@@ -15,6 +15,7 @@ class Themes {
   static final light = ThemeData(
     brightness: Brightness.light,
     primaryColor: primaryClr,
+    fontFamily: "OpenSans",
     // textTheme: GoogleFonts.muliTextTheme(),
     // visualDensity: VisualDensity.adaptivePlatformDensity,
   );
@@ -22,12 +23,13 @@ class Themes {
   static final dark = ThemeData(
     brightness: Brightness.dark,
     primaryColor: darkGreyClr,
+    fontFamily: "OpenSans",
     // textTheme: GoogleFonts.muliTextTheme(),
   );
 }
 
 TextStyle get subHeadingStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.openSans(
       textStyle: TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
@@ -35,7 +37,7 @@ TextStyle get subHeadingStyle {
 }
 
 TextStyle get headingStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.openSans(
       textStyle: const TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
@@ -43,7 +45,7 @@ TextStyle get headingStyle {
 }
 
 TextStyle get titleStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.openSans(
       textStyle: TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
@@ -52,7 +54,7 @@ TextStyle get titleStyle {
 }
 
 TextStyle get subTitleStyle {
-  return GoogleFonts.lato(
+  return GoogleFonts.openSans(
       textStyle: TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,

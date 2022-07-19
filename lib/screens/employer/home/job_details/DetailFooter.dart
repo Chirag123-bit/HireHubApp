@@ -23,43 +23,38 @@ class _DetailFooterState extends State<DetailFooter> {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: 0,
-      right: 0,
-      bottom: 0,
-      child: Container(
-        padding: EdgeInsets.all(kSpacingUnit * 2),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          boxShadow: [kFooterShadow],
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  Get.to(() => ApplicantListScreen(
-                      data: widget.data, needRefresh: widget.needRefresh));
-                },
-                child: Container(
-                  height: kSpacingUnit * 5,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(kSpacingUnit * 3),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'View Applicants',
-                      style: kTitleTextStyle.copyWith(
-                        color: Colors.white,
-                      ),
+    return Container(
+      padding: EdgeInsets.all(kSpacingUnit * 2),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        boxShadow: [kFooterShadow],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () {
+                Get.to(() => ApplicantListScreen(
+                    data: widget.data, needRefresh: widget.needRefresh));
+              },
+              child: Container(
+                height: kSpacingUnit * 5,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(kSpacingUnit * 3),
+                ),
+                child: Center(
+                  child: Text(
+                    'View Applicants',
+                    style: kTitleTextStyle.copyWith(
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

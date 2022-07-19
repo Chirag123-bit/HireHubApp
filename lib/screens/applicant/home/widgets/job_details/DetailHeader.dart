@@ -33,7 +33,7 @@ class DetailHeader extends StatelessWidget {
             ),
           ),
           Text(
-            data.company!.name!,
+            data.title!,
             style: kSubTitleTextStyle.copyWith(
               fontWeight: FontWeight.w600,
               color: Get.isDarkMode ? Colors.white : Colors.black,

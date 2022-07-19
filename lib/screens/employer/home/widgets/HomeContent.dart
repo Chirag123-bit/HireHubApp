@@ -2,19 +2,18 @@ import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/models/dashboardJobModels/DashboardJob.dart';
+import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/repository/job_repository.dart';
 import 'package:hirehub/response/jobResponse/dashboard_jobs_response.dart';
 import 'package:hirehub/screens/employer/home/widgets/JobCard.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeContent extends StatefulWidget {
-  Image logo;
-  bool isLoading;
-  HomeContent({
+  const HomeContent({
     Key? key,
-    required this.logo,
-    required this.isLoading,
   }) : super(key: key);
 
   @override
@@ -22,6 +21,36 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
+  bool isLoading = true;
+  bool isUpdating = false;
+  bool isImageLoading = false;
+  late SharedPreferences prefs;
+  late User user;
+  late Image profilePic;
+  late Image logo;
+  late UserRepository _userRepository;
+
+  void getAndSetDate() async {
+    setState(() {
+      isLoading = true;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _userRepository = UserRepository();
+    user = await _userRepository.getBasicUserDetails();
+    String log = await _userRepository.getLogoFromPreferences();
+    logo = _userRepository.imageFromBase64String(log);
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAndSetDate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Flexible(
@@ -84,8 +113,8 @@ class _HomeContentState extends State<HomeContent> {
 
                   return EmployerJobCard(
                       closeDateString: closeDateString,
-                      isLoading: widget.isLoading,
-                      logo: widget.logo,
+                      isLoading: isLoading,
+                      logo: logo,
                       item: item.value,
                       needRefresh: getDashboardJobsFromDb);
                 }).toList(),
