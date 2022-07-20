@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:hirehub/models/Chat/ChatModel.dart';
 
 class ContactCard extends StatelessWidget {
-  const ContactCard({Key? key}) : super(key: key);
+  ChatModel chat;
+  ContactCard({Key? key, required this.chat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: ListTile(
-        leading: CircleAvatar(
-          radius: 30,
-          child: Image.asset("assets/icons/real.png"),
-          backgroundColor: Colors.white,
-        ),
-        title: const Text(
-          'John Doe',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    return ListTile(
+      leading: Stack(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            child: Image.asset("assets/icons/real.png"),
+            backgroundColor: Colors.white,
           ),
-        ),
-        subtitle:
-            const Text("Full Stack Developer", style: TextStyle(fontSize: 13)),
+          const Positioned(
+            bottom: 0,
+            right: 0,
+            child: CircleAvatar(
+                backgroundColor: Colors.teal,
+                radius: 11,
+                child: Icon(Icons.check, color: Colors.white, size: 20)),
+          ),
+        ],
       ),
+      title: const Text(
+        'John Doe',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      subtitle:
+          const Text("Full Stack Developer", style: TextStyle(fontSize: 13)),
     );
   }
 }

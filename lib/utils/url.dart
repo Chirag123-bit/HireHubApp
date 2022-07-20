@@ -1,5 +1,6 @@
 const baseUrl = "http://192.168.18.9:5000/api/";
 const baseImgUrl = "http://192.168.18.9:5000/";
+const socketUrl = "http://192.168.18.9:5000";
 // const baseUrl = "http://10.0.2.2:5000/api/";
 // const baseImgUrl = "http://10.0.2.2:5000/";
 const loginUrl = "auth/login";
@@ -13,6 +14,7 @@ const employerDashboardUrl = "job/getCompanyJobDetailApp";
 const applyJobUrl = "job/applyForJob";
 const categoryUrl = "category/getCategory";
 const getAllCat = "category/getAllCategories";
+const searchUserRoute = "auth/getAllUsersApp";
 
 const testUrl = "http://localhost:5000/api/";
 

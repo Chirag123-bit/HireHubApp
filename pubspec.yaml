@@ -80,7 +80,7 @@ dependencies:
   slimy_card: ^1.0.4
   number_to_words: ^1.0.0
   redux: ^5.0.0
-  socket_io_client: ^2.0.0
+  socket_io_client: ^1.0.0
   uuid: ^3.0.6
 
 dev_dependencies:
@@ -124,9 +124,9 @@ flutter:
   fonts:
     - family: OpenSans
       fonts:
-        - asset: fonts/OpenSans-Bold.ttf
-        - asset: fonts/OpenSans-Regular.ttf
-        - asset: fonts/OpenSans-Italic.ttf
+        - asset: assets/fonts/OpenSans-Bold.ttf
+        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans-Italic.ttf
           style: italic
   #   - family: Trajan Pro
   #     fonts:

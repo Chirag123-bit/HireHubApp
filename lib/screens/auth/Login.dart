@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hirehub/controller/AppliedJobController.dart';
 import 'package:hirehub/models/Company.dart';
 import 'package:hirehub/models/Users.dart';
@@ -46,6 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (login.success!) {
         User loggedUser = login.user!;
         UserRepository userRepository = UserRepository();
+        GetStorage().write("userId", loggedUser.id);
 
         var profile = loggedUser.avatarImage;
         if (profile!.contains("uploads\\")) {

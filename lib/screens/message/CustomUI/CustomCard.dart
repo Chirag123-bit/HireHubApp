@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hirehub/models/Chat/ChatModel.dart';
-import 'package:hirehub/screens/message/Pages/IndividualPage.dart';
 
 class CustomCard extends StatelessWidget {
   ChatModel chat;
@@ -10,11 +8,11 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.to(() => IndividualPage(
-              chat: chat,
-            ));
-      },
+      // onTap: () {
+      //   Get.to(() => IndividualPage(
+      //         chat: chat,
+      //       ));
+      // },
       child: Column(
         children: [
           ListTile(

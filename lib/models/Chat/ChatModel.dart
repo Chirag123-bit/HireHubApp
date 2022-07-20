@@ -4,6 +4,8 @@ class ChatModel {
   bool isGroup;
   String time;
   String currentMessage;
+  bool select = false;
+  String? id;
 
   ChatModel({
     required this.name,
@@ -11,5 +13,7 @@ class ChatModel {
     required this.isGroup,
     required this.time,
     required this.currentMessage,
+    this.select = false,
+    this.id,
   });
 }

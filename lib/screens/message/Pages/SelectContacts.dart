@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hirehub/APIs/UserAPI.dart';
 import 'package:hirehub/models/Chat/ChatModel.dart';
+import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/response/ChatResponse/UserSearchResponse.dart';
 import 'package:hirehub/screens/message/CustomUI/ButtonCard.dart';
-import 'package:hirehub/screens/message/CustomUI/ContactCard.dart';
+import 'package:hirehub/screens/message/CustomUI/NewContactCard.dart';
+import 'package:hirehub/screens/message/Pages/CreateGroup.dart';
+import 'package:hirehub/screens/message/Pages/IndividualPage.dart';
 
 class SelectContact extends StatefulWidget {
   const SelectContact({Key? key}) : super(key: key);
@@ -11,7 +17,34 @@ class SelectContact extends StatefulWidget {
 }
 
 class _SelectContactState extends State<SelectContact> {
-  //generate list of random chatmodel objects
+  bool isLoading = false;
+  List<User>? users = [];
+  //handle search
+  getSearchedUsers() async {
+    final searchTerm = _searchController.text;
+    if (searchTerm.isEmpty) {
+      //show shackbar
+      Get.snackbar(
+        'Search',
+        'Please enter a search term',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+      );
+    } else {
+      setState(() {
+        isLoading = true;
+      });
+      UserAPI api = UserAPI();
+      UserSearchResponse? responseUsers = await api.searchUsers(searchTerm);
+      setState(() {
+        users = responseUsers?.users ?? [];
+        isLoading = false;
+      });
+    }
+  }
+
   List<ChatModel> chats = [
     ChatModel(
       name: 'Chirag Simkhada',
@@ -42,53 +75,116 @@ class _SelectContactState extends State<SelectContact> {
       currentMessage: 'Whats up?',
     ),
   ];
+  Icon custIcon = const Icon(Icons.search);
+  final TextEditingController _searchController = TextEditingController();
+  Widget custSearchBar = Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: const [
+      Text(
+        'Select Contact',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      Text(
+        '265 Contacts',
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.bold,
+          color: Colors.grey,
+        ),
+      ),
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              'Select Contact',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              '265 Contacts',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-              ),
-            ),
-          ],
-        ),
+        title: custSearchBar,
         actions: [
           IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
+            icon: custIcon,
+            onPressed: () {
+              setState(() {
+                if (custIcon.icon == Icons.search) {
+                  custIcon = const Icon(Icons.close);
+                  custSearchBar = TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Search',
+                      hintStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                      ),
+                      suffixIcon: InkWell(
+                        onTap: () => getSearchedUsers(),
+                        child: const Icon(Icons.search),
+                      ),
+                    ),
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  );
+                } else {
+                  _searchController.clear();
+                  custIcon = const Icon(Icons.search);
+                  custSearchBar = Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Select Contact',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '265 Contacts',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              });
+            },
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: chats.length + 2,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return ButtonCard(name: "New Group", icon: Icons.group);
-          } else if (index == 1) {
-            return ButtonCard(
-              name: "New Message",
-              icon: Icons.message,
-            );
-          } else {
-            return const ContactCard();
-          }
-        },
-      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: users!.length + 2,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return InkWell(
+                    onTap: () => {Get.to(const CreateGroup())},
+                    child: ButtonCard(name: "New Group", icon: Icons.group),
+                  );
+                } else if (index == 1) {
+                  return ButtonCard(
+                    name: "New Message",
+                    icon: Icons.message,
+                  );
+                } else {
+                  return InkWell(
+                    onTap: () =>
+                        {Get.to(() => IndividualPage(user: users![index - 2]))},
+                    child: NewContactCard(
+                      user: users![index - 2],
+                    ),
+                  );
+                }
+              },
+            ),
     );
   }
 }

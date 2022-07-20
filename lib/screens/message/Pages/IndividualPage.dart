@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hirehub/models/Chat/ChatModel.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/screens/message/CustomUI/OwnMessage.dart';
+import 'package:hirehub/screens/message/CustomUI/ReplyCard.dart';
+import 'package:hirehub/utils/url.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualPage extends StatefulWidget {
-  ChatModel chat;
-  IndividualPage({Key? key, required this.chat}) : super(key: key);
+  User user;
+  IndividualPage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<IndividualPage> createState() => _IndividualPageState();
 }
 
 class _IndividualPageState extends State<IndividualPage> {
+  late IO.Socket socket;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    connect();
+    print(GetStorage().read("userId"));
+  }
+
+  void connect() {
+    socket = IO.io(socketUrl, <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false,
+    });
+    socket.connect();
+    print(socket.connected);
+    socket.emit("setupApp", GetStorage().read("userId"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,15 +63,15 @@ class _IndividualPageState extends State<IndividualPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.chat.name,
+                widget.user.firstName! + " " + widget.user.lastName!,
                 style: const TextStyle(
                   fontSize: 18.5,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                "Last Seen: ${widget.chat.time}",
-                style: const TextStyle(
+              const Text(
+                "Last Seen: 10:45",
+                style: TextStyle(
                   fontSize: 11,
                 ),
               ),
@@ -66,7 +90,24 @@ class _IndividualPageState extends State<IndividualPage> {
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
-              ListView(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 140,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: const [
+                    OwnMessage(),
+                    ReplyMessage(),
+                    OwnMessage(),
+                    ReplyMessage(),
+                    OwnMessage(),
+                    ReplyMessage(),
+                    OwnMessage(),
+                    ReplyMessage(),
+                    OwnMessage(),
+                    ReplyMessage(),
+                  ],
+                ),
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Row(
