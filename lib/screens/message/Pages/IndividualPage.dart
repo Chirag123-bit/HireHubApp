@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hirehub/APIs/ChatAPI.dart';
+import 'package:hirehub/models/Chat/ChattingModel.dart';
+import 'package:hirehub/models/Chat/MessageModel.dart';
 import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/response/ChatResponse/MessageFetchResponse.dart';
 import 'package:hirehub/screens/message/CustomUI/OwnMessage.dart';
 import 'package:hirehub/screens/message/CustomUI/ReplyCard.dart';
 import 'package:hirehub/utils/url.dart';
@@ -9,7 +13,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualPage extends StatefulWidget {
   User user;
-  IndividualPage({Key? key, required this.user}) : super(key: key);
+  Chat? chat;
+  IndividualPage({Key? key, required this.user, this.chat}) : super(key: key);
 
   @override
   State<IndividualPage> createState() => _IndividualPageState();
@@ -18,12 +23,17 @@ class IndividualPage extends StatefulWidget {
 class _IndividualPageState extends State<IndividualPage> {
   late IO.Socket socket;
   final TextEditingController _msgController = TextEditingController();
+  List<Message>? chatMessages = [];
+  bool loading = false;
+
+  String? chatId;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     connect();
-    print(GetStorage().read("userId"));
+    fetchMessages();
   }
 
   void connect() {
@@ -42,7 +52,42 @@ class _IndividualPageState extends State<IndividualPage> {
     });
   }
 
-  void sendMessage() {
+  void fetchMessages() async {
+    ChatsAPI api = ChatsAPI();
+
+    setState(() {
+      loading = true;
+    });
+
+    if (widget.chat == null) {
+      String? chatD = await api.getChatId(widget.user.id!);
+      if (chatD == null) {
+        Get.snackbar(
+          "Error",
+          "Something went wrong",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 2),
+        );
+        return;
+      } else {
+        setState(() {
+          chatId = chatD;
+        });
+      }
+    } else {
+      chatId = widget.chat!.id!;
+    }
+    FetchMessagesResponse? messages = await api.getMessages(chatId!);
+    List<Message>? messageList = messages?.messages;
+    setState(() {
+      chatMessages = messageList;
+      loading = false;
+    });
+  }
+
+  void sendMessage() async {
     if (_msgController.text.isEmpty) {
       Get.snackbar(
         'Message',
@@ -59,12 +104,20 @@ class _IndividualPageState extends State<IndividualPage> {
         "receiverId": widget.user.id,
         "message": _msgController.text
       });
+
+      ChatsAPI api = ChatsAPI();
+      api.sendMessages(chatId!, _msgController.text);
       _msgController.clear();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    var profilePic = widget.user.avatarImage;
+    if (profilePic!.contains("uploads\\")) {
+      profilePic = baseImgUrl + profilePic;
+      profilePic = profilePic.replaceAll("\\", "/");
+    }
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -81,6 +134,7 @@ class _IndividualPageState extends State<IndividualPage> {
             CircleAvatar(
               radius: 20,
               backgroundColor: Get.isDarkMode ? Colors.white : Colors.black,
+              child: Image.network(profilePic),
             )
           ]),
         ),
@@ -95,12 +149,6 @@ class _IndividualPageState extends State<IndividualPage> {
                 style: const TextStyle(
                   fontSize: 18.5,
                   fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Text(
-                "Last Seen: 10:45",
-                style: TextStyle(
-                  fontSize: 11,
                 ),
               ),
             ],
@@ -120,21 +168,33 @@ class _IndividualPageState extends State<IndividualPage> {
             children: [
               SizedBox(
                 height: MediaQuery.of(context).size.height - 140,
-                child: ListView(
-                  shrinkWrap: true,
-                  children: const [
-                    OwnMessage(),
-                    ReplyMessage(),
-                    OwnMessage(),
-                    ReplyMessage(),
-                    OwnMessage(),
-                    ReplyMessage(),
-                    OwnMessage(),
-                    ReplyMessage(),
-                    OwnMessage(),
-                    ReplyMessage(),
-                  ],
-                ),
+                child: loading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : chatMessages!.isEmpty
+                        ? const Center(
+                            child: Text(
+                              "No messages yet",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: chatMessages!.length,
+                            itemBuilder: (context, index) {
+                              Message message = chatMessages![index];
+                              if (message.sender ==
+                                  GetStorage().read("userId")) {
+                                return OwnMessage(
+                                  message: message.content!,
+                                );
+                              } else {
+                                return ReplyMessage(
+                                  message: message.content!,
+                                );
+                              }
+                            }),
               ),
               Align(
                 alignment: Alignment.bottomCenter,

@@ -16,6 +16,9 @@ const categoryUrl = "category/getCategory";
 const getAllCat = "category/getAllCategories";
 const searchUserRoute = "auth/getAllUsersApp";
 
+const chatsUrl = "chat/app";
+const messagesUrl = "message/app";
+
 const testUrl = "http://localhost:5000/api/";
 
 String? token;

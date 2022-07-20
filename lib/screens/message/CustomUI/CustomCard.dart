@@ -1,28 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:hirehub/models/Chat/ChatModel.dart';
+import 'package:get/get.dart';
+import 'package:hirehub/Logic/ChatLogic.dart';
+import 'package:hirehub/models/Chat/ChattingModel.dart';
+import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/screens/message/Pages/IndividualPage.dart';
+import 'package:hirehub/utils/url.dart';
+import 'package:intl/intl.dart';
 
 class CustomCard extends StatelessWidget {
-  ChatModel chat;
+  Chat chat;
   CustomCard({Key? key, required this.chat}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    DateTime date;
+    String dateString;
+
+    try {
+      date = DateTime.parse(chat.latestMessage!.createdAt!);
+    } catch (e) {
+      date = DateTime.now();
+      print(e);
+    }
+
+    dateString = DateFormat('MMM d, yyyy').format(date);
+
+    User sender = getSender(chat.users!);
+
+    var profilePic = sender.avatarImage;
+    if (profilePic!.contains("uploads\\")) {
+      profilePic = baseImgUrl + profilePic;
+      profilePic = profilePic.replaceAll("\\", "/");
+    }
+
     return InkWell(
-      // onTap: () {
-      //   Get.to(() => IndividualPage(
-      //         chat: chat,
-      //       ));
-      // },
+      onTap: () {
+        Get.to(() => IndividualPage(
+              user: sender,
+              chat: chat,
+            ));
+      },
       child: Column(
         children: [
           ListTile(
             leading: CircleAvatar(
               radius: 30,
-              child: Image.asset("assets/icons/real.png"),
+              child: Image.network(profilePic),
               backgroundColor: Colors.white,
             ),
             title: Text(
-              chat.name,
+              sender.firstName! + " " + sender.lastName!,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -33,12 +60,12 @@ class CustomCard extends StatelessWidget {
                 const Icon(Icons.done_all),
                 const SizedBox(width: 3),
                 Text(
-                  chat.currentMessage,
+                  chat.latestMessage?.content ?? " ",
                   style: const TextStyle(fontSize: 13),
                 ),
               ],
             ),
-            trailing: Text(chat.time),
+            trailing: Text(dateString),
           ),
           const Padding(
             padding: EdgeInsets.only(right: 20, left: 80),

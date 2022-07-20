@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/APIs/UserAPI.dart';
-import 'package:hirehub/models/Chat/ChatModel.dart';
 import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/response/ChatResponse/UserSearchResponse.dart';
 import 'package:hirehub/screens/message/CustomUI/ButtonCard.dart';
@@ -45,36 +44,6 @@ class _SelectContactState extends State<SelectContact> {
     }
   }
 
-  List<ChatModel> chats = [
-    ChatModel(
-      name: 'Chirag Simkhada',
-      icon: 'assets/icons/real.png',
-      isGroup: false,
-      time: '5:55',
-      currentMessage: 'Hello how are you?',
-    ),
-    ChatModel(
-      name: 'Random User',
-      icon: 'assets/icons/real.png',
-      isGroup: false,
-      time: '5:55',
-      currentMessage: 'You are a good person',
-    ),
-    ChatModel(
-      name: 'Test User',
-      icon: 'assets/icons/real.png',
-      isGroup: false,
-      time: '5:55',
-      currentMessage: 'Yo',
-    ),
-    ChatModel(
-      name: 'Google Inc',
-      icon: 'assets/icons/real.png',
-      isGroup: false,
-      time: '5:55',
-      currentMessage: 'Whats up?',
-    ),
-  ];
   Icon custIcon = const Icon(Icons.search);
   final TextEditingController _searchController = TextEditingController();
   Widget custSearchBar = Column(

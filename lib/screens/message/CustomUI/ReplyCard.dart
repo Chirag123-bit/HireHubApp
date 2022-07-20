@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ReplyMessage extends StatelessWidget {
-  const ReplyMessage({Key? key}) : super(key: key);
+  String? message;
+  ReplyMessage({Key? key, this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,13 @@ class ReplyMessage extends StatelessWidget {
               ? const Color.fromARGB(255, 20, 181, 106)
               : const Color.fromARGB(255, 13, 98, 75),
           child: Stack(children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 20),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 20),
               child: Text(
-                "Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey",
-                style: TextStyle(
+                message ??
+                    "Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey",
+                style: const TextStyle(
                   fontSize: 16,
                 ),
               ),
