@@ -17,6 +17,7 @@ class IndividualPage extends StatefulWidget {
 
 class _IndividualPageState extends State<IndividualPage> {
   late IO.Socket socket;
+  final TextEditingController _msgController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -33,6 +34,33 @@ class _IndividualPageState extends State<IndividualPage> {
     socket.connect();
     print(socket.connected);
     socket.emit("setupApp", GetStorage().read("userId"));
+    socket.onConnect((data) {
+      print("Connected");
+      socket.on("message", (msg) {
+        print(msg);
+      });
+    });
+  }
+
+  void sendMessage() {
+    if (_msgController.text.isEmpty) {
+      Get.snackbar(
+        'Message',
+        'Please enter a message',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        icon: const Icon(Icons.error, color: Colors.white),
+      );
+      return;
+    } else {
+      socket.emit("message", {
+        "senderId": GetStorage().read("userId"),
+        "receiverId": widget.user.id,
+        "message": _msgController.text
+      });
+      _msgController.clear();
+    }
   }
 
   @override
@@ -122,6 +150,7 @@ class _IndividualPageState extends State<IndividualPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: TextFormField(
+                          controller: _msgController,
                           textAlignVertical: TextAlignVertical.center,
                           keyboardType: TextInputType.multiline,
                           maxLines: 5,
@@ -137,7 +166,9 @@ class _IndividualPageState extends State<IndividualPage> {
                             ),
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.send),
-                              onPressed: () {},
+                              onPressed: () {
+                                sendMessage();
+                              },
                             ),
                           ),
                         ),

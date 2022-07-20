@@ -42,6 +42,14 @@ class _ChatPageState extends State<ChatPage> {
       currentMessage: 'Whats up?',
     ),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  fetchChats() async {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
