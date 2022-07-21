@@ -45,7 +45,7 @@ class CustomCard extends StatelessWidget {
           ListTile(
             leading: CircleAvatar(
               radius: 30,
-              child: Image.network(profilePic),
+              backgroundImage: NetworkImage(profilePic),
               backgroundColor: Colors.white,
             ),
             title: Text(

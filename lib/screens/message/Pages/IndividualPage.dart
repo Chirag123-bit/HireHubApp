@@ -47,7 +47,16 @@ class _IndividualPageState extends State<IndividualPage> {
     socket.onConnect((data) {
       print("Connected");
       socket.on("message", (msg) {
-        print(msg);
+        Message message = Message(
+          sender: msg["senderId"],
+          content: msg["message"],
+          chat: chatId,
+          createdAt: DateTime.now().toString(),
+          updatedAt: DateTime.now().toString(),
+        );
+        setState(() {
+          chatMessages!.add(message);
+        });
       });
     });
   }
@@ -72,9 +81,7 @@ class _IndividualPageState extends State<IndividualPage> {
         );
         return;
       } else {
-        setState(() {
-          chatId = chatD;
-        });
+        chatId = chatD;
       }
     } else {
       chatId = widget.chat!.id!;
@@ -101,8 +108,18 @@ class _IndividualPageState extends State<IndividualPage> {
     } else {
       socket.emit("message", {
         "senderId": GetStorage().read("userId"),
-        "receiverId": widget.user.id,
+        "reciverId": widget.user.id,
         "message": _msgController.text
+      });
+      Message message = Message(
+        sender: GetStorage().read("userId"),
+        content: _msgController.text,
+        chat: chatId,
+        createdAt: DateTime.now().toString(),
+        updatedAt: DateTime.now().toString(),
+      );
+      setState(() {
+        chatMessages!.add(message);
       });
 
       ChatsAPI api = ChatsAPI();
@@ -134,7 +151,7 @@ class _IndividualPageState extends State<IndividualPage> {
             CircleAvatar(
               radius: 20,
               backgroundColor: Get.isDarkMode ? Colors.white : Colors.black,
-              child: Image.network(profilePic),
+              backgroundImage: NetworkImage(profilePic),
             )
           ]),
         ),

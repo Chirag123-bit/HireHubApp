@@ -52,14 +52,18 @@ class _ChatPageState extends State<ChatPage> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : ListView.builder(
-              itemCount: userChats!.length,
-              itemBuilder: (context, index) {
-                return CustomCard(
-                  chat: userChats![index],
-                );
-              },
-            ),
+          : userChats == null
+              ? const Center(
+                  child: Text("No Chats"),
+                )
+              : ListView.builder(
+                  itemCount: userChats!.length,
+                  itemBuilder: (context, index) {
+                    return CustomCard(
+                      chat: userChats![index],
+                    );
+                  },
+                ),
     );
   }
 }
