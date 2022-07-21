@@ -47,6 +47,7 @@ class _IndividualPageState extends State<IndividualPage> {
     socket.onConnect((data) {
       print("Connected");
       socket.on("message", (msg) {
+        print("Message Received");
         Message message = Message(
           sender: msg["senderId"],
           content: msg["message"],
