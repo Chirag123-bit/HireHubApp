@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:hirehub/APIs/HttpServices.dart';
 import 'package:hirehub/models/Users.dart';
@@ -134,5 +136,38 @@ class UserAPI {
       print(e);
     }
     return userSearchResponse;
+  }
+
+  Future<bool> updateProfilePic(File img) async {
+    try {
+      String token = await _getToken();
+      const url = baseUrl + changeProfilePic;
+      String filename = img.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(
+          img.path,
+          filename: filename,
+        )
+      });
+      var dio = HttpServices().getDioInstance();
+      Response response = await dio.post(
+        url,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }),
+        data: formData,
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return false;
   }
 }

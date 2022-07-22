@@ -15,6 +15,7 @@ const applyJobUrl = "job/applyForJob";
 const categoryUrl = "category/getCategory";
 const getAllCat = "category/getAllCategories";
 const searchUserRoute = "auth/getAllUsersApp";
+const changeProfilePic = "auth/changeProfilePic";
 
 const chatsUrl = "chat/app";
 const messagesUrl = "message/app";

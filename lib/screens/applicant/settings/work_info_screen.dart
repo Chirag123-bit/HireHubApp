@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hirehub/APIs/UserAPI.dart';
+import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/models/Work.dart';
 import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/screens/auth/registerComponents/DropdownComponent.dart';
@@ -42,28 +44,51 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
   late SharedPreferences prefs;
   late List<Work> works;
   late UserRepository _userRepository;
-
-  Future _loadImage(ImageSource imageSource) async {
-    try {
-      final image = await ImagePicker().pickImage(source: imageSource);
-      if (image != null) {
-        setState(
-          () {
-            img = File(image.path);
-          },
-        );
-      } else {
-        return;
-      }
-    } catch (e) {
-      debugPrint("Failed to pick image $e");
-    }
-  }
+  Image? profilePic;
+  late User user;
 
   @override
   void initState() {
     super.initState();
     getAndSetData();
+  }
+
+  Future _loadImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        File uploadImage = File(image.path);
+        bool? success = await UserAPI().updateProfilePic(uploadImage);
+
+        if (success == true) {
+          img = File(image.path);
+          final bytes = img!.readAsBytesSync();
+          user = await _userRepository.getBasicUserDetails();
+          await _userRepository
+              .saveProfileToPreferences(_userRepository.base64String(bytes));
+          setState(
+            () {
+              img = File(image.path);
+              profilePic = Image.file(img!);
+            },
+          );
+          Get.back();
+          MotionToast.success(
+            description: const Text("Profile Picture Updated"),
+          ).show(context);
+        } else {
+          MotionToast.error(
+            description: const Text("Profile Picture Update Failed"),
+          ).show(context);
+        }
+      } else {
+        print("No image selected");
+        return;
+      }
+    } catch (e) {
+      print(e);
+      debugPrint("Failed to pick image $e");
+    }
   }
 
   void getAndSetData() async {
@@ -73,6 +98,8 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
     prefs = await SharedPreferences.getInstance();
     _userRepository = UserRepository();
     List<Work> workSaved = await _userRepository.getWorkDetails();
+    String prof = await _userRepository.getProfileFromPreferences();
+    profilePic = _userRepository.imageFromBase64String(prof);
     setState(() {
       isLoading = false;
       works = workSaved;
@@ -149,8 +176,8 @@ class _EditWorkInfoScreenState extends State<EditWorkInfoScreen> {
                               offset: const Offset(0, 10)),
                         ],
                         image: DecorationImage(
-                            image: img != null
-                                ? FileImage(img!)
+                            image: profilePic != null
+                                ? profilePic!.image
                                 : Image.asset("assets/images/profile.jpg")
                                     .image,
                             fit: BoxFit.cover),
