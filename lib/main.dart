@@ -13,6 +13,7 @@ import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
+import 'package:hirehub/screens/employer/EmployerMainScreen.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
@@ -49,6 +50,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         "/": (context) => const SplashScreen(),
         "/home": (context) => const ApplicantMainPage(),
+        "/homeEmployer": (context) => const EmployerMainPage(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const Register(),
         "/category": (context) => const CategoryScreen(),

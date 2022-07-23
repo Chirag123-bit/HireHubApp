@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/models/Education.dart';
 import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/models/Work.dart';
@@ -63,9 +64,43 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text(
-            "Skill(s)",
-            textAlign: TextAlign.left,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Education(s)",
+                textAlign: TextAlign.left,
+                style: GoogleFonts.lato(
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  addEduControl();
+                },
+                color: Theme.of(context).colorScheme.secondary,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const <Widget>[
+                    Text(
+                      'Add',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
           ListView.separated(
             shrinkWrap: true,
@@ -88,10 +123,43 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Text(
-          "Work Experience(s)",
-          textAlign: TextAlign.left,
-          style: TextStyle(fontSize: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Work Experience(s)",
+              textAlign: TextAlign.left,
+              style: GoogleFonts.lato(
+                textStyle: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            RaisedButton(
+              onPressed: () {
+                addWorkControl();
+              },
+              color: Theme.of(context).colorScheme.secondary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const <Widget>[
+                  Text(
+                    'Add',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+            )
+          ],
         ),
         ListView.separated(
           shrinkWrap: true,
@@ -99,7 +167,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
           itemCount: widget.user.workSet!.length,
           itemBuilder: (context, index) {
             return Column(children: [
-              WorkUi(index),
+              workUi(index),
             ]);
           },
           separatorBuilder: (context, index) => const Divider(),
@@ -125,6 +193,47 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Education ${index + 1}",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.lato(
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: index > 0,
+                          child: RaisedButton(
+                            onPressed: () {
+                              removeEduControl(index);
+                            },
+                            color: Colors.red,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const <Widget>[
+                                Text(
+                                  'Remove',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                     getTextField(
                       "Degree Title",
                       widget.user.educationSet![index].degree!,
@@ -155,19 +264,21 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                         children: [
                           getDateField(
                             "Start Date",
-                            widget.user.educationSet![index].startDate!,
+                            widget.user.educationSet![index].startDate!
+                                .split("T")[0],
                             (value) {
                               setState(
                                 () {
-                                  widget.user.educationSet![index].endDate =
+                                  widget.user.educationSet![index].startDate =
                                       value;
                                 },
                               );
                             },
                           ),
-                          getDateField("End Date",
-                              widget.user.educationSet![index].endDate!,
-                              (value) {
+                          getDateField(
+                              "End Date",
+                              widget.user.educationSet![index].endDate!
+                                  .split("T")[0], (value) {
                             setState(
                               () {
                                 widget.user.educationSet![index].endDate =
@@ -176,47 +287,17 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                             );
                           },
                               finalDate:
-                                  widget.user.educationSet![index].endDate!),
+                                  widget.user.educationSet![index].startDate!),
                         ])
                   ],
                 ),
               )),
         ),
       ),
-      Visibility(
-        child: SizedBox(
-          width: 35,
-          child: IconButton(
-            icon: const Icon(
-              Icons.add_circle,
-              color: Colors.orange,
-            ),
-            onPressed: () {
-              addEduControl();
-            },
-          ),
-        ),
-        visible: index == widget.user.skills!.length - 1,
-      ),
-      Visibility(
-        child: SizedBox(
-          width: 35,
-          child: IconButton(
-            icon: const Icon(
-              Icons.remove_circle,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              removeEduControl(index);
-            },
-          ),
-        ),
-        visible: index > 0,
-      ),
     ]);
   }
 
-  Widget WorkUi(int index) {
+  Widget workUi(int index) {
     return Row(children: [
       Flexible(
         child: Card(
@@ -233,6 +314,47 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Work ${index + 1}",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.lato(
+                            textStyle: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        Visibility(
+                          visible: index > 0,
+                          child: RaisedButton(
+                            onPressed: () {
+                              removeWorkControl(index);
+                            },
+                            color: Colors.red,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const <Widget>[
+                                Text(
+                                  'Remove',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                     Row(children: [
                       Flexible(
                         child: getTextField(
@@ -266,7 +388,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     getTextField(
                       "Work Location",
-                      widget.user.workSet![index].company_location!,
+                      widget.user.workSet![index].company_location ?? "",
                       (value) {
                         setState(
                           () {
@@ -281,7 +403,8 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                     ),
                     DropdownComponent(
                       items: widget.workOptions,
-                      valueHolder: widget.user.workSet![index].work_type,
+                      valueHolder:
+                          widget.user.workSet![index].work_type ?? "Part Time",
                       onChanged: (value) {
                         setState(
                           () {
@@ -295,7 +418,7 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                       children: [
                         getDateField(
                           "Start Date",
-                          widget.user.workSet![index].startDate!,
+                          widget.user.workSet![index].startDate!.split("T")[0],
                           (value) {
                             setState(
                               () {
@@ -304,8 +427,8 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                             );
                           },
                         ),
-                        getDateField(
-                            "End Date", widget.user.workSet![index].endDate!,
+                        getDateField("End Date",
+                            widget.user.workSet![index].endDate!.split("T")[0],
                             (value) {
                           setState(
                             () {
@@ -319,36 +442,6 @@ class _ProfessionalInfoState extends State<ProfessionalInfo> {
                 ),
               )),
         ),
-      ),
-      Visibility(
-        child: SizedBox(
-          width: 35,
-          child: IconButton(
-            icon: const Icon(
-              Icons.add_circle,
-              color: Colors.orange,
-            ),
-            onPressed: () {
-              addWorkControl();
-            },
-          ),
-        ),
-        visible: index == widget.user.skills!.length - 1,
-      ),
-      Visibility(
-        child: SizedBox(
-          width: 35,
-          child: IconButton(
-            icon: const Icon(
-              Icons.remove_circle,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              removeWorkControl(index);
-            },
-          ),
-        ),
-        visible: index > 0,
       ),
     ]);
   }

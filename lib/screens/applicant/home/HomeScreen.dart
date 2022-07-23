@@ -6,6 +6,7 @@ import 'package:hirehub/screens/applicant/home/widgets/HomeContent.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomeHeader.dart';
 import 'package:hirehub/screens/applicant/home/widgets/HomeSubHeader.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -13,6 +14,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isLoading = false;
+  bool isUpdating = false;
+  bool isImageLoading = false;
+  late String _imageUrl;
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //get user from shared prefs
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);

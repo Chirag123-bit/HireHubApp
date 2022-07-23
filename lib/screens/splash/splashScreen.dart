@@ -12,12 +12,19 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   String? token;
+  String? type;
 
   @override
   void initState() {
     super.initState();
     _getToken().whenComplete(() => {
-          if (token != null) {Navigator.pushReplacementNamed(context, '/home')}
+          if (token != null)
+            {
+              if (type == "Applicant")
+                {Navigator.pushReplacementNamed(context, '/home')}
+              else
+                {Navigator.pushReplacementNamed(context, '/homeEmployer')}
+            }
         });
   }
 
@@ -25,9 +32,11 @@ class _SplashScreenState extends State<SplashScreen> {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     var storedToken = sharedPreferences.getString('token');
+    var typeUser = sharedPreferences.getString('type');
 
     setState(() {
       token = storedToken;
+      type = typeUser;
     });
   }
 

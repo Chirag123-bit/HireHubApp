@@ -10,6 +10,7 @@ import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
 import 'package:hirehub/screens/applicant/job/AppliedJobsScreen.dart';
 import 'package:hirehub/screens/applicant/job/SavedJobScreen.dart';
 import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
+import 'package:hirehub/screens/applicant/settings/change_password_screen.dart';
 import 'package:hirehub/screens/applicant/settings/education_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/professional_info_screen.dart';
 import 'package:hirehub/screens/applicant/settings/work_info_screen.dart';
@@ -53,9 +54,6 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
         );
       }
     }));
-    // userAccelerometerEvents!.listen((UserAccelerometerEvent event) {
-    //   // print(event);
-    // });
   }
 
   @override
@@ -104,6 +102,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
               children: [
                 Text(
                   "Dark Mode",
+                  key: const Key("darkModeSlider"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -174,7 +173,11 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
                 onPressed: () {
                   Get.to(() => EditWorkInfoScreen());
                 }),
-            BuildSettingOption(title: "Change Password", onPressed: () {}),
+            BuildSettingOption(
+                title: "Change Password",
+                onPressed: () {
+                  Get.to(() => ChangePasswordScreen());
+                }),
             const SizedBox(
               height: 40,
             ),

@@ -9,7 +9,7 @@ part of 'applied_jobs_response.dart';
 AppliedJobsResponse _$AppliedJobsResponseFromJson(Map<String, dynamic> json) =>
     AppliedJobsResponse(
       success: json['success'] as bool?,
-      data: (json['data']['appliedJobs'] as List<dynamic>?)
+      data: (json['data'] as List<dynamic>?)
           ?.map((e) => AppliedJob.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

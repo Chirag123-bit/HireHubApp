@@ -8,6 +8,7 @@ class TextFieldGenerator extends StatelessWidget {
       required this.keyboardType,
       this.obscureText = false,
       required this.validatorText,
+      this.readOnly = false,
       this.border = const OutlineInputBorder()})
       : super(key: key);
 
@@ -17,6 +18,7 @@ class TextFieldGenerator extends StatelessWidget {
   final String validatorText;
   final InputBorder border;
   bool obscureText;
+  bool readOnly;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,6 +27,7 @@ class TextFieldGenerator extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         keyboardType: keyboardType,
+        readOnly: readOnly,
         decoration: InputDecoration(
             filled: true, labelText: label, border: const OutlineInputBorder()),
         validator: (value) {

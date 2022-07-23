@@ -1,9 +1,17 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:hirehub/controller/AppliedJobController.dart';
+import 'package:hirehub/models/Company.dart';
 import 'package:hirehub/models/Users.dart';
 import 'package:hirehub/repository/UserRepository.dart';
 import 'package:hirehub/repository/job_repository.dart';
 import 'package:hirehub/response/LoginResponse.dart';
+import 'package:hirehub/screens/auth/OTPVerificationScreen.dart';
+import 'package:hirehub/utils/url.dart';
+import 'package:http/http.dart' as http;
 import 'package:motion_toast/motion_toast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,15 +49,64 @@ class _LoginScreenState extends State<LoginScreen> {
       if (login.success!) {
         User loggedUser = login.user!;
         UserRepository userRepository = UserRepository();
+        GetStorage().write("userId", loggedUser.id);
+        GetStorage().write("isVerified", loggedUser.isVerified);
+
+        String isVerif = GetStorage().read("isVerified");
+
+        var profile = loggedUser.avatarImage;
+
+        if (profile != null) {
+          if (profile.contains("uploads\\")) {
+            profile = baseImgUrl + profile;
+            profile = profile.replaceAll("\\", "/");
+          }
+          http.Response response = await http.get(Uri.parse(profile));
+          await userRepository.saveProfileToPreferences(
+              userRepository.base64String(response.bodyBytes));
+        }
 
         if (loggedUser.type == "Applicant") {
+          Uint8List imageBytes;
+
           await userRepository.storeBasicUserDetails(loggedUser);
           await userRepository.storeProfessionalDetails(loggedUser);
           await userRepository.storeEducationDetails(loggedUser.educationSet!);
           await userRepository.storeWorkDetails(loggedUser.workSet!);
+
           prefs.setString("token", login.token!);
           getAppliedJobs();
+          print("Is Verified: $isVerif");
+          if (isVerif == "false") {
+            Get.to(const OTPScreen());
+            return;
+          }
           Navigator.popAndPushNamed(context, "/home");
+        } else if (loggedUser.type == "Company") {
+          Company company = login.company!;
+          await userRepository.storeBasicUserDetails(loggedUser);
+          await userRepository.storeCompanyDetails(login.company!);
+
+          var profile = company.avatarImage;
+          if (profile!.contains("uploads\\")) {
+            profile = baseImgUrl + profile;
+            profile = profile.replaceAll("\\", "/");
+          }
+          http.Response response = await http.get(Uri.parse(profile));
+          await userRepository.saveLogoToPreferences(
+              userRepository.base64String(response.bodyBytes));
+
+          prefs.setString("token", login.token!);
+          print("Is Verified: $isVerif");
+          if (isVerif == "false") {
+            Get.to(const OTPScreen());
+            return;
+          }
+          Navigator.popAndPushNamed(context, "/homeEmployer");
+        } else {
+          MotionToast.error(
+            description: const Text("Some Unknown error occured"),
+          ).show(context);
         }
       } else {
         MotionToast.error(

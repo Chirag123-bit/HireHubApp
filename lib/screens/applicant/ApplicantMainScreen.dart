@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
 import 'package:hirehub/screens/applicant/home/HomeScreen.dart';
-import 'package:hirehub/screens/applicant/message/MessageScreen.dart';
 import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
+import 'package:hirehub/screens/message/ChatHomeScreen.dart';
 import 'package:hirehub/theme/Theme.dart';
 
 class ApplicantMainPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _ApplicantMainPageState extends State<ApplicantMainPage> {
   List<Widget> applicantScreens = [
     HomeScreen(),
     const FilterPage(),
-    const MessageScreen(),
+    const ChatHomeScreen(),
     const SettingScreen(),
   ];
 

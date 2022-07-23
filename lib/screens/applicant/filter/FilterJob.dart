@@ -24,7 +24,10 @@ class FilterJob extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
-                      JobCard(data: lstJobs[index]),
+                      JobCard(
+                        data: lstJobs[index],
+                        uniqueIdentifier: "filter",
+                      ),
                       SizedBox(height: kSpacingUnit * 2),
                     ],
                   );
