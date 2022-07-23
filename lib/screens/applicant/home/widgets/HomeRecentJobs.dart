@@ -33,7 +33,10 @@ class HomeRecentJobs extends StatelessWidget {
                               top: item.key == 0 ? kSpacingUnit * 2 : 0,
                               bottom: kSpacingUnit * 2,
                             ),
-                            child: JobCard(data: item.value),
+                            child: JobCard(
+                              data: item.value,
+                              uniqueIdentifier: "recent",
+                            ),
                           ),
                         )
                         .toList(),

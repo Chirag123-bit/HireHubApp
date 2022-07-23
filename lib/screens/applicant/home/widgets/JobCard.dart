@@ -11,8 +11,10 @@ import 'package:hirehub/utils/url.dart';
 
 class JobCard extends StatelessWidget {
   final Job data;
+  final String uniqueIdentifier;
 
-  JobCard({Key? key, required this.data}) : super(key: key);
+  JobCard({Key? key, required this.data, required this.uniqueIdentifier})
+      : super(key: key);
   List<LinearGradient> gradients = [
     const LinearGradient(
       colors: [Color(0xffaddbaf), Color(0xff2095f3)],
@@ -54,6 +56,7 @@ class JobCard extends StatelessWidget {
         boxShadow: [kCardShadow],
       ),
       child: OpenContainer(
+        key: ValueKey(uniqueIdentifier + data.title!),
         transitionType: ContainerTransitionType.fade,
         transitionDuration: const Duration(milliseconds: 500),
         openColor: kSilverColor,

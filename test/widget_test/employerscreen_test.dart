@@ -1,45 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hirehub/screens/applicant/settings/change_password_screen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 
 void main() {
-  testWidgets("Login Widget Test", (WidgetTester test) async {
+  testWidgets("Setting Test", (WidgetTester test) async {
     await test.pumpWidget(
-      const MaterialApp(
-        title: "Arithmetic",
-        home: LoginScreen(),
+      MaterialApp(
+        title: "Settings Screen",
+        home: ChangePasswordScreen(),
       ),
     );
-
-    Finder usernameText = find.byKey(const ValueKey("txtUsername"));
-    await test.enterText(usernameText, "Chirag");
-    Finder passwordText = find.byKey(const ValueKey("txtPassword"));
-    await test.enterText(passwordText, "Abcd");
-
-    Finder btnLogin = find.byKey(const ValueKey("btnLogin"));
-    await test.tap(btnLogin);
-    await test.pump();
-    expect(find.text("Chirag"), findsOneWidget);
+    await test.pumpAndSettle();
+    Finder darkMode = find.byKey(const ValueKey("darkModeSlider"));
+    expect(find.text("Old Password"),
+        findsWidgets); // Validates that the text "Old Password" is displayed
   });
-  testWidgets("Login Screen Test", (WidgetTester test) async {
+  testWidgets("Home Banner Test", (WidgetTester test) async {
     await test.pumpWidget(
       const MaterialApp(
-        title: "Arithmetic",
+        title: "Home Banner",
         home: LoginScreen(),
       ),
     );
 
     Finder usernameText = find.byKey(const ValueKey("txtUsername"));
-    await test.enterText(usernameText, "Chirag");
+    await test.enterText(usernameText, "Chirag1");
     Finder passwordText = find.byKey(const ValueKey("txtPassword"));
     await test.enterText(passwordText, "Abcd");
 
     Finder btnLogin = find.byKey(const ValueKey("btnLogin"));
     await test.tap(btnLogin);
     await test.pumpAndSettle();
-    expect(find.text("continue"), findsNothing);
+    expect(find.text("Looking for Jobs?"),
+        findsNothing); //verifies we are not on "Applicant" home screen
   });
-  testWidgets("Home Page Test", (WidgetTester test) async {
+  testWidgets("Finds Jobs container in homepage", (WidgetTester test) async {
     await test.pumpWidget(
       const MaterialApp(
         title: "Arithmetic",
@@ -48,13 +44,15 @@ void main() {
     );
 
     Finder usernameText = find.byKey(const ValueKey("txtUsername"));
-    await test.enterText(usernameText, "ApplicantTen");
+    await test.enterText(usernameText, "Chirag1");
     Finder passwordText = find.byKey(const ValueKey("txtPassword"));
     await test.enterText(passwordText, "Abcd");
 
     Finder btnLogin = find.byKey(const ValueKey("btnLogin"));
     await test.tap(btnLogin);
     await test.pumpAndSettle();
-    expect(find.byKey(const ValueKey("homeBanner")), findsOneWidget);
+
+    expect(find.text("Chirag1"),
+        findsWidgets); //verifies our name is displayed in the banner
   });
 }

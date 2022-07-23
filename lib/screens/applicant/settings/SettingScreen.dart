@@ -102,6 +102,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
               children: [
                 Text(
                   "Dark Mode",
+                  key: const Key("darkModeSlider"),
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

@@ -46,6 +46,7 @@ class _HomeHeaderState extends State<HomeHeader> {
     //   logo = logo.replaceAll("\\", "/");
     // }
     return Padding(
+      key: const Key('homeBanner'),
       padding: EdgeInsets.symmetric(
         horizontal: kSpacingUnit * 3,
       ),
@@ -70,7 +71,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                     ? const TextSpan(text: "Loading...")
                     : TextSpan(text: 'Hey $fname, \n'),
                 const TextSpan(
-                  text: 'Looking to Hire?',
+                  text: 'Looking for Jobs?',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),

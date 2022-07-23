@@ -65,4 +65,9 @@ void main() {
       expect(actualResult, expectedResult);
     });
   });
+
+  tearDown() async {
+    prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
 }

@@ -47,7 +47,10 @@ class _HomePopularJobsState extends State<HomePopularJobs> {
                         Container(
                       width: double.infinity,
                       margin: EdgeInsets.symmetric(horizontal: kSpacingUnit),
-                      child: JobCard(data: lstJobs[index]),
+                      child: JobCard(
+                        data: lstJobs[index],
+                        uniqueIdentifier: "popular",
+                      ),
                     ),
                   );
                 }
