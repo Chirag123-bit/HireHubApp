@@ -170,4 +170,31 @@ class UserAPI {
 
     return false;
   }
+
+  Future<bool> updatePassword(String oldPassword, String newPassword) async {
+    try {
+      String token = await _getToken();
+      const url = baseUrl + changePassword;
+
+      var dio = HttpServices().getDioInstance();
+      Response response = await dio.put(
+        url,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }),
+        data: {"oldPassword": oldPassword, "password": newPassword},
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return false;
+  }
 }

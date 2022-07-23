@@ -115,7 +115,6 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
           setState(
             () {
               img = File(image.path);
-              //convert img to uint8list data
               profilePic = Image.file(img!);
             },
           );

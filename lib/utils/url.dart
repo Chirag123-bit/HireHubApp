@@ -16,6 +16,7 @@ const categoryUrl = "category/getCategory";
 const getAllCat = "category/getAllCategories";
 const searchUserRoute = "auth/getAllUsersApp";
 const changeProfilePic = "auth/changeProfilePic";
+const changePassword = "auth/updatePassword";
 
 const chatsUrl = "chat/app";
 const messagesUrl = "message/app";
