@@ -46,11 +46,13 @@ void main() {
     Finder passwordText = find.byKey(const ValueKey("txtPassword"));
     await test.enterText(passwordText, "Abcd");
 
-    Finder btnLogin = find.byKey(const ValueKey("btnLogin"));
+    Finder btnLogin = find.byKey(const Key("btnLogin"));
     await test.tap(btnLogin);
-    await test.pumpAndSettle();
-    Finder jobCard = find.text("Trainer");
+    await test.pumpAndSettle(const Duration(seconds: 10));
+    Finder jobCard = find.byKey(const Key("RecentTrainer"));
     await test.tap(jobCard);
+    await test.pumpAndSettle(const Duration(seconds: 5));
+
     expect(find.text("Amazon"), findsWidgets);
   });
 }

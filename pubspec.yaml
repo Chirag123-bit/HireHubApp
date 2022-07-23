@@ -83,6 +83,8 @@ dependencies:
   socket_io_client: ^1.0.0
   uuid: ^3.0.6
   sms_autofill: ^2.2.0
+  integration_test:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:

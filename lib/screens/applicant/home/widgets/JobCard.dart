@@ -56,7 +56,7 @@ class JobCard extends StatelessWidget {
         boxShadow: [kCardShadow],
       ),
       child: OpenContainer(
-        key: ValueKey(uniqueIdentifier + data.title!),
+        key: Key(uniqueIdentifier + data.title!),
         transitionType: ContainerTransitionType.fade,
         transitionDuration: const Duration(milliseconds: 500),
         openColor: kSilverColor,
