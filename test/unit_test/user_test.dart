@@ -1,113 +1,113 @@
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:hirehub/models/Education.dart';
-// import 'package:hirehub/models/Users.dart';
-// import 'package:hirehub/models/Work.dart';
-// import 'package:hirehub/repository/UserRepository.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hirehub/models/Education.dart';
+import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/models/Work.dart';
+import 'package:hirehub/repository/UserRepository.dart';
+import 'package:hirehub/response/LoginResponse.dart';
 
-// void main() {
-//   late User user;
+void main() {
+  late User user;
 
-//   setUp(() {
-//     user = User();
-//   });
+  setUp(() {
+    user = User();
+  });
 
-//   group("Login Test", () {
-//     test("Login Test Pass", () async {
-//       user.username = "Chirag";
-//       user.password = "Abcd";
+  group("Login Test", () {
+    test("Login Test Pass", () async {
+      user.username = "Chirag";
+      user.password = "Abcd";
 
-//       bool actualResult = await UserRepository().loginUser(user);
-//       bool expectedResult = true;
+      LoginResponse? actualResult = await UserRepository().loginUser(user);
 
-//       expect(actualResult, expectedResult);
-//     });
-//     test("Login Test Fail", () async {
-//       user.username = "Chirag";
-//       user.password = "Abcde";
+      bool expectedResult = true;
 
-//       bool actualResult = await UserRepository().loginUser(user);
-//       bool expectedResult = true;
+      expect(actualResult!.success, expectedResult);
+    });
+    test("Login Test Fail", () async {
+      user.username = "Chirag";
+      user.password = "Abcde";
 
-//       expect(actualResult, expectedResult);
-//     });
-//   });
+      LoginResponse? actualResult = await UserRepository().loginUser(user);
+      bool expectedResult = true;
 
-//   group("Register Test", () {
-//     test("Register Test Pass", () async {
-//       user.firstName = "Chirag";
-//       user.lastName = "Simkhada";
-//       user.username = "TestAccount1";
-//       user.password = "Abcd";
-//       user.email = "sadasdamsdasidm@gmail.com";
-//       user.phone = "123456789";
-//       user.type = "Applicant";
-//       user.gender = "Male";
+      expect(actualResult!.success, expectedResult);
+    });
+  });
 
-//       user.title = "Backend Developer";
-//       user.skills = ["Dart", "Flutter", "Backend"];
-//       user.summary = "I am a backend developer";
-//       user.educationSet = [
-//         Education(
-//           etitle: "Test Tes",
-//           eschool: "Softwarica",
-//           estart: "2020",
-//           eend: "2021",
-//         )
-//       ];
+  group("Register Test", () {
+    test("Register Test Pass", () async {
+      user.firstName = "Chirag";
+      user.lastName = "Simkhada";
+      user.username = "TestAccount1";
+      user.password = "Abcd";
+      user.email = "sadasdamsdasidm@gmail.com";
+      user.phone = "123456789";
+      user.type = "Applicant";
+      user.gender = "Male";
 
-//       user.workSet = [
-//         Work(
-//             wtitle: "Test",
-//             wcompany: "Softwarica",
-//             wstart: "2020",
-//             wend: "2021",
-//             wlocation: "Nepal",
-//             wtype: "Full Time")
-//       ];
+      user.title = "Backend Developer";
+      user.skills = ["Dart", "Flutter", "Backend"];
+      user.summary = "I am a backend developer";
+      user.educationSet = [
+        Education(
+          degree: "Test Tes",
+          college: "Softwarica",
+          startDate: "2020",
+          endDate: "2021",
+        )
+      ];
 
-//       bool actualResult = await UserRepository().registerUser(user);
-//       bool expectedResult = true;
+      user.workSet = [
+        Work(
+            job_title: "Test",
+            company: "Softwarica",
+            startDate: "2020",
+            endDate: "2021",
+            company_location: "Nepal",
+            work_type: "Full Time")
+      ];
 
-//       expect(actualResult, expectedResult);
-//     });
-//     test("Register Test Fail", () async {
-//       user.firstName = "Chirag";
-//       user.lastName = "Simkhada";
-//       user.username = "TestAccount";
-//       user.password = "Abcd";
-//       user.email = "sadamsdasidm@gmail.com";
-//       user.phone = "123456789";
-//       user.type = "Applicant";
-//       user.gender = "Male";
+      bool actualResult = await UserRepository().registerUser(user);
+      bool expectedResult = true;
 
-//       user.title = "Backend Developer";
-//       user.skills = ["Dart", "Flutter", "Backend"];
-//       user.summary = "I am a backend developer";
-//       user.educationSet = [
-//         Education(
-//           etitle: "Test Tes",
-//           eschool: "Softwarica",
-//           estart: "2020",
-//           eend: "2021",
-//         )
-//       ];
+      expect(actualResult, expectedResult);
+    });
+    test("Register Test Fail", () async {
+      user.firstName = "Chirag";
+      user.lastName = "Simkhada";
+      user.username = "TestAccount";
+      user.password = "Abcd";
+      user.email = "sadamsdasidm@gmail.com";
+      user.phone = "123456789";
+      user.type = "Applicant";
+      user.gender = "Male";
 
-//       user.workSet = [
-//         Work(
-//             wtitle: "Test",
-//             wcompany: "Softwarica",
-//             wstart: "2020",
-//             wend: "2021",
-//             wlocation: "Nepal",
-//             wtype: "Full Time")
-//       ];
+      user.title = "Backend Developer";
+      user.skills = ["Dart", "Flutter", "Backend"];
+      user.summary = "I am a backend developer";
+      user.educationSet = [
+        Education(
+          degree: "Test Tes",
+          college: "Softwarica",
+          startDate: "2020",
+          endDate: "2021",
+        )
+      ];
 
-//       bool actualResult = await UserRepository().registerUser(user);
-//       bool expectedResult = true;
+      user.workSet = [
+        Work(
+            job_title: "Test",
+            company: "Softwarica",
+            startDate: "2020",
+            endDate: "2021",
+            company_location: "Nepal",
+            work_type: "Full Time")
+      ];
 
-//       expect(actualResult, expectedResult);
-//     });
-//   });
+      bool actualResult = await UserRepository().registerUser(user);
+      bool expectedResult = true;
 
-  
-// }
+      expect(actualResult, expectedResult);
+    });
+  });
+}

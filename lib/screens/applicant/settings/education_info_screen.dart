@@ -341,7 +341,7 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                     ),
                     getTextField(
                       "Degree Title",
-                      educations[index].degree!,
+                      educations[index].degree ?? "Bs. in Computer Science",
                       (value) {
                         setState(
                           () {
@@ -355,7 +355,7 @@ class _EditEducationalInfoScreenState extends State<EditEducationalInfoScreen> {
                     ),
                     getTextField(
                       "College/University",
-                      educations[index].college!,
+                      educations[index].college ?? "Coventry University",
                       (value) {
                         setState(
                           () {
