@@ -82,6 +82,7 @@ dependencies:
   redux: ^5.0.0
   socket_io_client: ^1.0.0
   uuid: ^3.0.6
+  sms_autofill: ^2.2.0
 
 dev_dependencies:
   flutter_test:

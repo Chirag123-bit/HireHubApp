@@ -197,4 +197,66 @@ class UserAPI {
 
     return false;
   }
+
+  Future<Map<String, dynamic>> sendOTP(String id, String email) async {
+    Map<String, dynamic> resp = {};
+    try {
+      String token = await _getToken();
+      const url = baseUrl + sendVerification;
+
+      var dio = HttpServices().getDioInstance();
+      Response response = await dio.post(
+        url,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }),
+        data: {"email": email, "id": id},
+      );
+      print(response.data);
+      if (response.data['status'] == true) {
+        resp['success'] = true;
+        resp["message"] = response.data["msg"];
+      } else {
+        resp['success'] = false;
+        resp["message"] = response.data["msg"];
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return resp;
+  }
+
+  Future<Map<String, dynamic>> verifyOTP(String id, String otp) async {
+    Map<String, dynamic> resp = {};
+    try {
+      String token = await _getToken();
+      var url = baseUrl + verifyOTPRoute + "/" + id + "/" + otp + id;
+
+      var dio = HttpServices().getDioInstance();
+      Response response = await dio.post(
+        url,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }),
+      );
+      print(response.data);
+      if (response.data['status'] == true ||
+          response.data['status'] == "completed") {
+        resp['success'] = true;
+        resp["message"] = response.data["msg"];
+      } else {
+        resp['success'] = false;
+        resp["message"] = response.data["msg"];
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return resp;
+  }
 }

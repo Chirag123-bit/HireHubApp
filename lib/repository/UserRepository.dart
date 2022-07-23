@@ -115,8 +115,8 @@ class UserRepository {
   //function to store job details in shared preferences
   Future<void> storeProfessionalDetails(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(titleKey, user.title!);
-    prefs.setString(sectorKey, user.sector!);
+    prefs.setString(titleKey, user.title ?? "Tiltle");
+    prefs.setString(sectorKey, user.sector ?? "Information Technology");
     // prefs.setString(summaryKey, user.summary!);
     prefs.setStringList(skillsKey, user.skills!);
     prefs.setString(idKey, user.id!);

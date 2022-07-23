@@ -16,6 +16,7 @@ class User {
   String? type;
   String? password;
   String? username;
+  String? isVerified;
 
   String? cname;
   String? country;
@@ -56,6 +57,7 @@ class User {
     this.workSet,
     this.educationSet,
     this.avatarImage,
+    this.isVerified,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
