@@ -17,6 +17,7 @@ import 'package:hirehub/screens/employer/EmployerMainScreen.dart';
 import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
+import 'package:hirehub/wearOs/main.dart';
 // import 'package:hirehub/wearOs/main.dart';
 
 void main() async {
@@ -46,9 +47,10 @@ class _MyAppState extends State<MyApp> {
       theme: Themes.light,
       themeMode: ThemeServices().theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/",
+      initialRoute: "/wear",
       routes: {
         "/": (context) => const SplashScreen(),
+        "/wear": (context) => const WearOsApp(),
         "/home": (context) => const ApplicantMainPage(),
         "/homeEmployer": (context) => const EmployerMainPage(),
         "/login": (context) => const LoginScreen(),
