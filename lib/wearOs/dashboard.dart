@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hirehub/APIs/WearOs_api.dart';
+import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/models/WearOs/GetAppliedJobs.dart';
+import 'package:hirehub/repository/UserRepository.dart';
+import 'package:hirehub/response/WearOsResponse/getAppliedJobsResponse.dart';
+import 'package:hirehub/wearOs/main.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
   static List<Color> sky = [const Color(0xFF6448FE), const Color(0xFF5FC6FF)];
   static List<Color> sunset = [
@@ -12,6 +21,43 @@ class DashboardScreen extends StatelessWidget {
   static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
 
   static List<List<Color>> grads = [sky, sunset, sea, mango, fire];
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  late SharedPreferences prefs;
+  late String token;
+  late User user;
+  late UserRepository repo;
+  bool detailsLoading = false;
+  Image? profilePic;
+  WearOsApi api = WearOsApi();
+  WearOsGetAppliedJobsResponse? resp;
+  @override
+  void initState() {
+    getAndSetData();
+  }
+
+  void getAndSetData() async {
+    setState(() {
+      detailsLoading = true;
+    });
+    super.initState();
+    prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token')!;
+    repo = UserRepository();
+    user = await repo.getBasicUserDetails();
+    String prof = await repo.getProfileFromPreferences();
+    resp = await api.getAppliedJobs();
+
+    setState(() {
+      profilePic = repo.imageFromBase64String(prof);
+
+      detailsLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +80,8 @@ class DashboardScreen extends StatelessWidget {
                   PopupMenuButton(
                     padding: const EdgeInsets.all(0),
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
-                        child: Padding(
+                      PopupMenuItem(
+                        child: const Padding(
                           padding: EdgeInsets.all(0),
                           child: Text(
                             'Logout',
@@ -43,21 +89,35 @@ class DashboardScreen extends StatelessWidget {
                           ),
                         ),
                         value: 'Logout',
+                        onTap: () {
+                          prefs.clear();
+                          Get.to(() => const WearOsApp());
+                        },
                       ),
                     ],
                     child: Row(
-                      children: const [
-                        CircleAvatar(
-                          radius: 10,
-                          backgroundImage:
-                              AssetImage('assets/images/profile.jpg'),
+                      children: [
+                        Container(
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: profilePic != null
+                                    ? profilePic!.image
+                                    : Image.asset("assets/images/profile.jpg")
+                                        .image,
+                                fit: BoxFit.cover),
+                          ),
                         ),
-                        SizedBox(
-                          width: 5,
+                        const SizedBox(
+                          width: 3,
                         ),
                         Text(
-                          "Chirag Simkhada",
-                          style: TextStyle(
+                          detailsLoading
+                              ? "Loading...."
+                              : "${user.firstName} ${user.lastName}",
+                          style: const TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -79,263 +139,117 @@ class DashboardScreen extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Expanded(
-                child: ListView(
-                  children: [
-                    Container(
-                      height: 45,
-                      margin: const EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: grads[0],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: grads[0].last.withOpacity(0.4),
-                              blurRadius: 1,
-                              spreadRadius: 1,
-                              offset: const Offset(1, 1),
-                            )
-                          ]),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 2),
-                        child: Column(
-                          children: [
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/images/google_logo.png",
-                                  width: 13,
-                                  height: 13,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Text(
-                                  "Backend Developer",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "avenir",
+                  child: FutureBuilder<WearOsGetAppliedJobsResponse?>(
+                      future: WearOsApi().getAppliedJobs(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done ||
+                            snapshot.hasData) {
+                          if (snapshot.hasData) {
+                            List<AppliedJob> lstJobs = snapshot.data!.jobs!;
+                            return ListView.builder(
+                              itemBuilder: (BuildContext context, int index) {
+                                final appliedDate =
+                                    DateTime.parse(lstJobs[index].appliedDate!);
+                                final appliedDateString =
+                                    DateFormat.yMMMM().format(appliedDate);
+                                return Container(
+                                  height: 45,
+                                  margin: const EdgeInsets.only(bottom: 15),
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: DashboardScreen.grads[1],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight),
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: DashboardScreen.grads[1].last
+                                              .withOpacity(0.4),
+                                          blurRadius: 1,
+                                          spreadRadius: 1,
+                                          offset: const Offset(1, 1),
+                                        )
+                                      ]),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 2),
+                                    child: Column(
+                                      children: [
+                                        const Spacer(),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              lstJobs[index].job!.title!,
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily: "avenir",
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        const Spacer(),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                const Text(
+                                                  "Date: ",
+                                                  style: TextStyle(fontSize: 8),
+                                                ),
+                                                Text(
+                                                  appliedDateString,
+                                                  style: const TextStyle(
+                                                      fontSize: 8),
+                                                )
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                const Text(
+                                                  "Status: ",
+                                                  style: TextStyle(fontSize: 8),
+                                                ),
+                                                Text(
+                                                  lstJobs[index].status!,
+                                                  style: const TextStyle(
+                                                      fontSize: 8),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Date: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "2020-01-05",
-                                      style: TextStyle(fontSize: 8),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Status: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "Selected",
-                                      style: TextStyle(fontSize: 8),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 45,
-                      margin: const EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: grads[3],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: grads[3].last.withOpacity(0.4),
-                              blurRadius: 1,
-                              spreadRadius: 1,
-                              offset: const Offset(1, 1),
-                            )
-                          ]),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 2),
-                        child: Column(
-                          children: [
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/images/google_logo.png",
-                                  width: 13,
-                                  height: 13,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Text(
-                                  "Backend Developer",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "avenir",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Date: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "2020-01-05",
-                                      style: TextStyle(fontSize: 8),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Status: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "Selected",
-                                      style: TextStyle(fontSize: 8),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 45,
-                      margin: const EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: grads[1],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: grads[1].last.withOpacity(0.4),
-                              blurRadius: 1,
-                              spreadRadius: 1,
-                              offset: const Offset(1, 1),
-                            )
-                          ]),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 2),
-                        child: Column(
-                          children: [
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/images/google_logo.png",
-                                  width: 13,
-                                  height: 13,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Text(
-                                  "Backend Developer",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "avenir",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Date: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "2020-01-05",
-                                      style: TextStyle(fontSize: 8),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Status: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "Selected",
-                                      style: TextStyle(fontSize: 8),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
+                                );
+                              },
+                              itemCount: lstJobs.length,
+                            );
+                          }
+                          return const Text("No Jobs Found");
+                        } else if (snapshot.connectionState ==
+                                ConnectionState.waiting &&
+                            snapshot.hasData == false) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return const Text("Error retriving data");
+                        }
+                      }))
 
               // Card(
               //   // shape:

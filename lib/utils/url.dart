@@ -19,6 +19,7 @@ const changeProfilePic = "auth/changeProfilePic";
 const changePassword = "auth/updatePassword";
 const sendVerification = "auth/sendVerification";
 const verifyOTPRoute = "auth/verify";
+const getAppliedJobsWear = "auth/appliedJobsWear";
 
 const chatsUrl = "chat/app";
 const messagesUrl = "message/app";

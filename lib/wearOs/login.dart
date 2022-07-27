@@ -1,6 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hirehub/wearOs/EmployerDashboard.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:hirehub/models/Company.dart';
+import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/repository/UserRepository.dart';
+import 'package:hirehub/response/LoginResponse.dart';
+import 'package:hirehub/utils/url.dart';
+import 'package:http/http.dart' as http;
+import 'package:motion_toast/motion_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WearOsHome extends StatefulWidget {
   const WearOsHome({Key? key}) : super(key: key);
@@ -13,6 +22,85 @@ class _WearOsHomeState extends State<WearOsHome> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+  bool isLoading = false;
+
+  _loginUser(User user) async {
+    setState(() {
+      isLoading = true;
+    });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+
+    LoginResponse? login = await UserRepository().loginUser(user);
+    try {
+      if (login == null) {
+        MotionToast.error(
+          description: const Text("Incorrect Username or Password"),
+        ).show(context);
+        return;
+      }
+      if (login.success!) {
+        User loggedUser = login.user!;
+        UserRepository userRepository = UserRepository();
+        GetStorage().write("userId", loggedUser.id);
+
+        var profile = loggedUser.avatarImage;
+
+        if (profile != null) {
+          if (profile.contains("uploads\\")) {
+            profile = baseImgUrl + profile;
+            profile = profile.replaceAll("\\", "/");
+          }
+          http.Response response = await http.get(Uri.parse(profile));
+          await userRepository.saveProfileToPreferences(
+              userRepository.base64String(response.bodyBytes));
+        }
+
+        if (loggedUser.type == "Applicant") {
+          Uint8List imageBytes;
+
+          await userRepository.storeBasicUserDetails(loggedUser);
+          await userRepository.storeProfessionalDetails(loggedUser);
+          await userRepository.storeEducationDetails(loggedUser.educationSet!);
+          await userRepository.storeWorkDetails(loggedUser.workSet!);
+
+          prefs.setString("token", login.token!);
+
+          Navigator.popAndPushNamed(context, "/wearDashboard");
+        } else if (loggedUser.type == "Company") {
+          Company company = login.company!;
+          await userRepository.storeBasicUserDetails(loggedUser);
+          await userRepository.storeCompanyDetails(login.company!);
+
+          var profile = company.avatarImage;
+          if (profile!.contains("uploads\\")) {
+            profile = baseImgUrl + profile;
+            profile = profile.replaceAll("\\", "/");
+          }
+          http.Response response = await http.get(Uri.parse(profile));
+          await userRepository.saveLogoToPreferences(
+              userRepository.base64String(response.bodyBytes));
+
+          prefs.setString("token", login.token!);
+          Navigator.popAndPushNamed(context, "/wearDashboardEmployer");
+        } else {
+          MotionToast.error(
+            description: const Text("Some Unknown error occured"),
+          ).show(context);
+        }
+      } else {
+        MotionToast.error(
+          description: const Text("Incorrect Username or Password"),
+        ).show(context);
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,28 +189,17 @@ class _WearOsHomeState extends State<WearOsHome> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      bool result;
-                      if (username.text == 'admin' &&
-                          password.text == 'admin') {
-                        result = true;
-                      } else {
-                        result = false;
-                      }
-                      if (result) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const EmployerDashboardScreen(),
-                            ));
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: "Invalid username or password");
-                      }
+                      User user = User(
+                        username: username.text,
+                        password: password.text,
+                      );
+                      _loginUser(user);
                     }
                   },
-                  child: const Text("Login",
-                      style: TextStyle(color: Colors.white, fontSize: 14)),
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text("Login",
+                          style: TextStyle(color: Colors.white, fontSize: 14)),
                 ),
               )
             ],
