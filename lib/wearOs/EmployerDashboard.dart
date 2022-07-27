@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hirehub/APIs/WearOs_api.dart';
+import 'package:hirehub/models/Users.dart';
+import 'package:hirehub/models/WearOs/GetApplicants.dart';
+import 'package:hirehub/repository/UserRepository.dart';
+import 'package:hirehub/response/WearOsResponse/getApplicantsResponse.dart';
+import 'package:hirehub/response/WearOsResponse/getAppliedJobsResponse.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class EmployerDashboardScreen extends StatelessWidget {
+class EmployerDashboardScreen extends StatefulWidget {
   const EmployerDashboardScreen({Key? key}) : super(key: key);
   static List<Color> sky = [const Color(0xFF6448FE), const Color(0xFF5FC6FF)];
   static List<Color> sunset = [
@@ -11,7 +18,61 @@ class EmployerDashboardScreen extends StatelessWidget {
   static List<Color> mango = [const Color(0xFFFFA738), const Color(0xFFFFE130)];
   static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
 
-  static List<List<Color>> grads = [sky, sunset, sea, mango, fire];
+  static List<List<Color>> grads = [
+    sky,
+    sunset,
+    sea,
+    mango,
+    fire,
+    sky,
+    sunset,
+    sea,
+    mango,
+    fire,
+    sky,
+    sunset,
+    sea,
+    mango,
+    fire
+  ];
+
+  @override
+  State<EmployerDashboardScreen> createState() =>
+      _EmployerDashboardScreenState();
+}
+
+class _EmployerDashboardScreenState extends State<EmployerDashboardScreen> {
+  late SharedPreferences prefs;
+  late String token;
+  late User user;
+  late UserRepository repo;
+  bool detailsLoading = false;
+  Image? profilePic;
+  WearOsApi api = WearOsApi();
+  WearOsGetAppliedJobsResponse? resp;
+  @override
+  void initState() {
+    getAndSetData();
+  }
+
+  void getAndSetData() async {
+    setState(() {
+      detailsLoading = true;
+    });
+    super.initState();
+    prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token')!;
+    repo = UserRepository();
+    user = await repo.getBasicUserDetails();
+    String prof = await repo.getProfileFromPreferences();
+    resp = await api.getAppliedJobs();
+
+    setState(() {
+      profilePic = repo.imageFromBase64String(prof);
+
+      detailsLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,93 +139,103 @@ class EmployerDashboardScreen extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               Expanded(
-                child: ListView(
-                  children: [
-                    Container(
-                      height: 45,
-                      margin: const EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: grads[0],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight),
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: grads[0].last.withOpacity(0.4),
-                              blurRadius: 1,
-                              spreadRadius: 1,
-                              offset: const Offset(1, 1),
-                            )
-                          ]),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 2),
-                        child: Column(
-                          children: [
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/images/google_logo.png",
-                                  width: 13,
-                                  height: 13,
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Text(
-                                  "Backend Developer",
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "avenir",
+                child: FutureBuilder<WearOsGetApplicantsResponse?>(
+                  future: WearOsApi().getApplicants(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done ||
+                        snapshot.hasData) {
+                      if (snapshot.hasData) {
+                        List<GetApplicants> lstJobs = snapshot.data!.applicant!;
+                        return ListView.builder(
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              height: 45,
+                              margin: const EdgeInsets.only(bottom: 15),
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      colors:
+                                          EmployerDashboardScreen.grads[index],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(15),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            const Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Date: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "2020-01-05",
-                                      style: TextStyle(fontSize: 8),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: EmployerDashboardScreen
+                                          .grads[index].last
+                                          .withOpacity(0.4),
+                                      blurRadius: 1,
+                                      spreadRadius: 1,
+                                      offset: const Offset(1, 1),
                                     )
+                                  ]),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 2),
+                                child: Column(
+                                  children: [
+                                    const Spacer(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          lstJobs[index].title!,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: "avenir",
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    const Spacer(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            const Text(
+                                              "Applicants: ",
+                                              style: TextStyle(fontSize: 8),
+                                            ),
+                                            Text(
+                                              lstJobs[index]
+                                                  .applicants!
+                                                  .length
+                                                  .toString(),
+                                              style:
+                                                  const TextStyle(fontSize: 8),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
-                                    Text(
-                                      "Applicants: ",
-                                      style: TextStyle(fontSize: 8),
-                                    ),
-                                    Text(
-                                      "10",
-                                      style: TextStyle(fontSize: 8),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                              ),
+                            );
+                          },
+                          itemCount: lstJobs.length,
+                        );
+                      }
+                      return const Text("No Jobs Found");
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.waiting &&
+                        snapshot.hasData == false) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return const Text("Error retriving data");
+                    }
+                  },
                 ),
               )
             ],

@@ -157,7 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                   margin: const EdgeInsets.only(bottom: 15),
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
-                                          colors: DashboardScreen.grads[1],
+                                          colors: DashboardScreen.grads[index],
                                           begin: Alignment.centerLeft,
                                           end: Alignment.centerRight),
                                       borderRadius: const BorderRadius.all(
@@ -165,7 +165,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: DashboardScreen.grads[1].last
+                                          color: DashboardScreen
+                                              .grads[index].last
                                               .withOpacity(0.4),
                                           blurRadius: 1,
                                           spreadRadius: 1,

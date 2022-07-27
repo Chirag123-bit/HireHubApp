@@ -10,7 +10,7 @@ GetApplicants _$GetApplicantsFromJson(Map<String, dynamic> json) =>
     GetApplicants(
       title: json['title'] as String?,
       applicants: (json['applicants'] as List<dynamic>?)
-          ?.map((e) => e as String)
+          ?.map((e) => e as Map<String, dynamic>)
           .toList(),
     );
 

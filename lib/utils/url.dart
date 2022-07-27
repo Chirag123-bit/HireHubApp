@@ -20,6 +20,7 @@ const changePassword = "auth/updatePassword";
 const sendVerification = "auth/sendVerification";
 const verifyOTPRoute = "auth/verify";
 const getAppliedJobsWear = "auth/appliedJobsWear";
+const getJobsWearOs = "company/getJobsWearOs";
 
 const chatsUrl = "chat/app";
 const messagesUrl = "message/app";

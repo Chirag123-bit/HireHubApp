@@ -5,7 +5,7 @@ part 'GetApplicants.g.dart';
 @JsonSerializable()
 class GetApplicants {
   String? title;
-  List<String>? applicants;
+  List<Map<String, dynamic>>? applicants;
 
   GetApplicants({
     this.title,
