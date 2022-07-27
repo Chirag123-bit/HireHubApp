@@ -5,9 +5,20 @@ import 'package:get_storage/get_storage.dart';
 import 'package:hirehub/database/DbHelper.dart';
 import 'package:hirehub/database/JobHelper.dart';
 import 'package:hirehub/database/TodoHelper.dart';
+import 'package:hirehub/screens/applicant/ApplicantMainScreen.dart';
+import 'package:hirehub/screens/applicant/category/CategoryScreen.dart';
+import 'package:hirehub/screens/applicant/events/EventsScreen.dart';
+import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
+import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
+import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
+import 'package:hirehub/screens/auth/Login.dart';
+import 'package:hirehub/screens/auth/Register.dart';
+import 'package:hirehub/screens/employer/EmployerMainScreen.dart';
+import 'package:hirehub/screens/splash/splashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
-import 'package:hirehub/wearOs/main.dart';
+import 'package:hirehub/wearOs/EmployerDashboard.dart';
+import 'package:hirehub/wearOs/dashboard.dart';
 // import 'package:hirehub/wearOs/main.dart';
 
 void main() async {
@@ -39,20 +50,19 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       initialRoute: "/",
       routes: {
-        "/": (context) => const WearOsApp(),
-        // "/": (context) => const SplashScreen(),
-        // "/wear": (context) => const WearOsApp(),
-        // "/home": (context) => const ApplicantMainPage(),
-        // "/homeEmployer": (context) => const EmployerMainPage(),
-        // "/login": (context) => const LoginScreen(),
-        // "/register": (context) => const Register(),
-        // "/category": (context) => const CategoryScreen(),
-        // "/filter": (context) => const FilterPage(),
-        // "/todo": (context) => const EventsScreen(),
-        // "/edit_basic": (context) => const EditBasicInfoScreen(),
-        // "/settings": (context) => const SettingScreen(),
-        // "/wearDashboard": (context) => const DashboardScreen(),
-        // "/wearDashboardEmployer": (context) => const EmployerDashboardScreen(),
+        // "/": (context) => const WearOsApp(),
+        "/": (context) => const SplashScreen(),
+        "/home": (context) => const ApplicantMainPage(),
+        "/homeEmployer": (context) => const EmployerMainPage(),
+        "/login": (context) => const LoginScreen(),
+        "/register": (context) => const Register(),
+        "/category": (context) => const CategoryScreen(),
+        "/filter": (context) => const FilterPage(),
+        "/todo": (context) => const EventsScreen(),
+        "/edit_basic": (context) => const EditBasicInfoScreen(),
+        "/settings": (context) => const SettingScreen(),
+        "/wearDashboard": (context) => const DashboardScreen(),
+        "/wearDashboardEmployer": (context) => const EmployerDashboardScreen(),
       },
     );
   }

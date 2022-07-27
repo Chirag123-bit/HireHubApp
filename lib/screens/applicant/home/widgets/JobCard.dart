@@ -46,6 +46,7 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(uniqueIdentifier + data.title!);
     var logo = data.company!.avatarImage;
     if (logo!.contains("uploads\\")) {
       logo = baseImgUrl + logo;

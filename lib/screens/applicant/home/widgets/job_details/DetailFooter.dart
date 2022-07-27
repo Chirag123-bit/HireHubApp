@@ -183,6 +183,7 @@ class _DetailFooterState extends State<DetailFooter> {
                       child: isvalidating
                           ? const CircularProgressIndicator()
                           : GestureDetector(
+                              key: const Key("applyKey"),
                               onTap: isLoading ? () {} : applyForJob,
                               child: isLoading
                                   ? const CircularProgressIndicator()

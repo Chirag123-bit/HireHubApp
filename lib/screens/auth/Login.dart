@@ -284,22 +284,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Container(
+                  SizedBox(
                     height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: const LinearGradient(colors: [
-                          Color.fromRGBO(143, 148, 251, 1),
-                          Color.fromRGBO(143, 148, 251, .6),
-                        ])),
+                    // decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(10),
+                    //     gradient: const LinearGradient(colors: [
+                    //       Color.fromRGBO(143, 148, 251, 1),
+                    //       Color.fromRGBO(143, 148, 251, .6),
+                    //     ])),
                     child: Center(
                       child: Container(
                         child: isLoading
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                  CircularProgressIndicator(
-                                      color: Colors.white),
+                                  CircularProgressIndicator(color: Colors.blue),
                                   SizedBox(
                                     width: 25,
                                   ),
