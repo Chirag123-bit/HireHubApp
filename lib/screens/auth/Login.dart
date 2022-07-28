@@ -305,7 +305,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Text(
                                     "Verifying...",
                                     style: TextStyle(
-                                        color: Colors.white,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18),
                                   ),

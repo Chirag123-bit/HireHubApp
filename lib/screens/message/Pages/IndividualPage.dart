@@ -9,6 +9,7 @@ import 'package:hirehub/response/ChatResponse/MessageFetchResponse.dart';
 import 'package:hirehub/screens/message/CustomUI/OwnMessage.dart';
 import 'package:hirehub/screens/message/CustomUI/ReplyCard.dart';
 import 'package:hirehub/utils/url.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualPage extends StatefulWidget {
@@ -25,13 +26,17 @@ class _IndividualPageState extends State<IndividualPage> {
   final TextEditingController _msgController = TextEditingController();
   List<Message>? chatMessages = [];
   bool loading = false;
+  final player = AudioPlayer();
+  final player2 = AudioPlayer();
 
   String? chatId;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
     connect();
     fetchMessages();
   }
@@ -46,8 +51,14 @@ class _IndividualPageState extends State<IndividualPage> {
     socket.emit("setupApp", GetStorage().read("userId"));
     socket.onConnect((data) {
       print("Connected");
-      socket.on("message", (msg) {
-        print("Message Received");
+      socket.on("message", (msg) async {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+        await player.setAsset("assets/audio/incomming.mp3");
+        await player.play();
         Message message = Message(
           sender: msg["senderId"],
           content: msg["message"],
@@ -58,6 +69,7 @@ class _IndividualPageState extends State<IndividualPage> {
         setState(() {
           chatMessages!.add(message);
         });
+        await player.play();
       });
     });
   }
@@ -96,6 +108,8 @@ class _IndividualPageState extends State<IndividualPage> {
   }
 
   void sendMessage() async {
+    await player2.setAsset("assets/audio/sent.mp3");
+
     if (_msgController.text.isEmpty) {
       Get.snackbar(
         'Message',
@@ -122,6 +136,7 @@ class _IndividualPageState extends State<IndividualPage> {
       setState(() {
         chatMessages!.add(message);
       });
+      player2.play();
 
       ChatsAPI api = ChatsAPI();
       api.sendMessages(chatId!, _msgController.text);
@@ -182,10 +197,9 @@ class _IndividualPageState extends State<IndividualPage> {
       body: SizedBox(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: Stack(
+          child: Column(
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height - 140,
+              Expanded(
                 child: loading
                     ? const Center(
                         child: CircularProgressIndicator(),
@@ -199,17 +213,23 @@ class _IndividualPageState extends State<IndividualPage> {
                             ),
                           )
                         : ListView.builder(
-                            itemCount: chatMessages!.length,
+                            shrinkWrap: true,
+                            controller: _scrollController,
+                            itemCount: chatMessages!.length + 1,
                             itemBuilder: (context, index) {
-                              Message message = chatMessages![index];
-                              if (message.sender ==
+                              if (index == chatMessages!.length) {
+                                return Container(
+                                  height: 50,
+                                );
+                              }
+                              if (chatMessages![index].sender ==
                                   GetStorage().read("userId")) {
                                 return OwnMessage(
-                                  message: message.content!,
+                                  message: chatMessages![index].content!,
                                 );
                               } else {
                                 return ReplyMessage(
-                                  message: message.content!,
+                                  message: chatMessages![index].content!,
                                 );
                               }
                             }),
@@ -246,6 +266,11 @@ class _IndividualPageState extends State<IndividualPage> {
                             suffixIcon: IconButton(
                               icon: const Icon(Icons.send),
                               onPressed: () {
+                                _scrollController.animateTo(
+                                  _scrollController.position.maxScrollExtent,
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
                                 sendMessage();
                               },
                             ),
