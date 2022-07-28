@@ -49,10 +49,11 @@ void main() {
     Finder btnLogin = find.byKey(const Key("btnLogin"));
     await test.tap(btnLogin);
     await test.pumpAndSettle(const Duration(seconds: 10));
-    Finder jobCard = find.byKey(const Key("RecentTrainer"));
+    Finder jobCard = find.byKey(const Key("popularDeveloper"));
     await test.tap(jobCard);
     await test.pumpAndSettle(const Duration(seconds: 5));
 
-    expect(find.text("Amazon"), findsWidgets);
+    expect(find.text("Walmart"), findsWidgets);
+    expect(find.text("Requirements"), findsWidgets);
   });
 }

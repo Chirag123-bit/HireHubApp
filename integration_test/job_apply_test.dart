@@ -24,11 +24,6 @@ void main() {
     await tester.tap(btnLogin);
     await tester.pumpAndSettle(const Duration(seconds: 3));
 
-    // expect(find.text("Hey Esther,"), findsOneWidget);
-
-    // await tester.pumpAndSettle(const Duration(seconds: 10));
-    // expect(find.text("Looking for Jobs?"), findsWidgets);
-
     Finder jobCard = find.byKey(const Key("popularDeveloper")).first;
     await tester.tap(jobCard);
     await tester.pumpAndSettle(const Duration(seconds: 2));

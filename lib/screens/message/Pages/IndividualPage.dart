@@ -228,6 +228,7 @@ class _IndividualPageState extends State<IndividualPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: TextFormField(
+                          key: const Key("messageBox"),
                           controller: _msgController,
                           textAlignVertical: TextAlignVertical.center,
                           keyboardType: TextInputType.multiline,
