@@ -21,13 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late SharedPreferences prefs;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //get user from shared prefs
-  }
-
-  @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
 

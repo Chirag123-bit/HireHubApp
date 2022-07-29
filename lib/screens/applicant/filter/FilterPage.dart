@@ -61,7 +61,7 @@ class _FilterPageState extends State<FilterPage> {
                 SizedBox(height: kSpacingUnit * 3),
                 SizedBox(
                   width: double.infinity,
-                  height: ScreenUtil().setHeight(200),
+                  height: ScreenUtil().setHeight(270),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -88,12 +88,14 @@ class _FilterPageState extends State<FilterPage> {
                         ),
                         itemCount: Company.generatedCompanies().length,
                         itemBuilder: (BuildContext context, int index, int _) =>
-                            Container(
-                          width: double.infinity,
-                          margin:
-                              EdgeInsets.symmetric(horizontal: kSpacingUnit),
-                          child: CompanyCard(
-                              company: Company.generatedCompanies()[index]),
+                            Expanded(
+                          child: Container(
+                            width: double.infinity,
+                            margin:
+                                EdgeInsets.symmetric(horizontal: kSpacingUnit),
+                            child: CompanyCard(
+                                company: Company.generatedCompanies()[index]),
+                          ),
                         ),
                       ),
                       const Spacer(),

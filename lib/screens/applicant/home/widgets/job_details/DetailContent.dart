@@ -16,6 +16,7 @@ class DetailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     var logo = data.company!.avatarImage;
     if (logo!.contains("uploads\\")) {
       logo = baseImgUrl + logo;
@@ -59,7 +60,6 @@ class DetailContent extends StatelessWidget {
                     Text(
                       data.company!.country! + ", " + data.company!.region!,
                       style: kCaptionTextStyle.copyWith(
-                          fontSize: 16,
                           color:
                               Get.isDarkMode ? Colors.white : Colors.grey[600]),
                     ),
@@ -68,7 +68,7 @@ class DetailContent extends StatelessWidget {
               ),
               SizedBox(height: kSpacingUnit * 3),
               SizedBox(
-                height: 60,
+                height: 80,
                 width: double.infinity,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -79,14 +79,13 @@ class DetailContent extends StatelessWidget {
                           "Sallary",
                           style: kSubTitleTextStyle.copyWith(
                             fontWeight: FontWeight.w600,
-                            fontSize: 15,
                             color: Get.isDarkMode ? Colors.white : Colors.black,
                           ),
                         ),
                         Text(data.sallary.toString() + " /month",
                             style: kCaptionTextStyle.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 13,
+
                               //increase line spacing
                               height: 1.3,
                               color:
@@ -100,14 +99,13 @@ class DetailContent extends StatelessWidget {
                           "Type",
                           style: kSubTitleTextStyle.copyWith(
                             fontWeight: FontWeight.w600,
-                            fontSize: 15,
                             color: Get.isDarkMode ? Colors.white : Colors.black,
                           ),
                         ),
                         Text("Full Time",
                             style: kCaptionTextStyle.copyWith(
                               fontWeight: FontWeight.w400,
-                              fontSize: 13,
+
                               //increase line spacing
                               height: 1.3,
                               color:
@@ -121,9 +119,9 @@ class DetailContent extends StatelessWidget {
               SizedBox(height: kSpacingUnit),
               Text(
                 'About this job',
-                style: kSubTitleTextStyle.copyWith(
+                style: kTitleTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  // fontSize: 20,
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                 ),
               ),
@@ -133,7 +131,7 @@ class DetailContent extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 style: kCaptionTextStyle.copyWith(
                   fontWeight: FontWeight.w400,
-                  fontSize: 13,
+                  // fontSize: 13,
                   //increase line spacing
                   height: 1.3,
                   color: Get.isDarkMode ? Colors.white : Colors.black,
@@ -144,7 +142,7 @@ class DetailContent extends StatelessWidget {
                 'Job Description',
                 style: kSubTitleTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  // fontSize: 20,
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                 ),
               ),
@@ -154,7 +152,7 @@ class DetailContent extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 style: kCaptionTextStyle.copyWith(
                   fontWeight: FontWeight.w400,
-                  fontSize: 13,
+                  // fontSize: 13,
                   //increase line spacing
                   height: 1.3,
                   color: Get.isDarkMode ? Colors.white : Colors.black,
@@ -165,7 +163,7 @@ class DetailContent extends StatelessWidget {
                 'Responsibilities',
                 style: kSubTitleTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  // fontSize: 20,
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                 ),
               ),
@@ -178,7 +176,7 @@ class DetailContent extends StatelessWidget {
                 'Qualifications',
                 style: kSubTitleTextStyle.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  // fontSize: 20,
                   color: Get.isDarkMode ? Colors.white : Colors.black,
                 ),
               ),

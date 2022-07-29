@@ -24,7 +24,7 @@ class SearchTag extends StatelessWidget {
         child: Text(
           tag,
           textAlign: TextAlign.center,
-          style: kCaptionTextStyle.copyWith(color: Colors.white, fontSize: 14),
+          style: kCaptionTextStyle.copyWith(color: Colors.white),
         ),
       ),
     );

@@ -36,7 +36,7 @@ void main() {
   testWidgets("Find Company Name on jobs card", (WidgetTester test) async {
     await test.pumpWidget(
       const MaterialApp(
-        title: "Arithmetic",
+        title: "Login Screen",
         home: LoginScreen(),
       ),
     );
@@ -45,10 +45,12 @@ void main() {
     await test.enterText(usernameText, "ApplicantTen");
     Finder passwordText = find.byKey(const ValueKey("txtPassword"));
     await test.enterText(passwordText, "Abcd");
+    await test.testTextInput.receiveAction(TextInputAction.done);
+    await test.pumpAndSettle(const Duration(seconds: 10));
 
     Finder btnLogin = find.byKey(const Key("btnLogin"));
     await test.tap(btnLogin);
-    await test.pumpAndSettle(const Duration(seconds: 10));
+    await test.pumpAndSettle(const Duration(seconds: 5));
     Finder jobCard = find.byKey(const Key("popularDeveloper"));
     await test.tap(jobCard);
     await test.pumpAndSettle(const Duration(seconds: 5));

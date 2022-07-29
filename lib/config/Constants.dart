@@ -85,3 +85,5 @@ final kCaptionTextStyle = TextStyle(
   color: kSecondaryTextColor,
   fontSize: 10.sp,
 );
+
+final navTextSize = 16.sp;

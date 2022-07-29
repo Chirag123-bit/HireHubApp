@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/category/Category.dart';
 import 'package:hirehub/theme/Theme.dart';
@@ -42,10 +43,12 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Stack(
       children: [
         Container(
-          height: 120,
+          height: 80.sp,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kSpacingUnit * 3),
             gradient: gradients[_random.nextInt(gradients.length)],

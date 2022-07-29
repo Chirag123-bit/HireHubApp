@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/APIs/ChatAPI.dart';
 import 'package:hirehub/models/Chat/ChattingModel.dart';
@@ -39,22 +40,30 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Get.theme.primaryColor,
+        backgroundColor: Colors.blue,
         onPressed: () {
           Get.to(() => const SelectContact());
         },
-        child: Icon(Icons.chat,
-            color: Get.isDarkMode ? Colors.white : Colors.black),
+        child: Icon(
+          Icons.chat,
+          color: Colors.white,
+          size: 18.sp,
+        ),
       ),
       body: loading
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : userChats == null
-              ? const Center(
-                  child: Text("No Chats"),
+              ? Center(
+                  child: Text(
+                    "No Chats",
+                    style: TextStyle(fontSize: 20.sp),
+                  ),
                 )
               : ListView.builder(
                   itemCount: userChats!.length,

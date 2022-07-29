@@ -5,7 +5,7 @@ import 'package:integration_test/integration_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets("Login Test", (WidgetTester tester) async {
+  testWidgets("Dark Mode Test", (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle(const Duration(seconds: 5));
 
@@ -24,6 +24,12 @@ void main() {
     await tester.tap(btnLogin);
     await tester.pumpAndSettle(const Duration(seconds: 3));
 
-    expect(find.text("View All"), findsWidgets);
+    Finder settingsTab = find.byKey(const Key("settings")).first;
+    await tester.tap(settingsTab);
+    await tester.pumpAndSettle(const Duration(seconds: 2));
+
+    Finder switchKey = find.byKey(const Key("darkModeSwitch")).first;
+    await tester.tap(switchKey);
+    expect(find.text("Dark Mode"), findsWidgets);
   });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/APIs/UserAPI.dart';
 import 'package:hirehub/models/Users.dart';
@@ -69,6 +70,7 @@ class _SelectContactState extends State<SelectContact> {
   );
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Scaffold(
       appBar: AppBar(
         title: custSearchBar,
@@ -84,8 +86,8 @@ class _SelectContactState extends State<SelectContact> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Search',
-                      hintStyle: const TextStyle(
-                        fontSize: 16,
+                      hintStyle: TextStyle(
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
                       ),
@@ -94,30 +96,22 @@ class _SelectContactState extends State<SelectContact> {
                         child: const Icon(Icons.search),
                       ),
                     ),
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 16.sp,
                     ),
                   );
                 } else {
                   _searchController.clear();
-                  custIcon = const Icon(Icons.search);
+                  custIcon = Icon(Icons.search, size: 16.sp);
                   custSearchBar = Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'Select Contact',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        '265 Contacts',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
                         ),
                       ),
                     ],

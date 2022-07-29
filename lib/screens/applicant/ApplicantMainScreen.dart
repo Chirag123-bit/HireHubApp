@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/screens/applicant/filter/FilterPage.dart';
 import 'package:hirehub/screens/applicant/home/HomeScreen.dart';
 import 'package:hirehub/screens/applicant/settings/SettingScreen.dart';
@@ -25,6 +27,7 @@ class _ApplicantMainPageState extends State<ApplicantMainPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Scaffold(
       body: applicantScreens[_selectedIndex],
       bottomNavigationBar: Padding(
@@ -43,22 +46,31 @@ class _ApplicantMainPageState extends State<ApplicantMainPage> {
               icon: Icons.home,
               text: "Home",
               backgroundColor: primaryClr.withOpacity(0.7),
+              textStyle: TextStyle(fontSize: navTextSize),
+              iconSize: navTextSize,
             ),
             GButton(
               icon: Icons.search,
               text: "Explore",
               backgroundColor: yellowClr.withOpacity(0.7),
+              textStyle: TextStyle(fontSize: navTextSize),
+              iconSize: navTextSize,
             ),
             GButton(
               key: const Key('chat'),
               icon: Icons.message,
               text: "Messages",
               backgroundColor: pinkClr.withOpacity(0.7),
+              textStyle: TextStyle(fontSize: navTextSize),
+              iconSize: navTextSize,
             ),
             GButton(
+              key: const Key('settings'),
               icon: Icons.settings,
               text: "Settings",
               backgroundColor: Colors.green.withOpacity(0.7),
+              textStyle: TextStyle(fontSize: navTextSize),
+              iconSize: navTextSize,
             ),
           ],
         ),

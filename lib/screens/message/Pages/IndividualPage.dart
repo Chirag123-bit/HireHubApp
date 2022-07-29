@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hirehub/APIs/ChatAPI.dart';
@@ -146,6 +147,7 @@ class _IndividualPageState extends State<IndividualPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     var profilePic = widget.user.avatarImage;
     if (profilePic!.contains("uploads\\")) {
       profilePic = baseImgUrl + profilePic;
@@ -165,7 +167,7 @@ class _IndividualPageState extends State<IndividualPage> {
               size: 24,
             ),
             CircleAvatar(
-              radius: 20,
+              radius: 10.sp,
               backgroundColor: Get.isDarkMode ? Colors.white : Colors.black,
               backgroundImage: NetworkImage(profilePic),
             )
@@ -179,8 +181,8 @@ class _IndividualPageState extends State<IndividualPage> {
             children: [
               Text(
                 widget.user.firstName! + " " + widget.user.lastName!,
-                style: const TextStyle(
-                  fontSize: 18.5,
+                style: TextStyle(
+                  fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -189,7 +191,10 @@ class _IndividualPageState extends State<IndividualPage> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert),
+            icon: Icon(
+              Icons.more_vert,
+              size: 14.sp,
+            ),
             onPressed: () {},
           ),
         ],
@@ -248,6 +253,10 @@ class _IndividualPageState extends State<IndividualPage> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         child: TextFormField(
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            color: Get.isDarkMode ? Colors.white : Colors.black,
+                          ),
                           key: const Key("messageBox"),
                           controller: _msgController,
                           textAlignVertical: TextAlignVertical.center,
@@ -259,12 +268,15 @@ class _IndividualPageState extends State<IndividualPage> {
                             hintText: "Type a message...",
                             contentPadding:
                                 const EdgeInsets.symmetric(horizontal: 30),
-                            hintStyle: const TextStyle(
-                              fontSize: 16,
+                            hintStyle: TextStyle(
+                              fontSize: 13.sp,
                               color: Colors.grey,
                             ),
                             suffixIcon: IconButton(
-                              icon: const Icon(Icons.send),
+                              icon: Icon(
+                                Icons.send,
+                                size: 16.sp,
+                              ),
                               onPressed: () {
                                 _scrollController.animateTo(
                                   _scrollController.position.maxScrollExtent,
