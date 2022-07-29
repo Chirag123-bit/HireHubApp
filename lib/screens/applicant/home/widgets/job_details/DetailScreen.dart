@@ -4,11 +4,16 @@ import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailContent
 import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailFooter.dart';
 import 'package:hirehub/screens/applicant/home/widgets/job_details/DetailHeader.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final Job data;
 
   const DetailScreen({Key? key, required this.data}) : super(key: key);
 
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,12 +22,12 @@ class DetailScreen extends StatelessWidget {
           children: [
             Column(
               children: [
-                DetailHeader(data: data),
-                DetailContent(data: data),
+                DetailHeader(data: widget.data),
+                DetailContent(data: widget.data),
               ],
             ),
             DetailFooter(
-              data: data,
+              data: widget.data,
             ),
           ],
         ),

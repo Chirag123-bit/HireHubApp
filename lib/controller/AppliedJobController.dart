@@ -28,7 +28,6 @@ class JobController extends GetxController {
         addAppliedJob(appliedJob: data);
       }
     }
-    print("snasdnaskdnasdaskldaskldnasklndaskln");
     List<Map<String, dynamic>> events = await JobHelper.query();
     print("events: $events");
     appliedJobsList.assignAll(
