@@ -17,7 +17,6 @@ class HomeRecentJobs extends StatelessWidget {
             future: JobsRepository().getAllJobs(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                print(snapshot);
                 if (snapshot.hasData) {
                   List<Job> lstJobs = snapshot.data!.data!;
                   return Column(

@@ -40,6 +40,7 @@ class CustomCard extends StatelessWidget {
               chat: chat,
             ));
       },
+      key: Key(sender.firstName! + "key"),
       child: Column(
         children: [
           ListTile(

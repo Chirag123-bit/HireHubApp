@@ -32,6 +32,7 @@ class ReplyMessage extends StatelessWidget {
                     "Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey",
                 style: const TextStyle(
                   fontSize: 16,
+                  color: Colors.white,
                 ),
               ),
             ),

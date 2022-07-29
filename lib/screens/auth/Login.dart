@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:hirehub/config/Palette.dart';
+import 'package:hirehub/config/SizeConfig.dart';
 import 'package:hirehub/controller/AppliedJobController.dart';
 import 'package:hirehub/models/Company.dart';
 import 'package:hirehub/models/Users.dart';
@@ -282,53 +284,56 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-                  Container(
+                  SizedBox(
                     height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: const LinearGradient(colors: [
-                          Color.fromRGBO(143, 148, 251, 1),
-                          Color.fromRGBO(143, 148, 251, .6),
-                        ])),
+                    // decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(10),
+                    //     gradient: const LinearGradient(colors: [
+                    //       Color.fromRGBO(143, 148, 251, 1),
+                    //       Color.fromRGBO(143, 148, 251, .6),
+                    //     ])),
                     child: Center(
-                      child: GestureDetector(
-                          key: const ValueKey("btnLogin"),
-                          child: isLoading
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    CircularProgressIndicator(
-                                        color: Colors.white),
-                                    SizedBox(
-                                      width: 25,
-                                    ),
-                                    Text(
-                                      "Verifying...",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18),
-                                    ),
-                                  ],
-                                )
-                              : const Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                      child: Container(
+                        child: isLoading
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  CircularProgressIndicator(color: Colors.blue),
+                                  SizedBox(
+                                    width: 25,
+                                  ),
+                                  Text(
+                                    "Verifying...",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                  ),
+                                ],
+                              )
+                            : FlatButton(
+                                key: const ValueKey("btnLogin"),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                          onTap: () {
-                            // Navigator.pushNamed(context, "/home");
-
-                            if (_formKey.currentState!.validate()) {
-                              User user = User(
-                                username: _usernameController.text,
-                                password: _passwordController.text,
-                              );
-                              _loginUser(user);
-                            }
-                          }),
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    User user = User(
+                                      username: _usernameController.text,
+                                      password: _passwordController.text,
+                                    );
+                                    _loginUser(user);
+                                  }
+                                },
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    fontSize: getProportionateScreenWidth(18),
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                color: Palette.primaryColor,
+                              ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -372,3 +377,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+
+
+//  if (_formKey.currentState!.validate()) {
+//                               User user = User(
+//                                 username: _usernameController.text,
+//                                 password: _passwordController.text,
+//                               );
+//                               _loginUser(user);
+//                             }

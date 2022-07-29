@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +11,7 @@ import 'package:hirehub/models/jobModels/AppliedJobs.dart';
 import 'package:hirehub/repository/job_repository.dart';
 import 'package:intl/intl.dart';
 import 'package:motion_toast/motion_toast.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class DetailFooter extends StatefulWidget {
   final Job data;
@@ -23,11 +26,16 @@ class DetailFooter extends StatefulWidget {
 
 class _DetailFooterState extends State<DetailFooter> {
   bool isLoading = false;
+
   bool isApplied = false;
   bool isSaved = false;
   bool isvalidating = false;
+  bool issth = false;
   JobsRepository repo = JobsRepository();
   AppliedJob? appliedJob;
+  List<double> accelerometerValues = <double>[];
+  final List<StreamSubscription<dynamic>> _streamSubscriptions =
+      <StreamSubscription<dynamic>>[];
 
   final JobController _jobController = Get.put(JobController());
   getAppliedJobs() async {
@@ -89,8 +97,23 @@ class _DetailFooterState extends State<DetailFooter> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     getAppliedJobs();
+
+    super.initState();
+
+    checkMotion();
+  }
+
+  void checkMotion() {
+    _streamSubscriptions.add(
+      userAccelerometerEvents.listen((UserAccelerometerEvent event) async {
+        if (event.x > 4 || event.x < -4 && event.y > 2 || event.y < -2) {
+          setState(() {
+            issth = true;
+          });
+        }
+      }),
+    );
   }
 
   @override
@@ -180,26 +203,44 @@ class _DetailFooterState extends State<DetailFooter> {
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(kSpacingUnit * 3),
                       ),
-                      child: isvalidating
-                          ? const CircularProgressIndicator()
-                          : GestureDetector(
-                              onTap: isLoading ? () {} : applyForJob,
-                              child: isLoading
-                                  ? const CircularProgressIndicator()
-                                  : Center(
-                                      child: Text(
-                                        'Apply Now',
-                                        style: kTitleTextStyle.copyWith(
-                                          color: Colors.white,
+                      child: issth
+                          ? Center(
+                              child: Text(
+                                'Blocked',
+                                style: kTitleTextStyle.copyWith(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            )
+                          : isvalidating
+                              ? const CircularProgressIndicator()
+                              : GestureDetector(
+                                  key: const Key("applyKey"),
+                                  onTap: isLoading ? () {} : applyForJob,
+                                  child: isLoading
+                                      ? const CircularProgressIndicator()
+                                      : Center(
+                                          child: Text(
+                                            'Apply Now',
+                                            style: kTitleTextStyle.copyWith(
+                                              color: Colors.white,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                            ),
+                                ),
                     ),
                   ),
                 ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    for (final subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+    super.dispose();
   }
 }

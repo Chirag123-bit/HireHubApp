@@ -28,16 +28,16 @@ class _ChatHomeScreenState extends State<ChatHomeScreen>
             icon: const Icon(Icons.search),
             onPressed: () {},
           ),
-          PopupMenuButton(onSelected: (value) {
-            print(value);
-          }, itemBuilder: (context) {
-            return [
-              const PopupMenuItem(
-                child: Text('New Group Chat'),
-                value: 'New Group Chat',
-              ),
-            ];
-          }),
+          PopupMenuButton(
+              onSelected: (value) {},
+              itemBuilder: (context) {
+                return [
+                  const PopupMenuItem(
+                    child: Text('New Group Chat'),
+                    value: 'New Group Chat',
+                  ),
+                ];
+              }),
         ],
         bottom: TabBar(
           controller: _tabController,

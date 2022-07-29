@@ -50,6 +50,7 @@ class _ApplicantMainPageState extends State<ApplicantMainPage> {
               backgroundColor: yellowClr.withOpacity(0.7),
             ),
             GButton(
+              key: const Key('chat'),
               icon: Icons.message,
               text: "Messages",
               backgroundColor: pinkClr.withOpacity(0.7),

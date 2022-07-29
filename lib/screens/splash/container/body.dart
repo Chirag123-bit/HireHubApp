@@ -69,6 +69,7 @@ class _BodyState extends State<Body> {
                     width: double.infinity,
                     height: getProportionateScreenHeight(56),
                     child: defaultButton(
+                      key: const Key("btnContinue"),
                       press: () {
                         Navigator.pushNamed(context, "/login");
                       },

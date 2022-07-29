@@ -46,6 +46,7 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(uniqueIdentifier + data.title!);
     var logo = data.company!.avatarImage;
     if (logo!.contains("uploads\\")) {
       logo = baseImgUrl + logo;
@@ -56,7 +57,7 @@ class JobCard extends StatelessWidget {
         boxShadow: [kCardShadow],
       ),
       child: OpenContainer(
-        key: ValueKey(uniqueIdentifier + data.title!),
+        key: Key(uniqueIdentifier + data.title!),
         transitionType: ContainerTransitionType.fade,
         transitionDuration: const Duration(milliseconds: 500),
         openColor: kSilverColor,
