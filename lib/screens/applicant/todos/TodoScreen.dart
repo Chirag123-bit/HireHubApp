@@ -221,10 +221,9 @@ class TodoScreenState extends State<TodoScreen> {
                   "Pending",
                   style: selectedState == 0
                       ? headingStyle.copyWith(
-                          fontSize: 23,
                           color: Get.isDarkMode ? Colors.white : Colors.black,
                         )
-                      : headingStyle.copyWith(fontSize: 23),
+                      : headingStyle,
                 ),
               ),
             ),
@@ -252,10 +251,9 @@ class TodoScreenState extends State<TodoScreen> {
                   "Completed",
                   style: selectedState == 1
                       ? headingStyle.copyWith(
-                          fontSize: 23,
                           color: Get.isDarkMode ? Colors.white : Colors.black,
                         )
-                      : headingStyle.copyWith(fontSize: 23),
+                      : headingStyle,
                 ),
               ),
             ),

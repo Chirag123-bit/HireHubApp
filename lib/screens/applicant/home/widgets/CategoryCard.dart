@@ -48,7 +48,7 @@ class CategoryCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 80.sp,
+          height: 120.sp,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(kSpacingUnit * 3),
             gradient: gradients[_random.nextInt(gradients.length)],
@@ -59,7 +59,7 @@ class CategoryCard extends StatelessWidget {
           bottom: 0,
           top: 0,
           child: CustomPaint(
-            size: const Size(100, 115),
+            size: Size(100.sp, 115.sp),
             painter:
                 CustomCardShapePainter(_borderRadius, primaryClr, Colors.grey),
           ),
@@ -75,8 +75,8 @@ class CategoryCard extends StatelessWidget {
               children: [
                 Image.asset(
                   data.image!,
-                  height: 90,
-                  width: 90,
+                  height: 90.sp,
+                  width: 90.sp,
                 ),
                 Text(data.title!,
                     style: kCaptionTextStyle.copyWith(

@@ -39,17 +39,17 @@ TextStyle get subHeadingStyle {
 TextStyle get headingStyle {
   return GoogleFonts.openSans(
       textStyle: const TextStyle(
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
   ));
 }
 
 TextStyle get titleStyle {
   return GoogleFonts.openSans(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: Get.isDarkMode ? Colors.white : Colors.black,
+    // color: Get.isDarkMode ? Colors.white : Colors.black,
   ));
 }
 

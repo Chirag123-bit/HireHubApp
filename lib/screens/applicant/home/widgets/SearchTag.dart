@@ -13,8 +13,8 @@ class SearchTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: kSpacingUnit * 3,
-      width: kSpacingUnit * 9,
+      height: kSpacingUnit * 2.5, //3
+      width: kSpacingUnit * 8.5, //9
       margin: EdgeInsets.only(left: kSpacingUnit),
       decoration: BoxDecoration(
         color: primaryClr,

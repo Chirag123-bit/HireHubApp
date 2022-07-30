@@ -87,6 +87,8 @@ dependencies:
     sdk: flutter
   just_audio: ^0.9.28
   flutter_launcher_icons: ^0.9.3
+  animated_splash_screen: ^1.3.0
+  lottie: ^1.4.0
 
 dev_dependencies:
   flutter_test:

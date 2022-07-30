@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hirehub/screens/employer/home/Applicants/ApplicantTable.dart';
 import 'package:hirehub/screens/employer/home/HomeScreen.dart';
-import 'package:hirehub/screens/employer/message/MessageScreen.dart';
 import 'package:hirehub/screens/employer/settings/SettingScreen.dart';
+import 'package:hirehub/screens/message/ChatHomeScreen.dart';
 import 'package:hirehub/theme/Theme.dart';
 
 class EmployerMainPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _EmployerMainPageState extends State<EmployerMainPage> {
   List<Widget> applicantScreens = [
     HomeScreen(),
     const ApplicantsOverview(),
-    const MessageScreen(),
+    const ChatHomeScreen(),
     const SettingScreen(),
   ];
 
@@ -46,7 +46,7 @@ class _EmployerMainPageState extends State<EmployerMainPage> {
             ),
             GButton(
               icon: Icons.search,
-              text: "Explore",
+              text: "Applicants",
               backgroundColor: yellowClr.withOpacity(0.7),
             ),
             GButton(

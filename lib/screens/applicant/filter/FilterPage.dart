@@ -6,6 +6,7 @@ import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/Company.dart';
 import 'package:hirehub/screens/applicant/filter/FilterCompanyCard.dart';
 import 'package:hirehub/screens/applicant/filter/FilterJob.dart';
+import 'package:hirehub/screens/applicant/home/widgets/SearchControl.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({Key? key}) : super(key: key);
@@ -59,6 +60,7 @@ class _FilterPageState extends State<FilterPage> {
                   ),
                 ),
                 SizedBox(height: kSpacingUnit * 3),
+                const SearchControl(),
                 SizedBox(
                   width: double.infinity,
                   height: ScreenUtil().setHeight(270),
@@ -75,7 +77,7 @@ class _FilterPageState extends State<FilterPage> {
                       CarouselSlider.builder(
                         options: CarouselOptions(
                           autoPlay: true,
-                          height: 130.w,
+                          height: 140.w,
                           // aspectRatio: 16 / 9,
                           viewportFraction: 0.8,
                           initialPage: _cardIndex,

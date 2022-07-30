@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const kBackgroundColor = Color(0xFFFAFAFA);
@@ -52,14 +53,14 @@ final kFooterShadow = BoxShadow(
 );
 
 final kHeadingTextStyle = TextStyle(
-  color: kPrimaryTextColor,
+  color: Get.isDarkMode ? Colors.white : kPrimaryTextColor,
   fontFamily: 'SF Pro Rounded',
   fontSize: 34.sp,
   fontWeight: FontWeight.w100,
 );
 
 final kTitleTextStyle = TextStyle(
-  color: kPrimaryTextColor,
+  color: Get.isDarkMode ? Colors.white : kPrimaryTextColor,
   fontSize: 17.sp,
   fontWeight: FontWeight.w500,
 );
@@ -83,7 +84,7 @@ final kBodyTextStyle = TextStyle(
 
 final kCaptionTextStyle = TextStyle(
   color: kSecondaryTextColor,
-  fontSize: 10.sp,
+  fontSize: 12.sp,
 );
 
 final navTextSize = 16.sp;

@@ -142,6 +142,11 @@ class _IndividualPageState extends State<IndividualPage> {
       ChatsAPI api = ChatsAPI();
       api.sendMessages(chatId!, _msgController.text);
       _msgController.clear();
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
@@ -278,11 +283,6 @@ class _IndividualPageState extends State<IndividualPage> {
                                 size: 16.sp,
                               ),
                               onPressed: () {
-                                _scrollController.animateTo(
-                                  _scrollController.position.maxScrollExtent,
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
                                 sendMessage();
                               },
                             ),

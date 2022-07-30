@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
+import 'package:hirehub/screens/applicant/job/FilterOptions.dart';
 import 'package:hirehub/theme/Theme.dart';
 
 class SearchControl extends StatelessWidget {
@@ -10,7 +12,7 @@ class SearchControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: kSpacingUnit * 4,
+      height: kSpacingUnit * 3.5,
       decoration: BoxDecoration(
         color: kSilverColor,
         borderRadius: BorderRadius.circular(kSpacingUnit * 3),
@@ -34,8 +36,7 @@ class SearchControl extends StatelessWidget {
                 color: primaryClr,
               ),
               onPressed: () {
-                // Provider.of<MyBottomSheetModel>(context, listen: false)
-                //     .changeState();
+                Get.to(() => const FilterScreenOptions());
               },
             ),
             SizedBox(width: kSpacingUnit * 2),

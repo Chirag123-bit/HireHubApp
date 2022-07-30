@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
@@ -7,7 +9,18 @@ import 'package:hirehub/response/categoryResponse/get_category_with_count_respon
 import 'package:hirehub/utils/url.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+  CategoryScreen({Key? key}) : super(key: key);
+  static List<Color> sky = [const Color(0xFF6448FE), const Color(0xFF5FC6FF)];
+  static List<Color> sunset = [
+    const Color(0xFFFE6197),
+    const Color(0xFFFFB463)
+  ];
+  static List<Color> sea = [const Color(0xFF61A3FE), const Color(0xFF63FFD5)];
+  static List<Color> mango = [const Color(0xFFFFA738), const Color(0xFFFFE130)];
+  static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
+
+  static List<List<Color>> grads = [sky, sunset, sea, mango, fire];
+  final _random = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +117,7 @@ class CategoryScreen extends StatelessWidget {
                             itemCount: lstCats.length,
                             itemBuilder: (BuildContext context, int index) {
                               return (LongCourseCard(
-                                  background: Colors.red,
+                                  clr: grads[_random.nextInt(grads.length)],
                                   title: lstCats[index].category!.title!,
                                   subtitle: lstCats[index].jobs.toString(),
                                   image: lstCats[index].category!.image!));
@@ -128,16 +141,16 @@ class CategoryScreen extends StatelessWidget {
 }
 
 class LongCourseCard extends StatelessWidget {
-  final Color background;
   final String title;
   final String subtitle;
   final String image;
+  final List<Color> clr;
   const LongCourseCard(
       {Key? key,
-      required this.background,
       required this.title,
       required this.subtitle,
-      required this.image})
+      required this.image,
+      required this.clr})
       : super(key: key);
 
   @override
@@ -147,7 +160,10 @@ class LongCourseCard extends StatelessWidget {
       width: 155,
       height: 192,
       decoration: BoxDecoration(
-          color: background,
+          gradient: LinearGradient(
+              colors: clr,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight),
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
               color: Get.isDarkMode ? Colors.grey[900]! : kSilver, width: 5),
@@ -165,13 +181,11 @@ class LongCourseCard extends StatelessWidget {
           ),
           Text(
             title,
-            style: kTitleStyle.copyWith(
-                color: Get.isDarkMode ? Colors.white : Colors.grey[600]),
+            style: kTitleStyle.copyWith(color: Colors.white),
           ),
           Text(
             subtitle + " Jobs Available",
-            style: kSubtitleStyle.copyWith(
-                color: Get.isDarkMode ? Colors.white : Colors.grey[600]),
+            style: kSubtitleStyle.copyWith(color: Colors.white),
           ),
           Expanded(
             child: Image.network(imgUrl),

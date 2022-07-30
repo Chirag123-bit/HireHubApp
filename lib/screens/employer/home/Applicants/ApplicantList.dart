@@ -70,6 +70,17 @@ class _ApplicantListScreenState extends State<ApplicantListScreen> {
     updateData();
   }
 
+  static List<Color> sky = [const Color(0xFF6448FE), const Color(0xFF5FC6FF)];
+  static List<Color> sunset = [
+    const Color(0xFFFE6197),
+    const Color(0xFFFFB463)
+  ];
+  static List<Color> sea = [const Color(0xFF61A3FE), const Color(0xFF63FFD5)];
+  static List<Color> mango = [const Color(0xFFFFA738), const Color(0xFFFFE130)];
+  static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
+
+  static List<List<Color>> grads = [sky, sunset, sea, mango, fire];
+
   List<Color> clrs = [
     Colors.red,
     Colors.green,
@@ -183,45 +194,51 @@ class _ApplicantListScreenState extends State<ApplicantListScreen> {
                     profilePic = baseImgUrl + profilePic;
                     profilePic = profilePic.replaceAll("\\", "/");
                   }
-                  return ListTile(
-                    tileColor: clrs[_random.nextInt(clrs.length)],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(kSpacingUnit * 2),
-                    ),
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(profilePic),
-                      radius: kSpacingUnit * 2,
-                    ),
-                    title: Text(
-                      widget.data.applicants![index].applicant!.firstName! +
-                          " " +
-                          widget.data.applicants![index].applicant!.lastName!,
-                      style: TextStyle(fontSize: kSpacingUnit * 2),
-                    ),
-                    subtitle: Text(
-                      widget.data.applicants![index].status!,
-                      style: TextStyle(fontSize: kSpacingUnit * 1.5),
-                    ),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (context) => ApplicantProfileSheet(
-                              user: widget.data.applicants![index].applicant!,
-                              job: widget.data,
-                              clrs: clrs,
-                              profilePic: profilePic!,
-                              currentStatus:
-                                  widget.data.applicants![index].status!,
-                              needRefresh: widget.needRefresh,
-                              index: index),
-                        );
-                      },
-                      child: const Icon(
-                        Icons.remove_red_eye_outlined,
-                        color: Colors.white,
+                  return Container(
+                    margin: EdgeInsets.symmetric(
+                        // horizontal: kSpacingUnit * 2,
+                        vertical: kSpacingUnit * 2),
+                    child: ListTile(
+                      // horizontalTitleGap: 20,
+                      tileColor: clrs[_random.nextInt(clrs.length)],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(kSpacingUnit * 2),
+                      ),
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(profilePic),
+                        radius: kSpacingUnit * 2,
+                      ),
+                      title: Text(
+                        widget.data.applicants![index].applicant!.firstName! +
+                            " " +
+                            widget.data.applicants![index].applicant!.lastName!,
+                        style: TextStyle(fontSize: kSpacingUnit * 2),
+                      ),
+                      subtitle: Text(
+                        widget.data.applicants![index].status!,
+                        style: TextStyle(fontSize: kSpacingUnit * 1.5),
+                      ),
+                      trailing: GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (context) => ApplicantProfileSheet(
+                                user: widget.data.applicants![index].applicant!,
+                                job: widget.data,
+                                clrs: clrs,
+                                profilePic: profilePic!,
+                                currentStatus:
+                                    widget.data.applicants![index].status!,
+                                needRefresh: widget.needRefresh,
+                                index: index),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   );
@@ -237,7 +254,10 @@ class _ApplicantListScreenState extends State<ApplicantListScreen> {
       height: 150,
       width: 150,
       decoration: BoxDecoration(
-        color: clrs[_random.nextInt(clrs.length)],
+        gradient: LinearGradient(
+            colors: grads[_random.nextInt(grads.length)],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
@@ -332,20 +352,26 @@ class _ApplicantListScreenState extends State<ApplicantListScreen> {
                 style: TextStyle(fontSize: kSpacingUnit * 2),
               ),
               SizedBox(height: kSpacingUnit * 2),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Wrap(
-                    spacing: kSpacingUnit * 2,
-                    runSpacing: kSpacingUnit * 2,
-                    children: user.skills!.map((skill) {
-                      return Chip(
-                        label: Text(skill),
-                        backgroundColor: clrs[_random.nextInt(clrs.length)],
-                      );
-                    }).toList(),
-                  ),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Wrap(
+                      spacing: kSpacingUnit * 2,
+                      runSpacing: kSpacingUnit * 2,
+                      children: user.skills!.map((skill) {
+                        return Chip(
+                          label: Text(
+                            skill,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: clrs[_random.nextInt(clrs.length)],
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: kSpacingUnit * 2),
               Column(
@@ -474,7 +500,13 @@ class _ApplicantListScreenState extends State<ApplicantListScreen> {
                       updateData();
                     });
                     Get.back();
-                    Get.snackbar("Success", "Status Updated successfully");
+                    Get.snackbar(
+                      "Success",
+                      "Status Updated successfully",
+                      icon: const Icon(Icons.check, color: Colors.white),
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                    );
                     // Get.reload();
                   } else {
                     Get.snackbar("Error", "Failed to update status");

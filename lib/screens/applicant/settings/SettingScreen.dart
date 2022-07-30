@@ -95,7 +95,6 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
               style: titleStyle.copyWith(
                 fontSize: 22.sp,
                 fontFamily: GoogleFonts.lato().fontFamily,
-                color: isDarkMode ? Colors.white : Colors.black,
               ),
             ),
             const SizedBox(height: 40),

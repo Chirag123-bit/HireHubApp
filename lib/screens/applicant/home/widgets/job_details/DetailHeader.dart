@@ -15,6 +15,8 @@ class DetailHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: kSpacingUnit * 2,
