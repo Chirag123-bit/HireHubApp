@@ -48,8 +48,8 @@ class Company {
       ),
       Company(
         id: '1',
-        name: "Air BnB",
-        avatarImage: "assets/icons/airbnb_logo.svg",
+        name: "Google",
+        avatarImage: "assets/icons/google_logo.svg",
         about:
             "Aegis is a complete hotel and restaurant management software that covers the overall transaction of your hotel and restaurant operations. It is easier for you to streamline all tasks, increase revenue, control the expenses, and save the manpower cost. Products are featured from Front of the House to Back of the House with a single database. As per your business needs, we are ready to serve you with both Server Based and Cloud Based solutions.",
         desc:
@@ -59,8 +59,8 @@ class Company {
       ),
       Company(
         id: '1',
-        name: "Air BnB",
-        avatarImage: "assets/icons/airbnb_logo.svg",
+        name: "Apple Inc",
+        avatarImage: "assets/icons/apple_logo.svg",
         about:
             "Aegis is a complete hotel and restaurant management software that covers the overall transaction of your hotel and restaurant operations. It is easier for you to streamline all tasks, increase revenue, control the expenses, and save the manpower cost. Products are featured from Front of the House to Back of the House with a single database. As per your business needs, we are ready to serve you with both Server Based and Cloud Based solutions.",
         desc:
@@ -70,8 +70,8 @@ class Company {
       ),
       Company(
         id: '1',
-        name: "Air BnB",
-        avatarImage: "assets/icons/airbnb_logo.svg",
+        name: "Amazon",
+        avatarImage: "assets/icons/amazon_logo.svg",
         about:
             "Aegis is a complete hotel and restaurant management software that covers the overall transaction of your hotel and restaurant operations. It is easier for you to streamline all tasks, increase revenue, control the expenses, and save the manpower cost. Products are featured from Front of the House to Back of the House with a single database. As per your business needs, we are ready to serve you with both Server Based and Cloud Based solutions.",
         desc:
@@ -81,8 +81,8 @@ class Company {
       ),
       Company(
         id: '1',
-        name: "Air BnB",
-        avatarImage: "assets/icons/airbnb_logo.svg",
+        name: "Microsoft Corporation",
+        avatarImage: "assets/icons/microsoft_logo.svg",
         about:
             "Aegis is a complete hotel and restaurant management software that covers the overall transaction of your hotel and restaurant operations. It is easier for you to streamline all tasks, increase revenue, control the expenses, and save the manpower cost. Products are featured from Front of the House to Back of the House with a single database. As per your business needs, we are ready to serve you with both Server Based and Cloud Based solutions.",
         desc:

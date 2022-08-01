@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/APIs/job_api.dart';
 import 'package:hirehub/config/Constants.dart';
@@ -21,6 +22,18 @@ class ApplicantsOverview extends StatefulWidget {
 
 class _ApplicantsOverviewState extends State<ApplicantsOverview> {
   final _random = Random();
+
+  static List<Color> sky = [const Color(0xFF6448FE), const Color(0xFF5FC6FF)];
+  static List<Color> sunset = [
+    const Color(0xFFFE6197),
+    const Color(0xFFFFB463)
+  ];
+  static List<Color> sea = [const Color(0xFF61A3FE), const Color(0xFF63FFD5)];
+  static List<Color> mango = [const Color(0xFFFFA738), const Color(0xFFFFE130)];
+  static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
+
+  static List<List<Color>> grads = [sky, sunset, sea, mango, fire];
+
   List<Color> clrs = [
     Colors.red,
     Colors.green,
@@ -82,152 +95,217 @@ class _ApplicantsOverviewState extends State<ApplicantsOverview> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FutureBuilder<DashboardJobsResponse?>(
-                future: JobsRepository().getDashboardJobs(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasData) {
-                      List<DashboardJob> lstJobs = snapshot.data!.data!;
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: lstJobs
-                            .asMap()
-                            .entries
-                            .map((jobs) => Column(
-                                  children: [
-                                    Text(
-                                      "Applicants For : ${jobs.value.title}",
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    if (jobs.value.applicants!.isEmpty)
-                                      const Text("No Applicants")
-                                    else
-                                      ListView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            jobs.value.applicants!.length,
-                                        itemBuilder: (context, index) {
-                                          var profilePic = jobs
-                                              .value
-                                              .applicants![index]
-                                              .applicant!
-                                              .avatarImage;
-                                          if (profilePic!
-                                              .contains("uploads\\")) {
-                                            profilePic =
-                                                baseImgUrl + profilePic;
-                                            profilePic = profilePic.replaceAll(
-                                                "\\", "/");
-                                          }
-                                          return ListTile(
-                                            tileColor: clrs[
-                                                _random.nextInt(clrs.length)],
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      kSpacingUnit * 2),
-                                            ),
-                                            leading: CircleAvatar(
-                                              backgroundImage:
-                                                  NetworkImage(profilePic),
-                                              radius: kSpacingUnit * 2,
-                                            ),
-                                            title: Text(
-                                              jobs.value.applicants![index]
-                                                      .applicant!.firstName! +
-                                                  " " +
-                                                  jobs.value.applicants![index]
-                                                      .applicant!.lastName!,
+    ScreenUtil.init(context);
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+            child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FutureBuilder<DashboardJobsResponse?>(
+                  future: JobsRepository().getDashboardJobs(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        List<DashboardJob> lstJobs = snapshot.data!.data!;
+                        return Container(
+                          margin:
+                              EdgeInsets.symmetric(vertical: kSpacingUnit * 2),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: lstJobs
+                                .asMap()
+                                .entries
+                                .map((jobs) => Container(
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: kSpacingUnit * 2),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              " ${jobs.value.title}",
                                               style: TextStyle(
-                                                  fontSize: kSpacingUnit * 2),
+                                                  fontSize: 20.sp,
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: TextAlign.start,
                                             ),
-                                            subtitle: Text(
-                                              jobs.value.applicants![index]
-                                                  .status!,
-                                              style: TextStyle(
-                                                  fontSize: kSpacingUnit * 1.5),
-                                            ),
-                                            trailing: GestureDetector(
-                                              onTap: () {
-                                                showModalBottomSheet(
-                                                  backgroundColor:
-                                                      Colors.transparent,
-                                                  context: context,
-                                                  isScrollControlled: true,
-                                                  builder: (context) =>
-                                                      ApplicantProfileSheet(
-                                                          user: jobs
-                                                              .value
-                                                              .applicants![
-                                                                  index]
-                                                              .applicant!,
-                                                          job: jobs.value,
-                                                          clrs: clrs,
-                                                          profilePic:
-                                                              profilePic!,
-                                                          currentStatus: jobs
-                                                              .value
-                                                              .applicants![
-                                                                  index]
-                                                              .status!,
-                                                          jobId: jobs.value.id!,
-                                                          index: index),
-                                                );
-                                              },
-                                              child: const Icon(
-                                                Icons.remove_red_eye_outlined,
-                                                color: Colors.white,
+                                            if (jobs.value.applicants!.isEmpty)
+                                              Text(
+                                                "No Applicants",
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontSize: 10.sp,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            else
+                                              ListView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    const NeverScrollableScrollPhysics(),
+                                                itemCount: jobs
+                                                    .value.applicants!.length,
+                                                itemBuilder: (context, index) {
+                                                  var profilePic = jobs
+                                                      .value
+                                                      .applicants![index]
+                                                      .applicant!
+                                                      .avatarImage;
+                                                  if (profilePic!
+                                                      .contains("uploads\\")) {
+                                                    profilePic =
+                                                        baseImgUrl + profilePic;
+                                                    profilePic = profilePic
+                                                        .replaceAll("\\", "/");
+                                                  }
+                                                  return Container(
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 5),
+                                                    decoration: BoxDecoration(
+                                                      gradient: LinearGradient(
+                                                          colors: grads[_random
+                                                              .nextInt(grads
+                                                                  .length)],
+                                                          begin: Alignment
+                                                              .centerLeft,
+                                                          end: Alignment
+                                                              .centerRight),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              kSpacingUnit * 3),
+                                                    ),
+                                                    child: ListTile(
+                                                      style: ListTileStyle.list,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                kSpacingUnit *
+                                                                    2),
+                                                      ),
+                                                      leading: CircleAvatar(
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                profilePic),
+                                                        radius:
+                                                            kSpacingUnit * 2,
+                                                      ),
+                                                      title: Text(
+                                                        jobs
+                                                                .value
+                                                                .applicants![
+                                                                    index]
+                                                                .applicant!
+                                                                .firstName! +
+                                                            " " +
+                                                            jobs
+                                                                .value
+                                                                .applicants![
+                                                                    index]
+                                                                .applicant!
+                                                                .lastName!,
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                kSpacingUnit *
+                                                                    2),
+                                                      ),
+                                                      subtitle: Text(
+                                                        jobs
+                                                            .value
+                                                            .applicants![index]
+                                                            .status!,
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                kSpacingUnit *
+                                                                    1.5),
+                                                      ),
+                                                      trailing: GestureDetector(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            context: context,
+                                                            isScrollControlled:
+                                                                true,
+                                                            builder: (context) => ApplicantProfileSheet(
+                                                                user: jobs
+                                                                    .value
+                                                                    .applicants![
+                                                                        index]
+                                                                    .applicant!,
+                                                                job: jobs.value,
+                                                                clrs: clrs,
+                                                                profilePic:
+                                                                    profilePic!,
+                                                                currentStatus: jobs
+                                                                    .value
+                                                                    .applicants![
+                                                                        index]
+                                                                    .status!,
+                                                                jobId: jobs
+                                                                    .value.id!,
+                                                                index: index),
+                                                          );
+                                                        },
+                                                        child: const Icon(
+                                                          Icons
+                                                              .remove_red_eye_outlined,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
                                               ),
-                                            ),
-                                          );
-                                        },
+                                          ],
+                                        ),
                                       ),
-                                  ],
-                                ))
-                            .toList(),
+                                    ))
+                                .toList(),
+                          ),
+                        );
+                      } else {
+                        return const Text("No Jobs Found");
+                      }
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return Column(
+                        children: const [
+                          CardLoading(
+                            height: 100,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            margin: EdgeInsets.only(bottom: 10),
+                          ),
+                          CardLoading(
+                            height: 50,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            margin: EdgeInsets.only(bottom: 10),
+                          ),
+                          CardLoading(
+                            height: 100,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            margin: EdgeInsets.only(bottom: 10),
+                          ),
+                        ],
                       );
                     } else {
-                      return const Text("No Jobs Found");
+                      return const Text("Error retriving data");
                     }
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return Column(
-                      children: const [
-                        CardLoading(
-                          height: 100,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                        CardLoading(
-                          height: 50,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                        CardLoading(
-                          height: 100,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          margin: EdgeInsets.only(bottom: 10),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return const Text("Error retriving data");
-                  }
-                })
-          ],
-        ),
-      )),
+                  })
+            ],
+          ),
+        )),
+      ),
     );
   }
 
@@ -249,9 +327,11 @@ class _ApplicantsOverviewState extends State<ApplicantsOverview> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PopupMenuButton<String>(
                     onSelected: (value) => onStatusChange(context, value,
@@ -455,14 +535,31 @@ class _ApplicantsOverviewState extends State<ApplicantsOverview> {
                     setState(() {
                       job.applicants![index].status = status;
                     });
-                    // Get.back();
-                    Get.snackbar("Success", "Status Updated successfully");
-                    // Get.reload();
+
+                    Get.snackbar(
+                      "Success",
+                      "Status Updated successfully",
+                      icon: const Icon(Icons.check, color: Colors.white),
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white,
+                    );
                   } else {
-                    Get.snackbar("Error", "Failed to update status");
+                    Get.snackbar(
+                      "Error",
+                      "Failed to update status",
+                      icon: const Icon(Icons.error, color: Colors.white),
+                      backgroundColor: Colors.red,
+                      colorText: Colors.white,
+                    );
                   }
                 } else {
-                  Get.snackbar("Failed", "Failed to update status");
+                  Get.snackbar(
+                    "Failed",
+                    "Failed to update status",
+                    icon: const Icon(Icons.error, color: Colors.white),
+                    backgroundColor: Colors.red,
+                    colorText: Colors.white,
+                  );
                 }
                 // changeStatus(jonId, userId, status);
               },

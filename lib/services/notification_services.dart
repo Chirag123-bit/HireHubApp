@@ -61,7 +61,6 @@ class NotifyHelper {
   }
 
   displayNotification({required String title, required String body}) async {
-    print("doing test");
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'your channel id', 'your channel name',
         channelDescription: 'your channel description',
@@ -81,7 +80,6 @@ class NotifyHelper {
   }
 
   scheduledNotification(int hour, int minutes, Event event) async {
-    print("Called For scheduling");
     await flutterLocalNotificationsPlugin.zonedSchedule(
       event.id!.toInt(),
       event.title!,

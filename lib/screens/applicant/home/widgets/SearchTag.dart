@@ -13,8 +13,8 @@ class SearchTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: kSpacingUnit * 3,
-      width: kSpacingUnit * 9,
+      height: kSpacingUnit * 2, //3
+      width: kSpacingUnit * 8, //9
       margin: EdgeInsets.only(left: kSpacingUnit),
       decoration: BoxDecoration(
         color: primaryClr,
@@ -24,7 +24,7 @@ class SearchTag extends StatelessWidget {
         child: Text(
           tag,
           textAlign: TextAlign.center,
-          style: kCaptionTextStyle.copyWith(color: Colors.white, fontSize: 14),
+          style: kCaptionTextStyle.copyWith(color: Colors.white),
         ),
       ),
     );

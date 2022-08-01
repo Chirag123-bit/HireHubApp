@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/dashboardJobModels/DashboardJob.dart';
@@ -13,6 +14,7 @@ class EmployerJobCard extends StatefulWidget {
   final String closeDateString;
   final DashboardJob item;
   Function needRefresh;
+  List<Color> color;
 
   EmployerJobCard({
     Key? key,
@@ -21,6 +23,7 @@ class EmployerJobCard extends StatefulWidget {
     required this.item,
     required this.logo,
     required this.needRefresh,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -30,6 +33,8 @@ class EmployerJobCard extends StatefulWidget {
 class _EmployerJobCardState extends State<EmployerJobCard> {
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: [kCardShadow],
@@ -50,15 +55,20 @@ class _EmployerJobCardState extends State<EmployerJobCard> {
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
             child: Container(
               width: double.infinity,
-              height: 150,
+              height: 125.sp,
               padding: EdgeInsets.symmetric(
                 horizontal: kSpacingUnit * 1.2,
                 vertical: kSpacingUnit * 2,
               ),
               margin: EdgeInsets.symmetric(vertical: kSpacingUnit),
-              decoration: const BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: widget.color,
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(15),
+                ),
               ),
               child: Column(
                 children: [
@@ -80,14 +90,14 @@ class _EmployerJobCardState extends State<EmployerJobCard> {
                                 fontWeight: FontWeight.bold,
                                 color: Get.isDarkMode
                                     ? Colors.white
-                                    : Colors.grey[600],
+                                    : Colors.white,
                               )),
                           Text("Kathamndu, Nepal",
                               style: TextStyle(
                                 fontSize: kSpacingUnit * 1.2,
                                 color: Get.isDarkMode
                                     ? Colors.white
-                                    : Colors.grey[600],
+                                    : Colors.white,
                               )),
                         ],
                       )
@@ -105,19 +115,21 @@ class _EmployerJobCardState extends State<EmployerJobCard> {
                                 fontWeight: FontWeight.bold,
                                 color: Get.isDarkMode
                                     ? Colors.white
-                                    : Colors.grey[600],
+                                    : Colors.white,
                               )),
                           Text(
-                              NumberToWord()
-                                  .convert(
-                                      'en-in', widget.item.applicants!.length)
-                                  .toUpperCase(),
+                              widget.item.applicants!.isNotEmpty
+                                  ? NumberToWord()
+                                      .convert('en-in',
+                                          widget.item.applicants!.length)
+                                      .toUpperCase()
+                                  : "No Applicants",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: kSpacingUnit * 1.5,
                                 color: Get.isDarkMode
                                     ? Colors.white
-                                    : Colors.red[600],
+                                    : Colors.white,
                               )),
                         ],
                       ),
@@ -129,7 +141,7 @@ class _EmployerJobCardState extends State<EmployerJobCard> {
                                 fontWeight: FontWeight.bold,
                                 color: Get.isDarkMode
                                     ? Colors.white
-                                    : Colors.grey[600],
+                                    : Colors.white,
                               )),
                           Text(widget.closeDateString,
                               style: TextStyle(
@@ -137,7 +149,7 @@ class _EmployerJobCardState extends State<EmployerJobCard> {
                                 fontWeight: FontWeight.w600,
                                 color: Get.isDarkMode
                                     ? Colors.white
-                                    : Colors.grey[600],
+                                    : Colors.white,
                               )),
                         ],
                       ),

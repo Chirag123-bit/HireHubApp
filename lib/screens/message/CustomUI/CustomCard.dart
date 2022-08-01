@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/Logic/ChatLogic.dart';
 import 'package:hirehub/models/Chat/ChattingModel.dart';
@@ -13,6 +14,8 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     DateTime date;
     String dateString;
 
@@ -20,7 +23,6 @@ class CustomCard extends StatelessWidget {
       date = DateTime.parse(chat.latestMessage!.createdAt!);
     } catch (e) {
       date = DateTime.now();
-      print(e);
     }
 
     dateString = DateFormat('MMM d, yyyy').format(date);
@@ -40,19 +42,18 @@ class CustomCard extends StatelessWidget {
               chat: chat,
             ));
       },
-      key: Key(sender.firstName! + "key"),
       child: Column(
         children: [
           ListTile(
             leading: CircleAvatar(
-              radius: 30,
+              radius: 20.sp,
               backgroundImage: NetworkImage(profilePic),
               backgroundColor: Colors.white,
             ),
             title: Text(
               sender.firstName! + " " + sender.lastName!,
-              style: const TextStyle(
-                fontSize: 16,
+              style: TextStyle(
+                fontSize: 14.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -62,19 +63,31 @@ class CustomCard extends StatelessWidget {
                 const SizedBox(width: 3),
                 Text(
                   chat.latestMessage?.content ?? " ",
-                  style: const TextStyle(fontSize: 13),
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                  ),
                 ),
               ],
             ),
-            trailing: Text(dateString),
+            trailing: Text(dateString, style: TextStyle(fontSize: 9.sp)),
           ),
-          const Padding(
-            padding: EdgeInsets.only(right: 20, left: 80),
-            child: Divider(
+          // const Padding(
+          //   padding: EdgeInsets.only(right: 20, left: 80),
+          //   child: Divider(
+          //     thickness: 1,
+          //     color: Colors.grey,
+          //   ),
+          // ),
+          Container(
+            height: 1,
+            color: Colors.grey,
+            margin: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.only(right: 20, left: 80),
+            child: const Divider(
               thickness: 1,
               color: Colors.grey,
             ),
-          )
+          ),
         ],
       ),
     );

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +32,17 @@ class _HomeContentState extends State<HomeContent> {
   late Image logo;
   late UserRepository _userRepository;
 
+  static List<Color> sky = [const Color(0xFF6448FE), const Color(0xFF5FC6FF)];
+  static List<Color> sunset = [
+    const Color(0xFFFE6197),
+    const Color(0xFFFFB463)
+  ];
+  static List<Color> sea = [const Color(0xFF61A3FE), const Color(0xFF63FFD5)];
+  static List<Color> mango = [const Color(0xFFFFA738), const Color(0xFFFFE130)];
+  static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
+
+  static List<List<Color>> grads = [sky, sunset, sea, mango, fire];
+
   void getAndSetDate() async {
     setState(() {
       isLoading = true;
@@ -43,6 +56,8 @@ class _HomeContentState extends State<HomeContent> {
       isLoading = false;
     });
   }
+
+  final _random = Random();
 
   @override
   void initState() {
@@ -116,6 +131,7 @@ class _HomeContentState extends State<HomeContent> {
                       isLoading: isLoading,
                       logo: logo,
                       item: item.value,
+                      color: grads[_random.nextInt(grads.length)],
                       needRefresh: getDashboardJobsFromDb);
                 }).toList(),
               );

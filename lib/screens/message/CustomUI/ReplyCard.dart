@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ReplyMessage extends StatelessWidget {
@@ -7,6 +8,8 @@ class ReplyMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Align(
       alignment: Alignment.centerLeft,
       child: ConstrainedBox(
@@ -30,8 +33,8 @@ class ReplyMessage extends StatelessWidget {
               child: Text(
                 message ??
                     "Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey Hey",
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: 13.sp,
                   color: Colors.white,
                 ),
               ),
@@ -41,7 +44,7 @@ class ReplyMessage extends StatelessWidget {
               right: 4,
               child: Text(
                 "20:50",
-                style: TextStyle(fontSize: 13, color: Colors.grey[200]),
+                style: TextStyle(fontSize: 8.sp, color: Colors.grey[200]),
               ),
             )
           ]),

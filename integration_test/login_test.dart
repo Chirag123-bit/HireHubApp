@@ -5,7 +5,7 @@ import 'package:integration_test/integration_test.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets("Job Validation Test", (WidgetTester tester) async {
+  testWidgets("Login Test", (WidgetTester tester) async {
     app.main();
     await tester.pumpAndSettle(const Duration(seconds: 5));
 

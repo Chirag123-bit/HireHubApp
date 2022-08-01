@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hirehub/config/Constants.dart';
-import 'package:hirehub/config/test_data.dart';
 import 'package:hirehub/models/Job.dart';
 import 'package:hirehub/repository/job_repository.dart';
 import 'package:hirehub/response/jobResponse/get_jobs_response.dart';
@@ -19,7 +18,7 @@ class FilterJob extends StatelessWidget {
               List<Job> lstJobs = snapshot.data!.data!;
               return ListView.builder(
                 shrinkWrap: true,
-                itemCount: recentJobs.length,
+                itemCount: lstJobs.length,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Column(

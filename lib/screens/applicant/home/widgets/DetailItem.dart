@@ -16,7 +16,7 @@ class DetailItem extends StatelessWidget {
         textAlign: TextAlign.justify,
         style: kCaptionTextStyle.copyWith(
           fontWeight: FontWeight.w400,
-          fontSize: 13,
+          // fontSize: 13,
           color: Get.isDarkMode ? Colors.white : Colors.black,
         ),
       ),

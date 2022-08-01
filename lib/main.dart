@@ -14,11 +14,9 @@ import 'package:hirehub/screens/applicant/settings/basic_info_screen.dart';
 import 'package:hirehub/screens/auth/Login.dart';
 import 'package:hirehub/screens/auth/Register.dart';
 import 'package:hirehub/screens/employer/EmployerMainScreen.dart';
-import 'package:hirehub/screens/splash/splashScreen.dart';
+import 'package:hirehub/screens/splash/AnimatedSplashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
-import 'package:hirehub/wearOs/EmployerDashboard.dart';
-import 'package:hirehub/wearOs/dashboard.dart';
 // import 'package:hirehub/wearOs/main.dart';
 
 void main() async {
@@ -51,18 +49,18 @@ class _MyAppState extends State<MyApp> {
       initialRoute: "/",
       routes: {
         // "/": (context) => const WearOsApp(),
-        "/": (context) => const SplashScreen(),
+        "/": (context) => const AnimatedSplashScreens(),
         "/home": (context) => const ApplicantMainPage(),
         "/homeEmployer": (context) => const EmployerMainPage(),
         "/login": (context) => const LoginScreen(),
         "/register": (context) => const Register(),
-        "/category": (context) => const CategoryScreen(),
+        "/category": (context) => CategoryScreen(),
         "/filter": (context) => const FilterPage(),
         "/todo": (context) => const EventsScreen(),
         "/edit_basic": (context) => const EditBasicInfoScreen(),
         "/settings": (context) => const SettingScreen(),
-        "/wearDashboard": (context) => const DashboardScreen(),
-        "/wearDashboardEmployer": (context) => const EmployerDashboardScreen(),
+        // "/wearDashboard": (context) => const DashboardScreen(),
+        // "/wearDashboardEmployer": (context) => const EmployerDashboardScreen(),
       },
     );
   }

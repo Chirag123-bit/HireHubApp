@@ -18,7 +18,6 @@ class HomePopularCategories extends StatelessWidget {
             future: CategoryRepository().getAllCategory(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                print(snapshot);
                 if (snapshot.hasData) {
                   List<CategoryWithCount> lstCats = snapshot.data!.data!;
                   return Column(

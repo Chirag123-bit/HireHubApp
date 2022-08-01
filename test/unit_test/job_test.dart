@@ -25,13 +25,13 @@ void main() {
   });
 
   group("Job Apply Test", () {
-    test("Job Apply Test Pass", () async {
+    test("Job Apply Test Fail", () async {
       prefs = await SharedPreferences.getInstance();
       bool expectedResult = true;
       bool actualResult = await api.applyForJob(jobId);
       expect(actualResult, expectedResult);
     });
-    test("Job Apply Test Fail", () async {
+    test("Job Apply Test Pass", () async {
       bool expectedResult = false;
       bool actualResult = await api.applyForJob(jobId);
       expect(actualResult, expectedResult);
@@ -48,14 +48,14 @@ void main() {
   });
 
   group("Applied Jobs Fetch Test", () {
-    test("Fetch Test Pass", () async {
+    test("Apply Fetch Test Pass", () async {
       bool expectedResult = true;
       AppliedJobsResponse? res = await api.getAppliedJobs();
       bool actualResult = res?.success ?? true;
 
       expect(actualResult, expectedResult);
     });
-    test("Fetch Test Fail", () async {
+    test("Apply Fetch Test Fail", () async {
       prefs = await SharedPreferences.getInstance();
       prefs.clear();
       bool expectedResult = false;

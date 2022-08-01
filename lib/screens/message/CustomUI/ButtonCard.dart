@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ButtonCard extends StatelessWidget {
   String name;
@@ -9,19 +10,20 @@ class ButtonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return ListTile(
       leading: CircleAvatar(
-          radius: 30,
+          radius: 25.sp,
           child: Icon(
             icon,
-            size: 28,
+            size: 20.sp,
           ),
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white),
       title: Text(
         name,
-        style: const TextStyle(
-          fontSize: 16,
+        style: TextStyle(
+          fontSize: 14.sp,
           fontWeight: FontWeight.bold,
         ),
       ),

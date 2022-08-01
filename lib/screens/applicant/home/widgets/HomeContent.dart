@@ -63,7 +63,7 @@ class HomeContent extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => Get.to(() => const CategoryScreen()),
+                      onTap: () => Get.to(() => CategoryScreen()),
                       child: Text(
                         'View All',
                         style: kCardTitleTextStyle.copyWith(

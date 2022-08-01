@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/APIs/UserAPI.dart';
@@ -139,6 +140,7 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -162,8 +164,8 @@ class _EditBasicInfoScreenState extends State<EditBasicInfoScreen> {
               Text(
                 "Edit Profile",
                 style: GoogleFonts.lato(
-                  textStyle: const TextStyle(
-                    fontSize: 25,
+                  textStyle: TextStyle(
+                    fontSize: 25.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

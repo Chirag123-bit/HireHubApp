@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hirehub/screens/message/Pages/ChatPage.dart';
 
 class ChatHomeScreen extends StatefulWidget {
@@ -20,15 +21,12 @@ class _ChatHomeScreenState extends State<ChatHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HireHub Messages'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
           PopupMenuButton(
+              iconSize: 18.sp,
               onSelected: (value) {},
               itemBuilder: (context) {
                 return [
@@ -40,6 +38,7 @@ class _ChatHomeScreenState extends State<ChatHomeScreen>
               }),
         ],
         bottom: TabBar(
+          labelStyle: TextStyle(fontSize: 16.sp),
           controller: _tabController,
           tabs: const [
             Tab(
@@ -54,13 +53,13 @@ class _ChatHomeScreenState extends State<ChatHomeScreen>
           ],
         ),
       ),
-      body: TabBarView(children: const [
-        ChatPage(),
+      body: TabBarView(children: [
+        const ChatPage(),
         Center(
-          child: Text('Status'),
+          child: Text('Status', style: TextStyle(fontSize: 16.sp)),
         ),
         Center(
-          child: Text('Calls'),
+          child: Text('Calls', style: TextStyle(fontSize: 16.sp)),
         ),
       ], controller: _tabController),
     );

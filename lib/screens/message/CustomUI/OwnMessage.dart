@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class OwnMessage extends StatelessWidget {
@@ -7,6 +8,8 @@ class OwnMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
@@ -29,8 +32,8 @@ class OwnMessage extends StatelessWidget {
                   const EdgeInsets.only(left: 10, right: 5, top: 5, bottom: 20),
               child: Text(
                 message,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: 13.sp,
                   color: Colors.white,
                 ),
               ),
@@ -40,18 +43,12 @@ class OwnMessage extends StatelessWidget {
                 right: 4,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                    children: [
                       Text(
                         "20:50",
-                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                        style:
+                            TextStyle(fontSize: 8.sp, color: Colors.grey[200]),
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Icon(
-                        Icons.done_all,
-                        size: 20,
-                      )
                     ]))
           ]),
         ),
