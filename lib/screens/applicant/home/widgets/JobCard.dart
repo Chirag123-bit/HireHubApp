@@ -69,8 +69,8 @@ class JobCard extends StatelessWidget {
         closedElevation: 0,
         closedBuilder: (context, action) {
           return Container(
-            height: 129.w,
-            padding: EdgeInsets.all(kSpacingUnit * 2),
+            height: 100.w,
+            padding: EdgeInsets.all(kSpacingUnit * 1.2),
             decoration: BoxDecoration(
                 borderRadius:
                     BorderRadiusDirectional.circular(kSpacingUnit * 3),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:all_sensors2/all_sensors2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hirehub/config/Constants.dart';
@@ -79,6 +80,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.only(left: 16, right: 16, top: 25),
@@ -87,7 +89,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
             Text(
               "Settings",
               style: titleStyle.copyWith(
-                fontSize: 24,
+                fontSize: 24.sp,
                 fontFamily: GoogleFonts.lato().fontFamily,
                 color: isDarkMode ? Colors.white : Colors.black,
               ),
@@ -99,7 +101,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
                 Text(
                   "Dark Mode",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: GoogleFonts.lato().fontFamily),
                 ),
@@ -134,7 +136,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
                 Text(
                   "Account",
                   style: kTitleStyle.copyWith(
-                      fontSize: 18,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: GoogleFonts.lato().fontFamily),
                 ),
@@ -177,7 +179,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
                 Text(
                   "Personal Space",
                   style: kTitleStyle.copyWith(
-                      fontSize: 18,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: GoogleFonts.lato().fontFamily),
                 ),
@@ -215,7 +217,7 @@ class _SettingScreenState extends State<SettingScreen> with ShakeHandler {
               child: Text(
                 "Sign Out",
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 18.sp,
                   letterSpacing: 2.2,
                   fontFamily: GoogleFonts.lato().fontFamily,
                 ),
@@ -246,7 +248,7 @@ class BuildSettingOption extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                   fontFamily: GoogleFonts.lato().fontFamily),
             ),

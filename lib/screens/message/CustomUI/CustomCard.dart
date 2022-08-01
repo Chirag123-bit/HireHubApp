@@ -42,7 +42,6 @@ class CustomCard extends StatelessWidget {
               chat: chat,
             ));
       },
-      key: Key(sender.firstName! + "key"),
       child: Column(
         children: [
           ListTile(
@@ -72,13 +71,23 @@ class CustomCard extends StatelessWidget {
             ),
             trailing: Text(dateString, style: TextStyle(fontSize: 9.sp)),
           ),
-          const Padding(
-            padding: EdgeInsets.only(right: 20, left: 80),
-            child: Divider(
+          // const Padding(
+          //   padding: EdgeInsets.only(right: 20, left: 80),
+          //   child: Divider(
+          //     thickness: 1,
+          //     color: Colors.grey,
+          //   ),
+          // ),
+          Container(
+            height: 1,
+            color: Colors.grey,
+            margin: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.only(right: 20, left: 80),
+            child: const Divider(
               thickness: 1,
               color: Colors.grey,
             ),
-          )
+          ),
         ],
       ),
     );

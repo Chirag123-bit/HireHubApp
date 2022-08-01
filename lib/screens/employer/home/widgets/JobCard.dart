@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/config/Constants.dart';
 import 'package:hirehub/models/dashboardJobModels/DashboardJob.dart';
@@ -32,6 +33,8 @@ class EmployerJobCard extends StatefulWidget {
 class _EmployerJobCardState extends State<EmployerJobCard> {
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: [kCardShadow],
@@ -52,7 +55,7 @@ class _EmployerJobCardState extends State<EmployerJobCard> {
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5),
             child: Container(
               width: double.infinity,
-              height: 150,
+              height: 125.sp,
               padding: EdgeInsets.symmetric(
                 horizontal: kSpacingUnit * 1.2,
                 vertical: kSpacingUnit * 2,

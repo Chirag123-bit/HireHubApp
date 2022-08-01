@@ -77,7 +77,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                         text: 'Hey $fname, \n',
                         style: TextStyle(
                           //Remove This styles
-                          fontSize: 18.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -85,7 +85,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                   text: 'Looking for Jobs?',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20.sp), //remove fontsize
+                      fontSize: 18.sp), //remove fontsize
                 ),
               ],
             ),

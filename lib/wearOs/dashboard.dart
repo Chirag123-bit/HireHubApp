@@ -20,7 +20,18 @@ class DashboardScreen extends StatefulWidget {
   static List<Color> mango = [const Color(0xFFFFA738), const Color(0xFFFFE130)];
   static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
 
-  static List<List<Color>> grads = [sky, sunset, sea, mango, fire];
+  static List<List<Color>> grads = [
+    sky,
+    sunset,
+    sea,
+    mango,
+    fire,
+    sky,
+    sunset,
+    sea,
+    mango,
+    fire
+  ];
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();

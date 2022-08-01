@@ -38,9 +38,9 @@ void main() {
     test("Register Test Pass", () async {
       user.firstName = "Chirag";
       user.lastName = "Simkhada";
-      user.username = "TestAccount1";
+      user.username = "TestAccount1111";
       user.password = "Abcd";
-      user.email = "sadasdamsdasidm@gmail.com";
+      user.email = "sadasdamsdadsddwwdwdsidm@gmail.com";
       user.phone = "123456789";
       user.type = "Applicant";
       user.gender = "Male";

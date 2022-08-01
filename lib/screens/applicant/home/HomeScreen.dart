@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const HomeHeader(),
             SizedBox(height: kSpacingUnit * 3),
             const HomeSubHeader(),
-            SizedBox(height: kSpacingUnit * 3),
+            SizedBox(height: kSpacingUnit * 1.5),
             const HomeContent(),
           ],
         ),

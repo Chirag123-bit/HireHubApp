@@ -15,9 +15,9 @@ void main() {
 
     Finder usernameText = find.byKey(const ValueKey("txtUsername"));
     Finder btnLogin = find.byKey(const ValueKey("btnLogin"));
-    await tester.enterText(usernameText, "ApplicantTen");
+    await tester.enterText(usernameText, "TestU1");
     Finder passwordText = find.byKey(const ValueKey("txtPassword"));
-    await tester.enterText(passwordText, "Abcd");
+    await tester.enterText(passwordText, "Abcd@1234");
     await tester.pumpAndSettle(const Duration(seconds: 3));
     await tester.testTextInput.receiveAction(TextInputAction.done);
     await tester.pumpAndSettle(const Duration(seconds: 1));

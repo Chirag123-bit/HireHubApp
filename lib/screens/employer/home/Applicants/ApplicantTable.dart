@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:card_loading/card_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hirehub/APIs/job_api.dart';
 import 'package:hirehub/config/Constants.dart';
@@ -94,6 +95,7 @@ class _ApplicantsOverviewState extends State<ApplicantsOverview> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context);
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -129,15 +131,19 @@ class _ApplicantsOverviewState extends State<ApplicantsOverview> {
                                           children: [
                                             Text(
                                               " ${jobs.value.title}",
-                                              style: const TextStyle(
-                                                  fontSize: 20,
+                                              style: TextStyle(
+                                                  fontSize: 20.sp,
                                                   fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.start,
                                             ),
                                             if (jobs.value.applicants!.isEmpty)
-                                              const Text(
+                                              Text(
                                                 "No Applicants",
                                                 textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontSize: 10.sp,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               )
                                             else
                                               ListView.builder(

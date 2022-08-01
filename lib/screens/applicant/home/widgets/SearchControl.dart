@@ -12,7 +12,7 @@ class SearchControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: kSpacingUnit * 3.5,
+      height: kSpacingUnit * 3,
       decoration: BoxDecoration(
         color: kSilverColor,
         borderRadius: BorderRadius.circular(kSpacingUnit * 3),
@@ -20,7 +20,7 @@ class SearchControl extends StatelessWidget {
       child: Center(
         child: Row(
           children: [
-            SizedBox(width: kSpacingUnit * 2),
+            SizedBox(width: kSpacingUnit),
             const Icon(Icons.search, color: primaryClr),
             SizedBox(width: kSpacingUnit),
             Text(

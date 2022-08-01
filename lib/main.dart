@@ -17,8 +17,6 @@ import 'package:hirehub/screens/employer/EmployerMainScreen.dart';
 import 'package:hirehub/screens/splash/AnimatedSplashScreen.dart';
 import 'package:hirehub/services/theme_services.dart';
 import 'package:hirehub/theme/Theme.dart';
-import 'package:hirehub/wearOs/EmployerDashboard.dart';
-import 'package:hirehub/wearOs/dashboard.dart';
 // import 'package:hirehub/wearOs/main.dart';
 
 void main() async {
@@ -61,8 +59,8 @@ class _MyAppState extends State<MyApp> {
         "/todo": (context) => const EventsScreen(),
         "/edit_basic": (context) => const EditBasicInfoScreen(),
         "/settings": (context) => const SettingScreen(),
-        "/wearDashboard": (context) => const DashboardScreen(),
-        "/wearDashboardEmployer": (context) => const EmployerDashboardScreen(),
+        // "/wearDashboard": (context) => const DashboardScreen(),
+        // "/wearDashboardEmployer": (context) => const EmployerDashboardScreen(),
       },
     );
   }

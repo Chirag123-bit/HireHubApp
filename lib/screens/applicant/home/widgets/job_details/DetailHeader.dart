@@ -19,8 +19,8 @@ class DetailHeader extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: kSpacingUnit * 2,
-        vertical: kSpacingUnit * 3,
+        horizontal: kSpacingUnit * 1,
+        vertical: kSpacingUnit * 1.5,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

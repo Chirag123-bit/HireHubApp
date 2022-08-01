@@ -40,7 +40,7 @@ class DetailContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: kSpacingUnit * 5),
+              SizedBox(height: kSpacingUnit * 2.5),
               Center(
                 child: Column(
                   children: [

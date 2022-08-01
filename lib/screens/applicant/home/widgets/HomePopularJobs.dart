@@ -31,9 +31,9 @@ class _HomePopularJobsState extends State<HomePopularJobs> {
                   return CarouselSlider.builder(
                     options: CarouselOptions(
                       autoPlay: true,
-                      height: 130.w,
-                      aspectRatio: 16 / 9,
-                      viewportFraction: 0.8,
+                      height: 110.w,
+                      aspectRatio: 10 / 5,
+                      viewportFraction: 0.9,
                       initialPage: _cardIndex,
                       enlargeCenterPage: true,
                       onPageChanged: (index, reason) {

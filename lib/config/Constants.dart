@@ -79,7 +79,7 @@ final kCardTitleTextStyle = TextStyle(
 
 final kBodyTextStyle = TextStyle(
   color: kPrimaryTextColor,
-  fontSize: 13.sp,
+  fontSize: 11.sp,
 );
 
 final kCaptionTextStyle = TextStyle(

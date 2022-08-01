@@ -24,18 +24,12 @@ void main() {
     await tester.tap(btnLogin);
     await tester.pumpAndSettle(const Duration(seconds: 3));
 
-    Finder chatTab = find.byKey(const Key("chat")).first;
-    await tester.tap(chatTab);
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-    // expect(find.text("Chirag Simkhada"), findsWidgets);
-    Finder chat = find.byKey(const Key("Chiragkey")).first;
-    await tester.tap(chat);
-    await tester.pumpAndSettle(const Duration(seconds: 2));
-    Finder msgBox = find.byKey(const Key("messageBox"));
-    await tester.enterText(msgBox, "Hello");
-    Finder sendBtn = find.byIcon(Icons.send);
-    await tester.tap(sendBtn);
-    await tester.pumpAndSettle(const Duration(seconds: 1));
-    expect(find.text("Hello"), findsWidgets);
+    Finder eventsTab = find.byKey(const ValueKey("eventsTab"));
+    await tester.tap(eventsTab);
+    await tester.pumpAndSettle(const Duration(seconds: 3));
+    Finder eventsTile = find.byKey(const ValueKey("eventsTile"));
+    await tester.tap(eventsTile);
+    await tester.pumpAndSettle(const Duration(seconds: 3));
+    expect(find.byKey(const ValueKey("addEvent")), findsOneWidget);
   });
 }
