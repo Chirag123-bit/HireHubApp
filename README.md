@@ -92,7 +92,7 @@ Initially, GetX was used to store user’s state within the application like log
 
 
 ## Screenshots
-![App Screenshot](screenshots/1.jpg  | width=100)
+<img src="screenshots/2.jpg" alt="Onboarding" width="150"/>
 ![App Screenshot](screenshots/2.jpg)
 ![App Screenshot](screenshots/3.jpg)
 ![App Screenshot](screenshots/4.jpg)
