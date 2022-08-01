@@ -167,25 +167,25 @@ Initially, GetX was used to store user’s state within the application like log
 Clone the project
 
 ```bash
-  git clone https://github.com/Chirag123-bit/HireHub-Frontend.git
+  git clone https://github.com/stw300cem/final-assignment-Chirag123-bit.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd HireHub-Frontend
+  cd hirehub
 ```
 
 Install dependencies
 
 ```bash
-  npm install
+  flutter pub get
 ```
 
 Start the server
 
 ```bash
-  npm start
+  flutter main
 ```
 
 
@@ -194,6 +194,6 @@ Start the server
 To run tests, run the following command
 
 ```bash
-  npx jest
+  flutter test
 ```
 
