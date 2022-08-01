@@ -1,6 +1,8 @@
 
 # HireHub
-![App Logo](screenshots/logo.png)
+<p align="center">
+<img src="screenshots/logo.png" alt="screenshot" width="300" />
+</p>
 HireHub is the job platform with the target of simplifying recruiting and hiring process for the parties involved. With this application, employers, and potential employees could connect directly, efficiently cutting out the middleman. Moreover, with a real-time communication system integrated into this platform, employers can be confident about their applicants. In the favor of applicants, HireHub offers total transparency in their application process by informing them about state of their application
 The process of searching jobs remains one of the most hassled tasks in one’s professional life. Furthermore, the lack of transparency in the process leaves the applicants unsure about their application. This creates sort of an unprofessional atmosphere between the employer and the potential employee.
 
@@ -58,7 +60,9 @@ HireHub is based on Repository Pattern Architecture. The repository pattern is i
 In HireHub the data from server is loaded into the repository. The application makes request to the repository and based on the availability of server, the repository sends either the live data or the locally cached data from floor database.
 
 # State Management
-![GetX](screenshots/getx.jpg)
+<p align="center">
+<img src="screenshots/getx.jpg" alt="screenshot" width="600" />
+ </p>
 In HireHub. GetX was used for state management. GetX is an extra-light and powerful solution for Flutter. It combines high-performance state management, intelligent dependency injection, and route management quickly and practically.
 
 Initially, GetX was used to store user’s state within the application like logging user’s login activity, darkmode preference, storing tokens, etc. Later on, it was also used for redirecting and navigating users based on their activites. 
@@ -92,6 +96,7 @@ Initially, GetX was used to store user’s state within the application like log
 
 
 ## Screenshots
+<p>
 <img src="screenshots/1.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/2.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/3.jpg" alt="screenshot" width="200"/>
@@ -107,51 +112,48 @@ Initially, GetX was used to store user’s state within the application like log
 <img src="screenshots/13.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/14.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/15.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/50.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/16.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/46.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/17.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/18.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/19.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/49.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/20.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/42.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/21.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/44.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/22.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/45.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/23.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/43.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/24.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/33.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/25.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/34.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/26.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/35.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/27.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/37.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/28.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/29.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/30.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/31.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/32.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/33.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/34.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/35.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/36.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/37.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/38.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/30.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/39.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/31.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/40.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/32.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/41.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/42.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/43.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/44.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/45.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/46.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/47.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/48.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/49.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/50.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/51.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/58.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/52.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/59.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/53.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/60.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/54.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/55.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/56.jpg" alt="screenshot" width="200"/>
 <img src="screenshots/57.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/58.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/59.jpg" alt="screenshot" width="200"/>
-<img src="screenshots/60.jpg" alt="screenshot" width="200"/>
+</p>
 
 
 
