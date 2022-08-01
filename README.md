@@ -92,66 +92,67 @@ Initially, GetX was used to store user’s state within the application like log
 
 
 ## Screenshots
-<img src="screenshots/2.jpg" alt="Onboarding" width="150"/>
-![App Screenshot](screenshots/2.jpg)
-![App Screenshot](screenshots/3.jpg)
-![App Screenshot](screenshots/4.jpg)
-![App Screenshot](screenshots/5.jpg)
-![App Screenshot](screenshots/6.jpg)
-![App Screenshot](screenshots/7.jpg)
-![App Screenshot](screenshots/8.jpg)
-![App Screenshot](screenshots/9.jpg)
-![App Screenshot](screenshots/10.jpg)
-![App Screenshot](screenshots/11.jpg)
-![App Screenshot](screenshots/12.jpg)
-![App Screenshot](screenshots/13.jpg)
-![App Screenshot](screenshots/14.jpg)
-![App Screenshot](screenshots/15.jpg)
-![App Screenshot](screenshots/16.jpg)
-![App Screenshot](screenshots/17.jpg)
-![App Screenshot](screenshots/18.jpg)
-![App Screenshot](screenshots/19.jpg)
-![App Screenshot](screenshots/20.jpg)
-![App Screenshot](screenshots/21.jpg)
-![App Screenshot](screenshots/22.jpg)
-![App Screenshot](screenshots/23.jpg)
-![App Screenshot](screenshots/24.jpg)
-![App Screenshot](screenshots/25.jpg)
-![App Screenshot](screenshots/26.jpg)
-![App Screenshot](screenshots/27.jpg)
-![App Screenshot](screenshots/28.jpg)
-![App Screenshot](screenshots/29.jpg)
-![App Screenshot](screenshots/30.jpg)
-![App Screenshot](screenshots/31.jpg)
-![App Screenshot](screenshots/32.jpg)
-![App Screenshot](screenshots/33.jpg)
-![App Screenshot](screenshots/34.jpg)
-![App Screenshot](screenshots/35.jpg)
-![App Screenshot](screenshots/36.jpg)
-![App Screenshot](screenshots/37.jpg)
-![App Screenshot](screenshots/38.jpg)
-![App Screenshot](screenshots/39.jpg)
-![App Screenshot](screenshots/40.jpg)
-![App Screenshot](screenshots/41.jpg)
-![App Screenshot](screenshots/42.jpg)
-![App Screenshot](screenshots/43.jpg)
-![App Screenshot](screenshots/44.jpg)
-![App Screenshot](screenshots/45.jpg)
-![App Screenshot](screenshots/46.jpg)
-![App Screenshot](screenshots/47.jpg)
-![App Screenshot](screenshots/48.jpg)
-![App Screenshot](screenshots/49.jpg)
-![App Screenshot](screenshots/50.jpg)
-![App Screenshot](screenshots/51.jpg)
-![App Screenshot](screenshots/52.jpg)
-![App Screenshot](screenshots/53.jpg)
-![App Screenshot](screenshots/54.jpg)
-![App Screenshot](screenshots/55.jpg)
-![App Screenshot](screenshots/56.jpg)
-![App Screenshot](screenshots/57.jpg)
-![App Screenshot](screenshots/58.jpg)
-![App Screenshot](screenshots/59.jpg)
-![App Screenshot](screenshots/60.jpg)
+<img src="screenshots/1.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/2.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/3.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/4.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/5.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/6.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/7.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/8.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/9.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/10.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/11.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/12.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/13.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/14.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/15.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/16.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/17.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/18.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/19.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/20.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/21.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/22.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/23.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/24.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/25.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/26.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/27.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/28.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/29.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/30.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/31.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/32.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/33.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/34.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/35.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/36.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/37.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/38.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/39.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/40.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/41.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/42.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/43.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/44.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/45.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/46.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/47.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/48.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/49.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/50.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/51.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/52.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/53.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/54.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/55.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/56.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/57.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/58.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/59.jpg" alt="screenshot" width="200"/>
+<img src="screenshots/60.jpg" alt="screenshot" width="200"/>
+
 
 
 ## Authors
