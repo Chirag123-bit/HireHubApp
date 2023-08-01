@@ -94,7 +94,6 @@ Initially, GetX was used to store user’s state within the application like log
 
 
 
-
 ## Screenshots
 <p>
 <img src="screenshots/1.jpg" alt="screenshot" width="200"/>
