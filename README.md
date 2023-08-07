@@ -14,6 +14,7 @@ The application will consist of two users: Applicant, Employer and Admin. Althou
 Moreover, the system will offer the users an option to save the job for latter. This option will enable users to efficiently handle the application for each individual job posts. In the favor of Employers, they will be able to post the job vacancies at their companies. The overall hiring process can be done through this platform. This includes job posting, shortlisting, interviewing, and onboarding. Once the application deadline closes, companies can handpick the candidates and shortlist them. They can communicate with them through real-time chat, emails or video conference (future work). Similarly, the system will automatically send them alerts about your decision and you can formally begin the onboarding process.
 
 
+
 # Applicant Account's Feature
     •	Search For the Jobs
     •	Filter through Jobs
